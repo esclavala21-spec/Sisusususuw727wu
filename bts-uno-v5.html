@@ -1,0 +1,2952 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>BTS UNO 💜</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;700;900&family=Black+Han+Sans&display=swap" rel="stylesheet">
+<style>
+:root {
+  --purple:#6C3CE1; --purple-light:#9B6DFF; --purple-dark:#3A1A8C;
+  --gold:#FFD700; --pink:#FF6B9D; --cyan:#00D4FF;
+  --bg:#0A0612; --bg2:#110920;
+  --red:#E63946; --blue:#2196F3; --green:#4CAF50; --yellow:#FFC107;
+  --text:#F0E6FF; --dim:#9B8EC4;
+  --affinity-bar: #9B6DFF;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;height:100%;overflow:hidden;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);touch-action:manipulation;}
+
+/* STARS */
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse at 20% 50%,#1a0a3e,transparent 60%),
+             radial-gradient(ellipse at 80% 20%,#0d0a2e,transparent 60%),var(--bg);}
+#stars::before{content:'';position:absolute;inset:0;
+  background-image:radial-gradient(1px 1px at 10% 15%,#fff8,transparent),
+    radial-gradient(1px 1px at 30% 45%,#fff5,transparent),
+    radial-gradient(1.5px 1.5px at 55% 10%,#fff6,transparent),
+    radial-gradient(1px 1px at 72% 62%,#fff4,transparent),
+    radial-gradient(2px 2px at 87% 27%,#9B6DFF33,transparent),
+    radial-gradient(1px 1px at 18% 78%,#fff5,transparent),
+    radial-gradient(1.5px 1.5px at 62% 88%,#fff4,transparent),
+    radial-gradient(1px 1px at 40% 55%,#fff3,transparent),
+    radial-gradient(2px 2px at 48% 33%,#FFD70022,transparent);}
+
+/* PARTICLES */
+#particles{position:fixed;inset:0;z-index:2;pointer-events:none;overflow:hidden;}
+.particle{position:absolute;border-radius:50%;pointer-events:none;animation:particle-fall linear forwards;}
+@keyframes particle-fall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+
+/* SCREENS */
+.screen{position:relative;z-index:1;width:100%;height:100vh;display:none;flex-direction:column;align-items:center;justify-content:center;padding:16px;overflow-y:auto;}
+.screen.active{display:flex;}
+
+
+
+/* LOADING */
+#loading{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;}
+.l-logo{font-family:'Bebas Neue',sans-serif;font-size:90px;color:var(--purple-light);animation:tglow 1.5s infinite;}
+@keyframes tglow{0%,100%{filter:drop-shadow(0 0 15px #9B6DFF66)}50%{filter:drop-shadow(0 0 35px #FFD70077)}}
+.l-bar{width:220px;height:4px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden;}
+.l-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--pink));border-radius:2px;animation:lfill 1.8s ease-out forwards;}
+@keyframes lfill{from{width:0}to{width:100%}}
+
+/* TITLE */
+.logo{font-family:'Bebas Neue',sans-serif;font-size:clamp(56px,14vw,110px);
+  background:linear-gradient(135deg,var(--gold),var(--purple-light),var(--pink));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  letter-spacing:4px;line-height:.9;animation:tglow 3s infinite;text-align:center;}
+.logo-sub{font-family:'Black Han Sans',sans-serif;font-size:clamp(13px,3.5vw,24px);
+  color:var(--purple-light);letter-spacing:8px;margin-top:-8px;}
+.divider{width:50px;height:3px;background:linear-gradient(90deg,var(--purple),var(--pink));border-radius:2px;margin:14px auto;}
+
+/* INPUTS / FORMS */
+.name-wrap{display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:30px;width:100%;max-width:380px;}
+.name-wrap label{font-size:12px;color:var(--dim);letter-spacing:2px;text-transform:uppercase;}
+.inp{width:100%;padding:12px 18px;border-radius:50px;background:rgba(255,255,255,.05);
+  border:2px solid var(--purple);color:var(--text);font-size:18px;text-align:center;
+  font-family:'Black Han Sans',sans-serif;outline:none;transition:.3s;}
+.inp:focus{border-color:var(--purple-light);background:rgba(108,60,225,.15);box-shadow:0 0 18px rgba(108,60,225,.35);}
+.inp::placeholder{color:var(--dim);opacity:.5;}
+
+/* BUTTONS */
+.btn{padding:12px 30px;border-radius:50px;border:none;cursor:pointer;
+  font-family:'Black Han Sans',sans-serif;font-size:15px;letter-spacing:2px;
+  transition:all .25s;position:relative;overflow:hidden;}
+.btn::after{content:'absolute';position:absolute;inset:0;opacity:0;
+  background:radial-gradient(circle at center,rgba(255,255,255,.2),transparent);transition:.25s;}
+.btn:hover::after{opacity:1;}
+.btn:hover{transform:translateY(-3px);}
+.btn:active{transform:translateY(1px);}
+.btn-p{background:linear-gradient(135deg,var(--purple),var(--purple-dark));color:var(--gold);box-shadow:0 4px 18px rgba(108,60,225,.5);}
+.btn-p:hover{box-shadow:0 8px 28px rgba(108,60,225,.7);}
+.btn-g{background:linear-gradient(135deg,var(--gold),#FFA500);color:var(--bg);box-shadow:0 4px 18px rgba(255,215,0,.35);}
+.btn-pink{background:linear-gradient(135deg,var(--pink),#FF3D7A);color:#fff;box-shadow:0 4px 18px rgba(255,107,157,.4);}
+.btn-o{background:transparent;border:2px solid var(--purple-light);color:var(--purple-light);}
+.btn-o:hover{background:rgba(155,109,255,.1);}
+.btn-sm{padding:8px 20px;font-size:12px;}
+.btn-danger{background:linear-gradient(135deg,#c0392b,#922b21);color:#fff;}
+
+/* MODE CARDS */
+.mode-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;max-width:620px;width:100%;margin-top:24px;}
+.mcard{background:rgba(255,255,255,.03);border:2px solid rgba(108,60,225,.3);border-radius:18px;
+  padding:24px 16px;text-align:center;cursor:pointer;transition:.3s;}
+.mcard:hover{border-color:var(--purple-light);background:rgba(108,60,225,.1);transform:translateY(-4px);box-shadow:0 10px 28px rgba(108,60,225,.3);}
+.mcard .mi{font-size:42px;margin-bottom:10px;}
+.mcard h3{font-family:'Black Han Sans',sans-serif;font-size:16px;color:var(--gold);margin-bottom:6px;}
+.mcard p{font-size:11px;color:var(--dim);line-height:1.5;}
+
+/* MEMBER PHOTOS */
+.mphoto{width:64px;height:64px;border-radius:50%;object-fit:cover;object-position:top;
+  border:3px solid var(--purple-light);display:block;margin:0 auto;
+  box-shadow:0 0 12px rgba(155,109,255,.5);transition:.3s;}
+.ma:hover .mphoto,.ma.sel .mphoto{box-shadow:0 0 22px rgba(155,109,255,.9);border-color:var(--gold);}
+.mphoto-sm{width:40px;height:40px;border-radius:50%;object-fit:cover;object-position:top;
+  border:2px solid var(--purple-light);display:block;margin:0 auto;
+  box-shadow:0 0 8px rgba(155,109,255,.4);}
+.mphoto-lg{width:72px;height:72px;border-radius:50%;object-fit:cover;object-position:top;
+  border:3px solid var(--gold);display:block;margin:0 auto 10px;
+  box-shadow:0 0 20px rgba(255,215,0,.4);}
+.mphoto-aff{width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:top;
+  border:2px solid var(--purple-light);display:block;margin:0 auto;
+  box-shadow:0 0 8px rgba(155,109,255,.35);}
+
+/* MEMBER GRID */
+.mg{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:12px;max-width:780px;width:100%;margin-top:16px;}
+.ma{background:rgba(255,255,255,.03);border:2px solid rgba(108,60,225,.3);border-radius:14px;
+  padding:14px 8px;text-align:center;cursor:pointer;transition:.3s;position:relative;}
+.ma:hover,.ma.sel{border-color:var(--purple-light);background:rgba(108,60,225,.15);transform:scale(1.04);}
+.ma.sel::after{content:'✓';position:absolute;top:-7px;right:-7px;background:var(--gold);color:var(--bg);
+  border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold;}
+.ma .ae{font-size:36px;}.ma .an{font-size:11px;color:var(--gold);font-family:'Black Han Sans',sans-serif;margin-top:4px;}
+.ma .ar{font-size:9px;color:var(--dim);}
+
+/* AFFINITY BAR under member */
+.aff-bar{width:60px;height:3px;background:rgba(255,255,255,.1);border-radius:2px;margin:4px auto 0;}
+.aff-fill{height:100%;background:linear-gradient(90deg,var(--purple-light),var(--pink));border-radius:2px;transition:.5s;}
+
+/* ── FLYING CARD ANIMATION ── */
+#flyCard{
+  position:fixed;z-index:1000;pointer-events:none;
+  width:64px;height:98px;border-radius:10px;
+  display:none;align-items:center;justify-content:center;
+  font-family:'Bebas Neue',sans-serif;font-size:24px;
+  border:3px solid rgba(255,255,255,.35);
+  box-shadow:0 0 24px rgba(255,215,0,.6);
+  transition:none;
+}
+#flyCard .corner{position:absolute;font-size:12px;line-height:1;}
+#flyCard .corner.tl{top:5px;left:6px;}
+#flyCard .corner.br{bottom:5px;right:6px;transform:rotate(180deg);}
+@keyframes flyToCenter{
+  0%  {opacity:1;transform:scale(1) rotate(0deg);}
+  60% {opacity:1;transform:scale(1.25) rotate(-8deg);}
+  100%{opacity:0;transform:scale(0.6) rotate(12deg);}
+}
+
+/* ── QUIZ MODAL ── */
+#quizModal{
+  position:fixed;inset:0;background:rgba(0,0,0,.88);
+  display:none;align-items:center;justify-content:center;
+  z-index:600;backdrop-filter:blur(6px);
+}
+#quizModal.show{display:flex;}
+.qbox{
+  background:linear-gradient(135deg,var(--bg2),#1a0a3e);
+  border:2px solid var(--purple-light);border-radius:22px;
+  padding:28px 24px;max-width:380px;width:92%;text-align:center;
+  box-shadow:0 0 50px rgba(108,60,225,.55);
+  animation:bpop .35s cubic-bezier(.175,.885,.32,1.275);
+}
+.qbox .q-photo{width:80px;height:80px;border-radius:50%;object-fit:cover;object-position:top;
+  border:3px solid var(--gold);margin:0 auto 10px;display:block;
+  box-shadow:0 0 18px rgba(255,215,0,.4);}
+.qbox .q-member{font-family:'Black Han Sans',sans-serif;color:var(--gold);font-size:15px;margin-bottom:4px;}
+.qbox .q-title{font-size:13px;color:var(--dim);margin-bottom:16px;line-height:1.5;}
+.qbox .q-nums{display:flex;gap:10px;justify-content:center;margin-bottom:18px;}
+.qnum{width:48px;height:48px;border-radius:50%;background:rgba(108,60,225,.3);
+  border:2px solid var(--purple);color:var(--text);font-family:'Bebas Neue',sans-serif;
+  font-size:22px;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;}
+.qnum:hover{background:rgba(108,60,225,.7);border-color:var(--gold);transform:scale(1.15);}
+.qnum.correct{background:rgba(76,175,80,.5);border-color:#4CAF50;animation:ushake .3s;}
+.qnum.wrong{background:rgba(230,57,70,.4);border-color:var(--red);}
+.qbox .q-result{font-size:13px;line-height:1.6;color:var(--text);min-height:40px;}
+.qbox .q-skip{font-size:11px;color:var(--dim);cursor:pointer;text-decoration:underline;margin-top:6px;display:block;}
+.qbox .q-skip:hover{color:var(--text);}
+
+/* ── GIFT / SPECIAL CARDS ── */
+#giftNotif{
+  position:fixed;top:60px;left:50%;transform:translateX(-50%) translateY(-20px);
+  background:linear-gradient(135deg,#2a1060,#1a0a3e);
+  border:2px solid var(--gold);border-radius:16px;
+  padding:14px 22px;z-index:860;text-align:center;
+  opacity:0;transition:.4s;pointer-events:none;white-space:nowrap;
+  box-shadow:0 0 30px rgba(255,215,0,.3);
+}
+#giftNotif.show{opacity:1;transform:translateX(-50%) translateY(0);}
+#giftNotif .gn-icon{font-size:28px;}
+#giftNotif .gn-title{font-family:'Black Han Sans',sans-serif;color:var(--gold);font-size:13px;}
+#giftNotif .gn-desc{font-size:11px;color:var(--dim);}
+
+/* Gift card in hand */
+.card.gift{background:linear-gradient(135deg,#2a0060,#6C3CE1,#FFD700);
+  border-color:var(--gold);box-shadow:0 0 14px rgba(255,215,0,.5);}
+.card.gift:hover{transform:translateY(-18px) rotate(2deg)!important;
+  box-shadow:0 0 28px rgba(255,215,0,.8)!important;}
+/* Gift inventory badge */
+#giftBadge{
+  display:none;position:fixed;bottom:16px;right:12px;z-index:200;
+  background:linear-gradient(135deg,var(--purple-dark),#2a0060);
+  border:2px solid var(--gold);border-radius:14px;
+  padding:8px 12px;text-align:center;cursor:pointer;
+  box-shadow:0 0 18px rgba(255,215,0,.3);transition:.2s;
+}
+#giftBadge:hover{transform:scale(1.05);box-shadow:0 0 28px rgba(255,215,0,.5);}
+#giftBadge .gb-icon{font-size:22px;}
+#giftBadge .gb-label{font-size:9px;color:var(--gold);font-family:'Black Han Sans',sans-serif;letter-spacing:1px;}
+
+
+#gameScreen{padding:6px 8px;padding-bottom:8px;justify-content:flex-start;gap:0;}
+.gtop{display:flex;justify-content:space-between;align-items:center;padding:4px 8px;gap:6px;flex-wrap:wrap;}
+.badge{background:rgba(108,60,225,.2);border:1px solid var(--purple);border-radius:50px;
+  padding:5px 12px;font-size:11px;display:flex;align-items:center;gap:5px;white-space:nowrap;}
+.badge span{color:var(--gold);font-family:'Black Han Sans',sans-serif;font-size:14px;}
+
+/* OPPONENTS ROW */
+.orow{display:flex;justify-content:center;align-items:flex-start;gap:8px;padding:6px 8px;flex-wrap:wrap;}
+.oslot{background:rgba(255,255,255,.03);border:2px solid rgba(108,60,225,.2);border-radius:14px;
+  padding:8px 10px;text-align:center;min-width:82px;transition:.3s;position:relative;}
+.oslot.aturn{border-color:var(--gold);box-shadow:0 0 18px rgba(255,215,0,.45);animation:tpulse .8s infinite;}
+@keyframes tpulse{0%,100%{box-shadow:0 0 8px rgba(255,215,0,.3)}50%{box-shadow:0 0 22px rgba(255,215,0,.7)}}
+.oslot .omood{font-size:24px;}.oslot .oav{font-size:28px;}.oslot .oname{font-size:10px;color:var(--gold);font-family:'Black Han Sans',sans-serif;}
+.oslot .ocards{font-size:9px;color:var(--dim);margin-top:1px;}
+.ocb{display:inline-block;width:11px;height:16px;border-radius:2px;background:linear-gradient(135deg,var(--purple-dark),var(--purple));
+  border:1px solid var(--purple-light);margin:1px;vertical-align:middle;}
+
+/* STATUS */
+.sbar{text-align:center;padding:5px 10px;font-size:12px;color:var(--dim);min-height:28px;transition:.3s;}
+.sbar.hi{color:var(--gold);font-family:'Black Han Sans',sans-serif;font-size:13px;}
+
+/* CENTER */
+.gcenter{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;padding:4px;}
+.pile-lbl{font-size:10px;color:var(--dim);letter-spacing:2px;margin-bottom:5px;text-align:center;}
+
+/* CARDS */
+.card{width:64px;height:98px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;
+  cursor:pointer;font-family:'Bebas Neue',sans-serif;font-size:24px;position:relative;
+  border:3px solid rgba(255,255,255,.25);transition:all .22s;user-select:none;flex-shrink:0;}
+.card::before{content:'';position:absolute;inset:4px;border-radius:6px;border:2px solid rgba(255,255,255,.18);pointer-events:none;}
+.card.red   {background:radial-gradient(circle at 30% 30%,#FF6B6B,var(--red));}
+.card.blue  {background:radial-gradient(circle at 30% 30%,#64B5F6,var(--blue));}
+.card.green {background:radial-gradient(circle at 30% 30%,#81C784,var(--green));}
+.card.yellow{background:radial-gradient(circle at 30% 30%,#FFD54F,var(--yellow));color:#333;}
+.card.wild  {background:conic-gradient(var(--red) 25%,var(--blue) 25% 50%,var(--yellow) 50% 75%,var(--green) 75%);}
+.card.back  {background:linear-gradient(135deg,var(--purple-dark),#0d0520);cursor:default;}
+.card.back::after{content:'BTS';font-family:'Black Han Sans',sans-serif;font-size:12px;color:var(--gold);}
+.card.dtop  {cursor:default;width:72px;height:110px;font-size:28px;}
+.card.dpile {width:72px;height:110px;}
+.card.dpile:hover{transform:translateY(-5px) rotate(-4deg);}
+.corner{position:absolute;font-size:12px;line-height:1;}
+.corner.tl{top:5px;left:6px;}.corner.br{bottom:5px;right:6px;transform:rotate(180deg);}
+
+/* HAND */
+.player-area{padding:6px 10px;}
+.pinfo{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.ptag{font-family:'Black Han Sans',sans-serif;font-size:13px;color:var(--pink);
+  background:rgba(255,107,157,.1);border:1px solid rgba(255,107,157,.3);padding:3px 12px;border-radius:50px;}
+.hand{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;min-height:110px;padding:8px;
+  background:rgba(255,255,255,.02);border-radius:14px;border:1px solid rgba(108,60,225,.15);}
+.card.playable:hover{transform:translateY(-14px) rotate(2deg);box-shadow:0 0 18px rgba(255,215,0,.5);border-color:var(--gold);}
+.card.nplay{opacity:.45;cursor:not-allowed;}.card.nplay:hover{transform:none;box-shadow:none;}
+@keyframes deal{from{transform:translateY(-80px) rotate(-8deg);opacity:0}to{transform:none;opacity:1}}
+.deal-anim{animation:deal .28s ease-out;}
+
+/* UNO BTN */
+.uno-btn{background:linear-gradient(135deg,var(--red),#8B0000);color:#fff;
+  font-family:'Bebas Neue',sans-serif;font-size:28px;padding:10px 26px;
+  border-radius:50px;border:3px solid #fff;cursor:pointer;letter-spacing:3px;
+  transition:.2s;box-shadow:0 0 0 rgba(230,57,70,.6);}
+.uno-btn:hover{box-shadow:0 0 25px rgba(230,57,70,.7);animation:ushake .4s;}
+@keyframes ushake{0%,100%{transform:rotate(0)}25%{transform:rotate(-5deg)}75%{transform:rotate(5deg)}}
+
+/* COLOR PICKER */
+#cpicker{position:fixed;inset:0;background:rgba(0,0,0,.82);display:none;align-items:center;
+  justify-content:center;z-index:500;backdrop-filter:blur(5px);}
+#cpicker.show{display:flex;}
+.cpi{text-align:center;}
+.cpi h3{font-family:'Black Han Sans',sans-serif;font-size:22px;color:var(--gold);margin-bottom:16px;}
+.copts{display:flex;gap:16px;}
+.copt{width:64px;height:64px;border-radius:50%;cursor:pointer;border:3px solid rgba(255,255,255,.2);
+  font-size:22px;display:flex;align-items:center;justify-content:center;transition:.3s;}
+.copt:hover{transform:scale(1.2);border-color:#fff;}
+.copt.red{background:var(--red)}.copt.blue{background:var(--blue)}.copt.green{background:var(--green)}.copt.yellow{background:var(--yellow)}
+
+/* SPEECH BUBBLE */
+#speech{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:600;
+  background:rgba(0,0,0,.7);backdrop-filter:blur(4px);}
+#speech.show{display:flex;}
+.sb{background:linear-gradient(135deg,var(--bg2),#1a0a3e);border:2px solid var(--purple-light);
+  border-radius:20px;padding:20px 28px;max-width:440px;width:90%;text-align:center;
+  box-shadow:0 0 50px rgba(108,60,225,.5);animation:bpop .3s cubic-bezier(.175,.885,.32,1.275);cursor:pointer;}
+@keyframes bpop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+.sb .bav{margin-bottom:10px;display:flex;justify-content:center;}
+.sb .bname{font-family:'Black Han Sans',sans-serif;color:var(--gold);font-size:16px;margin-bottom:8px;}
+.sb .btxt{font-size:14px;line-height:1.7;color:var(--text);}
+.sb .btap{font-size:10px;color:var(--dim);margin-top:12px;}
+/* Affinity gain indicator */
+.aff-gain{font-size:11px;color:var(--purple-light);margin-top:6px;font-family:'Black Han Sans',sans-serif;}
+
+/* PAUSE MENU */
+#pause{position:fixed;inset:0;background:rgba(0,0,0,.9);display:none;flex-direction:column;
+  align-items:center;justify-content:center;z-index:700;gap:14px;backdrop-filter:blur(8px);}
+#pause.show{display:flex;}
+#pause h2{font-family:'Bebas Neue',sans-serif;font-size:50px;color:var(--gold);letter-spacing:3px;}
+#pause .psong{font-size:12px;color:var(--dim);margin-top:-10px;}
+
+/* VICTORY */
+#victory{position:fixed;inset:0;background:rgba(0,0,0,.93);z-index:800;
+  display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;}
+#victory.show{display:flex;}
+.vconf{font-size:50px;animation:cfall 2s infinite;}
+@keyframes cfall{0%,100%{transform:translateY(0);opacity:1}50%{transform:translateY(8px);opacity:.6}}
+.vtitle{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,11vw,90px);
+  background:linear-gradient(135deg,var(--gold),var(--pink),var(--purple-light));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  animation:vpulse 1s infinite;}
+@keyframes vpulse{0%,100%{filter:drop-shadow(0 0 8px gold)}50%{filter:drop-shadow(0 0 25px gold)}}
+.vsub{font-size:15px;color:var(--dim);margin:8px 0 20px;}
+.sbox{background:rgba(255,255,255,.05);border:1px solid rgba(108,60,225,.3);border-radius:14px;padding:16px 30px;margin:8px 0;}
+.sbox h4{color:var(--gold);font-family:'Black Han Sans',sans-serif;margin-bottom:8px;font-size:13px;}
+.srow{display:flex;justify-content:space-between;gap:30px;font-size:12px;padding:3px 0;}
+.srow .sl{color:var(--dim)}.srow .sv{color:var(--text);font-weight:bold;}
+
+/* ACHIEVEMENTS POPUP */
+#achpop{position:fixed;top:70px;left:50%;transform:translateX(-50%) translateY(-20px);
+  background:linear-gradient(135deg,#1a0a3e,var(--purple-dark));
+  border:2px solid var(--gold);border-radius:14px;padding:12px 24px;z-index:850;
+  text-align:center;opacity:0;transition:.4s;pointer-events:none;white-space:nowrap;}
+#achpop.show{opacity:1;transform:translateX(-50%) translateY(0);}
+#achpop .ach-icon{font-size:28px;}
+#achpop .ach-title{font-family:'Black Han Sans',sans-serif;color:var(--gold);font-size:14px;}
+#achpop .ach-desc{font-size:11px;color:var(--dim);}
+
+/* EVENTS BANNER */
+#eventBanner{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.8);
+  background:linear-gradient(135deg,#1a0050,#3a0080);border:3px solid var(--gold);
+  border-radius:20px;padding:20px 30px;z-index:650;text-align:center;
+  opacity:0;pointer-events:none;transition:all .4s;}
+#eventBanner.show{opacity:1;transform:translate(-50%,-50%) scale(1);}
+#eventBanner .ev-icon{font-size:48px;margin-bottom:8px;}
+#eventBanner .ev-title{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--gold);letter-spacing:2px;}
+#eventBanner .ev-desc{font-size:13px;color:var(--text);margin-top:4px;}
+
+/* TOURNAMENT */
+.bwrap{background:rgba(255,255,255,.02);border:1px solid rgba(108,60,225,.2);border-radius:14px;padding:16px;max-width:440px;width:100%;margin-top:16px;}
+.bstep{display:flex;align-items:center;gap:10px;padding:8px;border-radius:8px;margin:3px 0;transition:.3s;}
+.bstep.done{background:rgba(76,175,80,.1);border:1px solid rgba(76,175,80,.3);}
+.bstep.cur{background:rgba(255,215,0,.1);border:1px solid rgba(255,215,0,.4);animation:tpulse 1s infinite;}
+.bstep.pend{opacity:.4;}
+.bnum{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--gold);width:26px;}
+
+/* SAVES */
+.saves-box{background:rgba(255,255,255,.03);border:1px solid rgba(108,60,225,.2);border-radius:14px;
+  padding:14px;max-width:380px;width:100%;margin-top:16px;}
+.saves-box h4{color:var(--gold);font-family:'Black Han Sans',sans-serif;margin-bottom:10px;text-align:center;font-size:13px;}
+.srow2{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:12px;}
+.srow2:last-child{border:none;}
+
+/* AFFINITY SCREEN */
+#affinityScreen{gap:16px;}
+.aff-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:10px;max-width:680px;width:100%;}
+.aff-card{background:rgba(255,255,255,.03);border:1px solid rgba(108,60,225,.25);border-radius:12px;padding:12px 8px;text-align:center;}
+.aff-card .ac-em{font-size:32px;}.aff-card .ac-name{font-size:11px;color:var(--gold);font-family:'Black Han Sans',sans-serif;margin:4px 0 2px;}
+.aff-card .ac-val{font-size:10px;color:var(--dim);}
+.aff-card .ac-bar{width:100%;height:4px;background:rgba(255,255,255,.1);border-radius:2px;margin-top:4px;overflow:hidden;}
+.aff-card .ac-fill{height:100%;background:linear-gradient(90deg,var(--purple-light),var(--pink));border-radius:2px;transition:.5s;}
+/* Unlock badge */
+.unlock-badge{display:inline-block;background:var(--gold);color:var(--bg);font-size:9px;font-family:'Black Han Sans',sans-serif;
+  padding:1px 6px;border-radius:50px;margin-top:3px;}
+
+/* TOAST */
+.toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%) translateY(12px);
+  background:rgba(108,60,225,.9);border:1px solid var(--purple-light);border-radius:50px;
+  padding:8px 20px;font-size:12px;opacity:0;transition:.3s;z-index:950;white-space:nowrap;
+  backdrop-filter:blur(8px);}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* MISC */
+.fr{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
+.screen h2{font-family:'Black Han Sans',sans-serif;font-size:clamp(18px,4.5vw,32px);color:var(--gold);letter-spacing:2px;margin-bottom:6px;text-align:center;}
+.screen p.sub{color:var(--dim);font-size:12px;text-align:center;margin-bottom:16px;}
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-thumb{background:var(--purple);border-radius:3px;}
+
+/* Skin themes */
+body.skin-gold .card.red{background:radial-gradient(circle at 30% 30%,#FFE066,#FFD700);}
+body.skin-gold .card.blue{background:radial-gradient(circle at 30% 30%,#FFF0AA,#FFD700);}
+body.skin-gold .card.green{background:radial-gradient(circle at 30% 30%,#FFE066,#FFA500);}
+body.skin-dark .card{filter:brightness(.7) saturate(1.5);}
+
+/* ── AVATAR ── */
+#avatarScreen{gap:10px;padding:12px;}
+.av-canvas{width:90px;height:90px;border-radius:50%;border:3px solid var(--pink);margin:0 auto;
+  position:relative;overflow:hidden;background:#1a0a2e;box-shadow:0 0 18px rgba(255,107,157,.4);}
+.av-hair-layer{position:absolute;top:0;left:0;right:0;height:48%;border-radius:50% 50% 0 0;}
+.av-face-layer{position:absolute;top:18%;left:12%;right:12%;bottom:18%;border-radius:50%;}
+.av-eye-wrap{position:absolute;top:40%;left:50%;transform:translateX(-50%);display:flex;gap:12px;}
+.av-eye-dot{width:9px;height:9px;border-radius:50%;}
+.av-outfit-layer{position:absolute;bottom:0;left:0;right:0;height:42%;border-radius:0 0 50% 50%;}
+.av-acc-layer{position:absolute;top:-6px;left:50%;transform:translateX(-50%);font-size:20px;line-height:1;z-index:5;}
+.av-name-tag{font-family:'Black Han Sans',sans-serif;font-size:12px;color:var(--pink);text-align:center;
+  background:rgba(255,107,157,.12);border:1px solid rgba(255,107,157,.35);border-radius:50px;padding:3px 14px;margin:4px auto;width:fit-content;}
+.av-tabs{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;}
+.av-tab{padding:5px 12px;border-radius:50px;border:2px solid rgba(108,60,225,.4);background:transparent;
+  color:var(--dim);font-family:'Black Han Sans',sans-serif;font-size:10px;cursor:pointer;transition:.2s;}
+.av-tab.on{border-color:var(--pink);color:var(--pink);background:rgba(255,107,157,.1);}
+.av-palette{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;max-width:320px;margin:6px auto 0;}
+.av-swatch{width:36px;height:36px;border-radius:50%;border:2px solid rgba(255,255,255,.15);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-size:16px;transition:.2s;background:rgba(255,255,255,.05);}
+.av-swatch:hover,.av-swatch.on{border-color:#fff;transform:scale(1.15);box-shadow:0 0 10px rgba(255,255,255,.3);}
+
+/* ── NOVEL ROUTE SELECT ── */
+#novelScreen{gap:12px;padding:12px;}
+.nv-coins{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;}
+.nv-badge{background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.3);border-radius:50px;
+  padding:5px 14px;font-family:'Black Han Sans',sans-serif;font-size:12px;color:var(--gold);}
+.route-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;max-width:680px;width:100%;}
+.rcard{border-radius:18px;padding:14px 10px;text-align:center;position:relative;overflow:hidden;transition:.3s;
+  background:rgba(255,255,255,.03);border:2px solid rgba(108,60,225,.3);}
+.rcard.open{cursor:pointer;}
+.rcard.open:hover{border-color:var(--pink);background:rgba(255,107,157,.07);transform:translateY(-3px);box-shadow:0 8px 24px rgba(255,107,157,.2);}
+.rcard.locked{opacity:.5;cursor:not-allowed;}
+.rcard .rphoto{width:52px;height:52px;border-radius:50%;object-fit:cover;object-position:top;
+  border:3px solid var(--pink);margin:0 auto 7px;display:block;box-shadow:0 0 10px rgba(255,107,157,.35);}
+.rcard .rname{font-family:'Black Han Sans',sans-serif;color:var(--gold);font-size:13px;}
+.rcard .rsub{font-size:9px;color:var(--dim);margin:2px 0 5px;}
+.rcard .rprog{width:100%;height:3px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden;}
+.rcard .rpfill{height:100%;background:linear-gradient(90deg,#FF9ABB,#FFD700);border-radius:2px;transition:.5s;}
+.rcard .rchap{font-size:8px;color:var(--dim);margin-top:3px;}
+.rcard .rtick{position:absolute;top:6px;right:6px;background:var(--pink);color:#fff;
+  font-size:8px;font-family:'Black Han Sans',sans-serif;padding:1px 6px;border-radius:50px;}
+.nvaff-track{width:100%;height:4px;background:rgba(255,255,255,.1);border-radius:2px;margin-top:5px;overflow:hidden;}
+.nvaff-fill{height:100%;background:linear-gradient(90deg,#FF9ABB,#FF6B9D,#FFD700);border-radius:2px;transition:.6s;}
+
+/* ── NOVEL GAMEPLAY ── */
+#novelGameScreen{padding:0;justify-content:flex-start;overflow:hidden;}
+.ng-wrap{width:100%;height:100vh;display:flex;flex-direction:column;position:relative;
+  background:radial-gradient(ellipse at 30% 60%,rgba(255,107,157,.06),transparent 55%),
+             radial-gradient(ellipse at 75% 15%,rgba(108,60,225,.09),transparent 55%),var(--bg);}
+.ng-hud{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;
+  background:rgba(0,0,0,.35);backdrop-filter:blur(8px);flex-shrink:0;}
+.ng-chap-lbl{font-family:'Black Han Sans',sans-serif;font-size:11px;color:var(--pink);letter-spacing:2px;}
+.ng-aff-row{display:flex;align-items:center;gap:6px;flex:1;max-width:160px;margin:0 10px;}
+.ng-aff-track{flex:1;height:5px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden;}
+.ng-aff-bar{height:100%;background:linear-gradient(90deg,#FF9ABB,#FF6B9D,#FFD700);border-radius:3px;transition:.7s;}
+.ng-illus{flex:0 0 auto;display:flex;align-items:flex-end;justify-content:center;
+  height:clamp(150px,33vh,240px);overflow:hidden;position:relative;}
+.ng-charimg{height:100%;width:auto;max-width:clamp(110px,26vw,190px);object-fit:cover;object-position:top center;
+  filter:drop-shadow(0 0 18px rgba(255,107,157,.28));animation:nvfloat 4s ease-in-out infinite;}
+@keyframes nvfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.ng-loc{position:absolute;bottom:6px;left:12px;font-size:9px;color:rgba(255,255,255,.45);
+  font-family:'Black Han Sans',sans-serif;letter-spacing:2px;}
+.ng-dlg{margin:0 10px 8px;background:rgba(8,4,16,.92);border:2px solid rgba(255,107,157,.3);
+  border-radius:16px;padding:12px 14px;flex-shrink:0;min-height:80px;}
+.ng-spk{font-family:'Black Han Sans',sans-serif;font-size:12px;color:var(--pink);margin-bottom:5px;}
+.ng-txt{font-size:12px;line-height:1.75;color:var(--text);}
+.ng-cursor{display:inline-block;width:2px;height:12px;background:var(--pink);
+  vertical-align:middle;margin-left:1px;animation:nvcursor .65s infinite;}
+@keyframes nvcursor{0%,100%{opacity:1}50%{opacity:0}}
+.ng-tap{font-size:9px;color:rgba(255,107,157,.5);text-align:right;margin-top:4px;}
+.ng-choices{display:flex;flex-direction:column;gap:7px;margin:0 10px 10px;flex-shrink:0;}
+.ng-choice{padding:10px 14px;background:rgba(255,255,255,.03);border:2px solid rgba(255,107,157,.25);
+  border-radius:12px;color:var(--text);font-size:11px;cursor:pointer;transition:.2s;text-align:left;}
+.ng-choice:hover{border-color:var(--pink);background:rgba(255,107,157,.1);transform:translateX(3px);}
+.ng-choice.good{border-left:3px solid rgba(76,175,80,.6);}
+.ng-choice.bad{border-left:3px solid rgba(230,57,70,.5);}
+#nvTrans{position:fixed;inset:0;z-index:7000;background:var(--bg);display:none;
+  align-items:center;justify-content:center;flex-direction:column;gap:10px;text-align:center;padding:20px;}
+#nvTrans.show{display:flex;}
+.nvt-num{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,9vw,70px);
+  background:linear-gradient(135deg,var(--pink),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:4px;}
+.nvt-loc{font-size:12px;color:var(--dim);}
+#nvPause{display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:6500;
+  flex-direction:column;align-items:center;justify-content:center;gap:12px;}
+#nvPause.show{display:flex;}
+
+/* ── NOVEL ENDING ── */
+#novelEndScreen{gap:12px;padding:18px;}
+.ne-frame{width:150px;height:150px;margin:0 auto;position:relative;}
+.ne-frame img{width:100%;height:100%;border-radius:14px;object-fit:cover;object-position:top;
+  border:3px solid var(--pink);box-shadow:0 0 25px rgba(255,107,157,.45);}
+.ne-heart{position:absolute;top:-10px;right:-10px;font-size:26px;animation:nvfloat 2.5s ease-in-out infinite;}
+.ne-sign{position:absolute;bottom:7px;right:7px;font-size:11px;
+  background:rgba(255,107,157,.9);color:#fff;padding:2px 8px;border-radius:50px;font-family:'Black Han Sans',sans-serif;}
+.ne-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,7vw,52px);text-align:center;
+  background:linear-gradient(135deg,var(--pink),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.ne-desc{font-size:12px;color:var(--dim);text-align:center;max-width:320px;line-height:1.7;}
+.ne-coll{background:rgba(255,107,157,.07);border:2px solid rgba(255,107,157,.28);border-radius:14px;
+  padding:10px 18px;text-align:center;max-width:320px;width:100%;}
+.ne-coll h4{color:var(--pink);font-family:'Black Han Sans',sans-serif;font-size:12px;margin-bottom:4px;}
+
+/* ── COLLECTION ── */
+#collectionScreen{gap:12px;padding:12px;}
+.coll-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;max-width:560px;width:100%;}
+.ccard{background:rgba(255,255,255,.03);border:2px solid rgba(108,60,225,.25);border-radius:14px;
+  padding:10px;text-align:center;position:relative;}
+.ccard.earned{border-color:rgba(255,107,157,.45);background:rgba(255,107,157,.04);}
+.ccard img{width:72px;height:72px;border-radius:10px;object-fit:cover;object-position:top;
+  border:2px solid var(--pink);margin:0 auto 6px;display:block;}
+.ccard .cname{font-family:'Black Han Sans',sans-serif;font-size:11px;color:var(--gold);}
+.ccard .ctag{font-size:9px;color:var(--pink);margin-top:2px;}
+.ccard .cheart{position:absolute;top:-7px;right:-7px;font-size:18px;}
+.ccard .clock{font-size:36px;margin:8px 0;}
+</style>
+</head>
+<body>
+<div id="stars"></div>
+<div id="particles"></div>
+
+<div id="loading">
+  <div class="l-logo">BTS</div>
+  <div style="color:var(--dim);font-size:12px;letter-spacing:3px">ARMY EDITION</div>
+  <div class="l-bar"><div class="l-fill"></div></div>
+</div>
+
+<div id="achpop">
+  <div class="ach-icon" id="achIcon">🏆</div>
+  <div class="ach-title" id="achTitle">LOGRO</div>
+  <div class="ach-desc" id="achDesc">descripción</div>
+</div>
+
+<div id="eventBanner">
+  <div class="ev-icon" id="evIcon">🎉</div>
+  <div class="ev-title" id="evTitle">EVENTO</div>
+  <div class="ev-desc" id="evDesc">descripción</div>
+</div>
+
+<div class="screen active" id="titleScreen">
+  <div class="logo">BTS<br>UNO</div>
+  <div class="logo-sub">💜 ARMY EDITION 💜</div>
+  <div class="divider"></div>
+  <div class="name-wrap">
+    <label>¿Cómo te llamas, ARMY?</label>
+    <input class="inp" id="nameInp" type="text" maxlength="20" placeholder="Tu nombre..." />
+    <button class="btn btn-p" onclick="enterGame()">ENTRAR ✨</button>
+  </div>
+  <div class="saves-box" id="savesBox" style="display:none">
+    <h4>📊 HISTORIAL</h4>
+    <div id="savesContent"></div>
+  </div>
+  <div style="margin-top:12px;">
+    <button class="btn btn-o btn-sm" onclick="goTo('affinityScreen')" style="display:none" id="affBtn">💜 Afinidad BTS</button>
+  </div>
+</div>
+
+<div class="screen" id="modeScreen">
+  <h2>ELIGE TU MODO</h2>
+  <p class="sub" id="modeWel"></p>
+  <div class="divider"></div>
+  <div class="mode-grid">
+    <div class="mcard" onclick="selectMode('1v1')">
+      <div class="mi">⚔️</div><h3>1 VS 1</h3>
+      <p>Tú sola contra un miembro de BTS elegido.</p>
+    </div>
+    <div class="mcard" onclick="selectMode('parejas')">
+      <div class="mi">👫</div><h3>PAREJAS</h3>
+      <p>Elige tu pareja BTS y enfrenta a otra pareja rival.</p>
+    </div>
+    <div class="mcard" onclick="selectMode('torneo')">
+      <div class="mi">🏆</div><h3>TORNEO</h3>
+      <p>Vence a los 7 miembros uno por uno. ¡ARMY Legend!</p>
+    </div>
+    <div class="mcard" onclick="openNovelMode()">
+      <div class="mi">💌</div><h3>HISTORIA</h3>
+      <p>Novela visual con tu BTS favorito. 8 capítulos únicos.</p>
+    </div>
+  </div>
+  <div class="fr" style="margin-top:16px">
+    <button class="btn btn-o btn-sm" onclick="goTo('affinityScreen')">💜 Afinidad</button>
+    <button class="btn btn-o btn-sm" onclick="goTo('avatarScreen')">👤 Mi Avatar</button>
+    <button class="btn btn-o btn-sm" onclick="changePlayer()">🔄 Cambiar</button>
+  </div>
+</div>
+
+<!-- AVATAR -->
+<div class="screen" id="avatarScreen">
+  <h2>👤 MI AVATAR</h2>
+  <div class="divider"></div>
+  <div class="av-canvas" id="avCanvas">
+    <div class="av-hair-layer" id="avHair"></div>
+    <div class="av-face-layer" id="avFace"></div>
+    <div class="av-eye-wrap"><div class="av-eye-dot" id="avEye1"></div><div class="av-eye-dot" id="avEye2"></div></div>
+    <div class="av-outfit-layer" id="avOutfit"></div>
+    <div class="av-acc-layer" id="avAcc"></div>
+  </div>
+  <div class="av-name-tag" id="avNameTag">ARMY</div>
+  <div class="av-tabs" id="avTabs">
+    <button class="av-tab on" onclick="setAvTab('skin',this)">🎨 Piel</button>
+    <button class="av-tab" onclick="setAvTab('hair',this)">💇 Cabello</button>
+    <button class="av-tab" onclick="setAvTab('eyes',this)">👀 Ojos</button>
+    <button class="av-tab" onclick="setAvTab('outfit',this)">👗 Ropa</button>
+    <button class="av-tab" onclick="setAvTab('acc',this)">✨ Accesorios</button>
+  </div>
+  <div class="av-palette" id="avPalette"></div>
+  <div class="fr" style="margin-top:12px">
+    <button class="btn btn-o btn-sm" onclick="goTo('modeScreen')">← Volver</button>
+    <button class="btn btn-pink btn-sm" onclick="saveAvatar()">💾 Guardar</button>
+  </div>
+</div>
+
+<!-- NOVEL ROUTE SELECT -->
+<div class="screen" id="novelScreen">
+  <h2>💌 HISTORIAS BTS</h2>
+  <p class="sub">Elige tu ruta y vive 8 capítulos únicos 💜</p>
+  <div class="divider"></div>
+  <div class="nv-coins">
+    <div class="nv-badge">🪙 <span id="nvCoins">0</span> Fan Coins</div>
+    <div class="nv-badge">🎫 <span id="nvTickets">0</span> Tickets</div>
+  </div>
+  <div class="route-grid" id="routeGrid"></div>
+  <div class="fr" style="margin-top:12px">
+    <button class="btn btn-o btn-sm" onclick="goTo('modeScreen')">← Volver</button>
+    <button class="btn btn-o btn-sm" onclick="goTo('collectionScreen')">📸 Colección</button>
+  </div>
+</div>
+
+<!-- NOVEL GAMEPLAY -->
+<div class="screen" id="novelGameScreen">
+  <div class="ng-wrap">
+    <div class="ng-hud">
+      <div class="ng-chap-lbl" id="ngChapLbl">CAP 1</div>
+      <div class="ng-aff-row">
+        <span style="font-size:9px;color:var(--pink)">❤️</span>
+        <div class="ng-aff-track"><div class="ng-aff-bar" id="ngAffBar" style="width:0%"></div></div>
+        <span style="font-size:9px;color:var(--pink)" id="ngAffVal">0</span>
+      </div>
+      <button class="btn btn-o btn-sm" style="padding:4px 10px;font-size:9px" onclick="nvPause()">⏸</button>
+    </div>
+    <div class="ng-illus">
+      <img class="ng-charimg" id="ngCharImg" src="" alt="">
+      <div class="ng-loc" id="ngLoc"></div>
+    </div>
+    <div class="ng-dlg">
+      <div class="ng-spk" id="ngSpk"></div>
+      <div class="ng-txt" id="ngTxt"></div>
+      <div class="ng-tap" id="ngTap">Toca para continuar ▶</div>
+    </div>
+    <div class="ng-choices" id="ngChoices"></div>
+  </div>
+</div>
+
+<!-- NOVEL ENDING -->
+<div class="screen" id="novelEndScreen">
+  <div class="ne-frame" id="neFrame" style="display:none">
+    <img id="nePhoto" src="" alt="">
+    <div class="ne-heart">💜</div>
+    <div class="ne-sign" id="neSign">♥ BTS</div>
+  </div>
+  <div class="ne-title" id="neTitle">FIN</div>
+  <div class="ne-desc" id="neDesc"></div>
+  <div class="ne-coll" id="neCollBox" style="display:none">
+    <h4>📸 ¡FOTO DESBLOQUEADA!</h4>
+    <p style="font-size:10px;color:var(--dim)">Guardada en tu Colección de Fan 💜</p>
+  </div>
+  <div class="fr" style="margin-top:14px">
+    <button class="btn btn-pink btn-sm" onclick="goTo('collectionScreen')">📸 Colección</button>
+    <button class="btn btn-o btn-sm" onclick="goTo('novelScreen')">← Rutas</button>
+  </div>
+</div>
+
+<!-- FAN COLLECTION -->
+<div class="screen" id="collectionScreen">
+  <h2>📸 COLECCIÓN DE FAN</h2>
+  <p class="sub">Fotos firmadas de BTS — consíguelas completando historias 💜</p>
+  <div class="divider"></div>
+  <div class="coll-grid" id="collGrid"></div>
+  <div class="fr" style="margin-top:12px">
+    <button class="btn btn-o btn-sm" onclick="goTo('novelScreen')">← Rutas</button>
+  </div>
+</div>
+
+<!-- NOVEL CHAPTER TRANSITION -->
+<div id="nvTrans">
+  <div style="font-size:44px">💜</div>
+  <div class="nvt-num" id="nvTransNum">CAPÍTULO 1</div>
+  <div class="nvt-loc" id="nvTransLoc"></div>
+</div>
+
+<!-- NOVEL PAUSE -->
+<div id="nvPause">
+  <div style="font-size:38px">💌</div>
+  <h2 style="font-family:'Bebas Neue',sans-serif;font-size:38px;color:var(--pink)">PAUSA</h2>
+  <div class="fr" style="flex-direction:column;align-items:center;gap:10px">
+    <button class="btn btn-pink" onclick="nvResume()">▶ CONTINUAR</button>
+    <button class="btn btn-o" onclick="nvExit()">🏠 Salir (guardado)</button>
+  </div>
+</div>
+
+<div class="screen" id="memberScreen">
+  <h2 id="msTitle">ELIGE TU RIVAL</h2>
+  <p class="sub" id="msSub">Selecciona con quién jugarás</p>
+  <div class="divider"></div>
+  <div class="mg" id="mg"></div>
+  <div class="fr" style="margin-top:14px">
+    <button class="btn btn-o btn-sm" onclick="goTo('modeScreen')">← Volver</button>
+    <button class="btn btn-p" id="msConfirm" style="display:none" onclick="confirmMember()">JUGAR 🎴</button>
+  </div>
+</div>
+
+<div class="screen" id="affinityScreen">
+  <h2>💜 AFINIDAD BTS</h2>
+  <p class="sub">Juega más para aumentar la afinidad con cada miembro</p>
+  <div class="divider"></div>
+  <div class="aff-grid" id="affGrid"></div>
+  <div class="fr" style="margin-top:14px">
+    <button class="btn btn-o btn-sm" onclick="goTo('modeScreen')">← Volver</button>
+  </div>
+</div>
+
+<div class="screen" id="tournamentScreen">
+  <div style="font-size:50px">🏆</div>
+  <h2>COPA BTS</h2>
+  <p class="sub">Vence a los 7 miembros para ser ARMY Legend</p>
+  <div class="divider"></div>
+  <div class="bwrap" id="bracket"></div>
+  <div class="fr" style="margin-top:14px">
+    <button class="btn btn-o btn-sm" onclick="goTo('modeScreen')">← Volver</button>
+    <button class="btn btn-p" id="nextMatch" onclick="startNext()">SIGUIENTE DUELO ⚔️</button>
+  </div>
+</div>
+
+<div class="screen" id="gameScreen">
+  <div class="gtop">
+    <div class="badge">🏆 <span id="winsD">0</span></div>
+    <div class="badge" id="tourBadge" style="display:none">🎯 Ronda <span id="tourRound">1</span>/7</div>
+    <div class="badge" id="dirBadge">↻ Normal</div>
+    <button class="btn btn-o btn-sm" onclick="showPause()">⏸ Pausa</button>
+  </div>
+  <div class="orow" id="orow"></div>
+  <div class="sbar" id="sbar">Cargando...</div>
+  <div class="gcenter">
+    <div>
+      <div class="pile-lbl">DESCARTE</div>
+      <div class="card dtop" id="dtop">
+        <span class="corner tl" id="dtl">?</span>
+        <span id="dc">?</span>
+        <span class="corner br" id="dbr">?</span>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+      <div>
+        <div class="pile-lbl">ROBAR</div>
+        <div class="card dpile back" id="dpile" onclick="drawCard()"></div>
+      </div>
+      <button class="uno-btn" id="unoBtn" onclick="callUNO()" style="display:none">UNO!</button>
+    </div>
+  </div>
+  <div class="player-area">
+    <div class="pinfo">
+      <div class="ptag" id="ptag">ARMY</div>
+      <div style="font-size:11px;color:var(--dim)" id="cardCnt">0 cartas</div>
+    </div>
+    <div class="hand" id="hand"></div>
+  </div>
+</div>
+
+<div id="pause">
+  <div style="font-size:50px">⏸</div>
+  <h2>PAUSA</h2>
+  <div class="fr" style="flex-direction:column;align-items:center;gap:10px;margin-top:10px">
+    <button class="btn btn-p" onclick="hidePause()">▶ CONTINUAR</button>
+    <button class="btn btn-o" onclick="goTo('modeScreen');hidePause()">🏠 Menú Principal</button>
+    <button class="btn btn-danger btn-sm" onclick="if(confirm('¿Abandonar?')){hidePause();goTo('modeScreen')}">✕ Abandonar Partida</button>
+  </div>
+</div>
+
+<div id="cpicker">
+  <div class="cpi">
+    <h3>💜 ELIGE EL COLOR</h3>
+    <div class="copts">
+      <div class="copt red"    onclick="pickColor('red')">🔴</div>
+      <div class="copt blue"   onclick="pickColor('blue')">🔵</div>
+      <div class="copt green"  onclick="pickColor('green')">🟢</div>
+      <div class="copt yellow" onclick="pickColor('yellow')">🟡</div>
+    </div>
+  </div>
+</div>
+
+<div id="speech" onclick="closeSpeech()">
+  <div class="sb">
+    <div class="bav" id="bav">🎤</div>
+    <div class="bname" id="bname">BTS</div>
+    <div class="btxt" id="btxt">...</div>
+    <div class="aff-gain" id="baffgain"></div>
+    <div class="btap">Toca para continuar</div>
+  </div>
+</div>
+
+<div id="victory">
+  <div class="vconf">🎉 💜 ⭐ 💜 🎉</div>
+  <div class="vtitle" id="vtitle">¡GANASTE!</div>
+  <div class="vsub" id="vsub">Eres increíble 💜</div>
+  <div class="sbox" id="vstats"></div>
+  <div class="fr" style="margin-top:16px">
+    <button class="btn btn-g" id="vnext" onclick="victoryNext()">CONTINUAR 💜</button>
+    <button class="btn btn-o" onclick="document.getElementById('victory').classList.remove('show');goTo('modeScreen')">MENÚ</button>
+  </div>
+</div>
+
+
+<!-- FLYING CARD -->
+<div id="flyCard">
+  <span class="corner tl" id="flyTL"></span>
+  <span id="flyC"></span>
+  <span class="corner br" id="flyBR"></span>
+</div>
+
+<!-- QUIZ MODAL -->
+<div id="quizModal">
+  <div class="qbox">
+    <img class="q-photo" id="qPhoto" src="" alt="">
+    <div class="q-member" id="qMember"></div>
+    <div class="q-title" id="qTitle"></div>
+    <div class="q-nums" id="qNums"></div>
+    <div class="q-result" id="qResult"></div>
+    <span class="q-skip" id="qSkip" onclick="closeQuiz(false)">No gracias, saltar 🙅</span>
+  </div>
+</div>
+
+<!-- GIFT NOTIFICATION -->
+<div id="giftNotif">
+  <div class="gn-icon" id="gnIcon">🎁</div>
+  <div class="gn-title" id="gnTitle">¡REGALO!</div>
+  <div class="gn-desc" id="gnDesc"></div>
+</div>
+
+<!-- GIFT BADGE (in-game) -->
+<div id="giftBadge" onclick="useGiftCard()">
+  <div class="gb-icon">🎁</div>
+  <div class="gb-label">USAR DON</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+//  BTS DATA
+// ═══════════════════════════════════════════════════════════
+const MEMBERS = [
+  { id:'rm', name:'RM', e:'https://thebackstage-deezer.com/wp-content/uploads/2023/11/rm-bts.jpg', color:'#4A90D9', role:'Líder / Rapero',
+    mood:{ happy:'😄',neutral:'😊',angry:'😤',thinking:'🤔',win:'🤩',lose:'😔',block:'😏' },
+    p:{
+      greet:["¡Buena suerte! Recuerda: 'Love yourself' ✨","Sé tú misma, ARMY. Es suficiente 💙","Disfrutemos esta partida juntos 🎤"],
+      win:  ["Filosofía del UNO: el que más aprende, gana 📚","RM style... mis cartas hablan solas 😎","Solo practicando, ¿verdad? Yo también 💙"],
+      lose: ["No era parte de mi plan intelectual 🤦","Acepto la derrota... temporalmente 📖","Estudiaré más estrategia 📚"],
+      even: ["Ahora estamos en el mismo barco, ARMY 🚢","Equilibrio perfecto, como el universo ⚖️","Somos igual de buenos 😏"],
+      adv:  ["Tengo la ventaja filosófica 😎 Mis cartas hablan 📚","Menos cartas, más serenidad 🧘 No lo hagas difícil"],
+      block:["¿Skip? Aprecio la creatividad táctica 😏","Ah... clásico movimiento 🎯 Pero no me detiene por mucho 📚","Touché. Pero mi próxima jugada ya está calculada 🧠"],
+      uno:  ["¡UNO! No lo vi venir... mentira, sí lo vi 😂"],
+      wgame:["Eres demasiado increíble, ARMY... pero hoy gané yo 🏆","¡Victoria filosófica! 🎓"],
+      lgame:["Eres increíblemente buena, ARMY. Te lo mereces 💙","Me superaste completamente. Felicidades 💜"]
+    }
+  },
+  { id:'jin', name:'JIN', e:'https://i.pinimg.com/originals/9d/28/8b/9d288bd89e9d3d9ea86779b11e427ced.jpg', color:'#FF6B6B', role:'Vocalista / El más guapo',
+    mood:{ happy:'😂',neutral:'😊',angry:'😒',thinking:'🤔',win:'👑',lose:'😭',block:'😤' },
+    p:{
+      greet:["¡Suerte! Aunque yo soy impresionante incluso si pierdo 👑","¡Hoy estoy guapo Y bueno en UNO! 😂","¡WORLDWIDE HANDSOME te desafía! ✨"],
+      win:  ["Ahahahaha 😂 mis cartas son tan hermosas como yo","¡Worldwide UNO champion! ¿Alguien tiene cámara? 📸","¡Soy el mejor! En cartas Y en vida 👑"],
+      lose: ["¡DESASTRE total! 😭 mis cartas me odian","¡Soy demasiado hermoso para perder! 😤","Lloraré lágrimas guapas 😭"],
+      even: ["¡Mismo barco! Pero yo me veo mejor en él 😂","Empate... lo cual nos hace increíbles a ambos 👑","Desigualdad de belleza (yo gano) 😏"],
+      adv:  ["¡El rey gobierna! 👑😂 Menos cartas que tú ahahaha","¡JAJAJA! ¡Tengo la ventaja! ¡Quién es el mejor ahora! 😂👑"],
+      block:["¡NO! ¡Eso es trampa! ¡Soy demasiado guapo para que me bloqueen! 😤","¿Skip a MÍ? ¡Increíble desfachatez! 😒👑","¡Cómo te atreves! ¡Yo soy WORLDWIDE HANDSOME! 😭"],
+      uno:  ["¡UNO! ¿Alguien tomó foto de mi cara victoriosa? 📸"],
+      wgame:["¡Worldwide Handsome Y campeón de UNO! 👑🏆","¡JAJAJA! ¡LO LOGRÉ! 😂"],
+      lgame:["Okay... eres increíble. Pero yo sigo siendo el más guapo 😂💜","¡Felicidades! Me ganaste 💜 (pero soy más lindo 😏)"]
+    }
+  },
+  { id:'suga', name:'SUGA', e:'https://wallpapercave.com/wp/wp6769800.png', color:'#9B6DFF', role:'Rapero / Productor',
+    mood:{ happy:'😸',neutral:'😐',angry:'😾',thinking:'😑',win:'😎',lose:'😒',block:'😑' },
+    p:{
+      greet:["Hm. Juega bien.","No estoy aquí para socializar. Estoy aquí para ganar. 🐱","Buena suerte. La necesitarás. 😐"],
+      win:  ["Como esperaba. 😎","Min Yoongi UNO strategy > todo 😏","Mis cartas trabajan mejor que mis alarmas a las 3am 🐱"],
+      lose: ["...","Bien jugado. No lo admitiré en público. 😒","Necesito dormir 12 horas y repensar mi vida 😾"],
+      even: ["Mismo número. Interesante. 😐","Ahora estamos en el mismo barco. Qué inesperado. 🚢","Equilibrio. Puedo vivir con eso. 🐱"],
+      adv:  ["Menos cartas. Sin sorpresas. 😎","La brecha se amplía. Descansa. 😏"],
+      block:["...skip. Bien.","No me importa. Tengo paciencia infinita. 😐🐱","Hm. Movimiento predecible. 😑"],
+      uno:  ["UNO. 🐱"],
+      wgame:["Ganar era el plan. 😎 Bien jugado igual.","Victoria. 🏆 Ahora a dormir. 😴"],
+      lgame:["Bien jugado. Eres demasiado increíble. 🐱💜","... Felicidades. Genuinamente. 💜"]
+    }
+  },
+  { id:'jhope', name:'J-HOPE', e:'https://wallpapercat.com/w/full/5/5/6/1505868-1920x1280-desktop-hd-j-hope-bts-wallpaper-photo.jpg', color:'#FFC107', role:'Rapero / Danzante',
+    mood:{ happy:'😆',neutral:'😊',angry:'😠',thinking:'🤔',win:'🕺',lose:'😢',block:'😤' },
+    p:{
+      greet:["¡HOBI AQUÍ! ¡Buena suerte! ¡Hwaiting! ☀️💜","¡Hoy es un gran día! ¡Juguemos con energía! 🕺","¡Tu esperanza, tu ángel! ¡Buena suerte! ✨"],
+      win:  ["¡Woooo! ¡Estoy en llamas! 🕺☀️","¡J-HOPE STYLE! ¡Las cartas aman mi energía! 😆","¡Bailando mentalmente mientras gano! ☀️"],
+      lose: ["¡Nooo! ¡Mis cartas me traicionaron! 😢","¡No importa! ¡La actitud positiva sigue aquí! ☀️","¡Esto duele más que un día sin sol! 😭"],
+      even: ["¡Mismo barco! ¡Remamos juntos! ☀️🚢","¡Empate! ¡Somos estrellas los dos! ⭐","¡La energía positiva une! 💛"],
+      adv:  ["¡¡¡WOOOOO!!! ¡La ventaja es MÍA! ☀️🕺","¡Tengo menos cartas! ¡¡YAY!! 😆"],
+      block:["¡¡¡NOOO!!! ¡¡¡Eso fue horrible!!! 😤☀️","¿¡¡SKIP A MÍ!!? ¡¡¡Eso me pone triste Y enojado!!! 😠😢","¡¡Traición!! ¡¡No me lo esperaba de ti!! 😤"],
+      uno:  ["¡¡¡UNO!!! ¡¡¡WOOOOO!!! ☀️🎉"],
+      wgame:["¡¡¡VICTORIAAA!!! ¡¡J-HOPE IS THE BEST!! 🕺☀️🏆","¡Eres demasiado increíble, pero hoy gané YO! 😆💜"],
+      lgame:["¡¡¡ERES INCREÍBLE ARMY!!! ¡¡TÚ GANASTE!! ☀️💜","¡Felicidades! ¡Eres la mejor! ¡Hwaiting siempre! 💜"]
+    }
+  },
+  { id:'jimin', name:'JIMIN', e:'https://hips.hearstapps.com/hmg-prod/images/bts-jimin-1637753091.jpg?resize=980:*', color:'#FF9ABB', role:'Vocalista / Danzante',
+    mood:{ happy:'😊',neutral:'🙂',angry:'😡',thinking:'💭',win:'🌸',lose:'🥺',block:'😢' },
+    p:{
+      greet:["¡Hola ARMY! ¿Lista para jugar? ¡Suerte! 🌸💜","Sonrío pero jugaré con todo 🌸","¡Quiero ver tu mejor cara de victoria! 💜"],
+      win:  ["¡Perdona! Mis cartas fueron muy buenas 🌸","Sonrío por fuera, estratega por dentro 😊","¡Estoy ganando! ¿Ves mi carita feliz? 🌸"],
+      lose: ["Esto no me hace feliz 🥺 pero sigo siendo Jimin 💜","Mis cartas me dejaron mal 😔🌸","No era mi día en UNO 🥺"],
+      even: ["¡Iguales! ¡Mismo barco! 🌸🚢","Ambos somos especiales 💜","¡Empate! ¡Eso es precioso! 🌸"],
+      adv:  ["Tengo muchas menos cartas... no me siento mal 😊🌸","¡La ventaja es mía! ¡Jiminito ganando! ✨"],
+      block:["¡Eso dolió! 😢🌸 No fue nada amable de tu parte","¿Por qué me bloqueas? 🥺 Solo quería seguir jugando...","¡Ay! 😢 Eso me pone triste 🌸"],
+      uno:  ["¡UNO! 🌸 ¡No lo esperabas! 😊"],
+      wgame:["¡Gané! 🌸🏆 Pero tú eres increíble, ARMY 💜","¡Victoria! ¡Gracias por el gran juego! 🌸"],
+      lgame:["¡Eres demasiado increíble ARMY! 💜🌸 ¡Felicidades!","Ganaste con todo. ¡Me alegra verte ganar! 🌸💜"]
+    }
+  },
+  { id:'v', name:'V', e:'https://i.pinimg.com/originals/1c/23/a6/1c23a6d6092d8766856c57da0326c728.jpg', color:'#4CAF50', role:'Vocalista / El más original',
+    mood:{ happy:'😄',neutral:'🐻',angry:'😤',thinking:'🤨',win:'🐯',lose:'🥺',block:'🤨' },
+    p:{
+      greet:["Annyeonghaseyo... buena suerte 🐻 O no, veremos 👀","¡Voy a ganar de manera única y artística! ✨🐻","¡Tae dice buena suerte! Pero también quiero ganar 😄"],
+      win:  ["¡Bello! ¡Las cartas tienen un color hermoso! 🎨🐻","Gano con estilo artístico 🐯✨","¡Mi estrategia es el caos y funciona! 😄"],
+      lose: ["Las cartas no entendieron mi visión artística 😔🐻","Hmm... resultado inesperado 🤨","El arte del UNO es difícil 🥺🎨"],
+      even: ["¡Mismo número! ¡Mismo barco! 🐻🚢","Empate... como un cuadro simétrico 🎨","¡Iguales! ¡Eso es arte! ✨🐻"],
+      adv:  ["¡Menos cartas, más misterio! 🐯✨","La ventaja... como el final inesperado de una película 🎬🐻"],
+      block:["Hmm. Eso fue... inesperado 🤨🐻","¿Skip? Interesante movimiento artístico 🎨 pero no lo apruebo","¡Oye! Eso interrumpió mi flujo creativo 🐻😤"],
+      uno:  ["UNO... 🐻 *pausa artística* ¡UNO! 🎨"],
+      wgame:["¡VICTORIA! ¡Como una obra de arte! 🐯🎨🏆","¡Gané de manera única! ¿Tomaste foto? 📸🐻"],
+      lgame:["Eres demasiado increíble ARMY 🐻💜 ¡Ganaste con arte!","Felicidades 🎨💜 Pintaste una victoria hermosa"]
+    }
+  },
+  { id:'jk', name:'JUNGKOOK', e:'https://w0.peakpx.com/wallpaper/309/965/HD-wallpaper-jungkook-bangtan-sonyeondan-be-bts-dynamite-golden-maknae-jeon-jungkook-jk-kookie-kpop-thumbnail.jpg', color:'#E91E63', role:'Golden Maknae',
+    mood:{ happy:'😁',neutral:'🐰',angry:'😠',thinking:'🤔',win:'💪',lose:'😤',block:'😡' },
+    p:{
+      greet:["¡Soy el Golden Maknae! ¡Pero suerte igual! 🐰💜","¡Voy a darlo todo! ¡Tú también! 💪","¡Jungkook está listo! ¿Y tú? 🐰✨"],
+      win:  ["¡Golden Maknae domina el UNO también! 💪🐰","¡Todo lo que hago, lo hago bien! 😁","¡Sin frenos! ¡Así juega Jungkook! 🔥"],
+      lose: ["¡Esto no puede ser! ¡Soy el maknae dorado! 😤🐰","¡Practicaré 10 horas de UNO hasta ganar! 💪","No acepto esta derrota 😠🐰"],
+      even: ["¡Mismo número! ¡Mismo barco! 🐰🚢","¡El maknae no se rinde! 💪","¡Empate! ¡Voy a romperlo yo! 😁"],
+      adv:  ["¡¡La ventaja es mía!! ¡¡Golden Maknae al poder!! 💪🔥","¡¡Jungkook dominando!! ¡¡Sin piedad!! 🐰😠"],
+      block:["¡¡¡CÓMO TE ATREVES!!! 😡🐰 ¡ESO FUE GUERRA!","¡¡¡Skip a MÍ!!! ¡¡¡Ahora sí me enojé en serio!!! 😠🔥","¡¡TRAICIÓN!! ¡¡Así que así quieres jugar!! 😡💪"],
+      uno:  ["¡¡¡UNO!!! ¡¡¡El maknae dorado no falla!!! 🐰💪🔥"],
+      wgame:["¡¡GOLDEN MAKNAE CAMPEÓN!! 💪🐰🏆","¡Eres increíble pero HOY gané yo! 🔥💜"],
+      lgame:["Eres demasiado increíble ARMY 🐰💜 ¡Me ganaste bien!","¡Felicidades! 💜 Eres la mejor y lo mereces 🐰🏆"]
+    }
+  }
+];
+
+
+const RANDOM_EVENTS = [
+  {icon:"🎉",title:"¡MODO FIESTA!",desc:"Todos roban 2 cartas extra",effect:'allDraw2'},
+  {icon:"💜",title:"¡FAN BOOST!",desc:"Robas 2 cartas menos esta ronda",effect:'playerBoost'},
+  {icon:"😈",title:"¡MODO CAOS!",desc:"El color activo cambia aleatoriamente",effect:'chaos'},
+  {icon:"⚡",title:"¡TURNO DOBLE!",desc:"El jugador actual juega dos veces seguidas",effect:'doubleTurn'},
+  {icon:"🔄",title:"¡GRAN REVERSA!",desc:"El orden de turno se invierte",effect:'bigReverse'},
+];
+
+const ACHIEVEMENTS = [
+  {id:'first_win',icon:'🏆',title:'Primera Victoria',desc:'Ganaste tu primera partida',cond:s=>s.wins>=1},
+  {id:'wins5',icon:'⭐',title:'5 Victorias',desc:'5 partidas ganadas',cond:s=>s.wins>=5},
+  {id:'wins10',icon:'💫',title:'10 Victorias',desc:'¡10 victorias! Eres leyenda',cond:s=>s.wins>=10},
+  {id:'tourney',icon:'🥇',title:'Campeona Torneo',desc:'Ganaste el torneo completo',cond:s=>s.tournamentWins>=1},
+  {id:'aff50',icon:'💜',title:'BTS Army Real',desc:'50+ de afinidad total',cond:s=>Object.values(s.affinity||{}).reduce((a,b)=>a+b,0)>=50},
+  {id:'streak3',icon:'🔥',title:'En Racha',desc:'3 victorias seguidas',cond:s=>s.streak>=3},
+  {id:'nolose',icon:'🛡️',title:'Sin Rendir',desc:'Juega 5 partidas',cond:s=>s.totalGames>=5},
+];
+
+// ═══════════════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════════════
+let G = {
+  // Player info
+  name:'ARMY', mode:'1v1',
+  // Game state
+  deck:[], discard:[], playerHand:[],
+  oppHands:{}, opponents:[], ally:null,
+  teamPlayer:['player'], teamRivals:[],
+  turnOrder:[], currentTurn:'player',
+  direction:1, currentColor:null,
+  gameActive:false, unoCalled:false,
+  // Saved data
+  wins:0, tournamentWins:0, totalGames:0,
+  streak:0, achievements:[],
+  affinity:{rm:0,jin:0,suga:0,jhope:0,jimin:0,v:0,jk:0},
+  // Tournament
+  tourIdx:0,
+  // Selection
+  selected:[],
+  // Gift inventory: {id, name, effect, icon, desc} or null per member
+  giftInventory:{},
+  // Pending callbacks
+  colorCb:null, speechCb:null,
+  // Timers
+  timers:[],
+};
+
+// ═══════════════════════════════════════════════════════════
+//  SAVE / LOAD
+// ═══════════════════════════════════════════════════════════
+function save() {
+  const d = {wins:G.wins,tournamentWins:G.tournamentWins,totalGames:G.totalGames,
+    streak:G.streak,achievements:G.achievements,affinity:G.affinity,name:G.name,
+    giftInventory:G.giftInventory};
+  try{ localStorage.setItem('btsuno_v2_'+G.name, JSON.stringify(d)); }catch(e){}
+}
+function load(name) {
+  try{
+    const d = JSON.parse(localStorage.getItem('btsuno_v2_'+name)||'{}');
+    G.wins = d.wins||0; G.tournamentWins = d.tournamentWins||0;
+    G.totalGames = d.totalGames||0; G.streak = d.streak||0;
+    G.achievements = d.achievements||[]; G.affinity = d.affinity||{rm:0,jin:0,suga:0,jhope:0,jimin:0,v:0,jk:0};
+    G.giftInventory = d.giftInventory||{};
+  }catch(e){G.wins=0;G.tournamentWins=0;G.totalGames=0;G.streak=0;G.achievements=[];G.affinity={rm:0,jin:0,suga:0,jhope:0,jimin:0,v:0,jk:0};G.giftInventory={};}
+}
+function getAllSaves() {
+  const saves = [];
+  for(let i=0;i<localStorage.length;i++){
+    const k=localStorage.key(i);
+    if(k&&k.startsWith('btsuno_v2_')){
+      try{const d=JSON.parse(localStorage.getItem(k));saves.push({name:k.replace('btsuno_v2_',''),data:d});}catch(e){}
+    }
+  }
+  return saves;
+}
+
+// ═══════════════════════════════════════════════════════════
+//  TIMERS
+// ═══════════════════════════════════════════════════════════
+function st(fn, ms) { const t=setTimeout(fn,ms); G.timers.push(t); return t; }
+function clearTimers() { G.timers.forEach(t=>clearTimeout(t)); G.timers=[]; }
+
+// ═══════════════════════════════════════════════════════════
+//  NAVIGATION
+// ═══════════════════════════════════════════════════════════
+function goTo(id) {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+function requestFS() {
+  const el=document.documentElement;
+  const r=el.requestFullscreen||el.webkitRequestFullscreen||el.mozRequestFullScreen||el.msRequestFullscreen;
+  if(r) r.call(el).catch(()=>{});
+}
+
+// ═══════════════════════════════════════════════════════════
+//  TITLE
+// ═══════════════════════════════════════════════════════════
+function enterGame() {
+  const n = document.getElementById('nameInp').value.trim();
+  if(!n){ toast('¡Escribe tu nombre ARMY! 💜'); sfx('error'); return; }
+  sfx('btn');
+  G.name = n; load(n);
+  try{ localStorage.setItem('btsuno_playername', n); }catch(e){}
+  requestFS();
+  document.getElementById('winsD').textContent = G.wins;
+  document.getElementById('modeWel').textContent = `¡Bienvenida, ${n}! ¿Lista para el desafío? 💜`;
+  document.getElementById('affBtn').style.display='inline-flex';
+  renderSaves(); renderAffinity();
+  goTo('modeScreen');
+}
+
+function changePlayer() {
+  try{ localStorage.removeItem('btsuno_playername'); }catch(e){}
+  goTo('titleScreen');
+  document.getElementById('nameInp').value='';
+}
+
+function renderSaves() {
+  const saves = getAllSaves();
+  const box = document.getElementById('savesBox');
+  if(!saves.length){ box.style.display='none'; return; }
+  box.style.display='block';
+  document.getElementById('savesContent').innerHTML = saves.map(s=>`
+    <div class="srow2"><span style="color:var(--dim)">👤 ${s.name}</span><span style="color:var(--text)">🏆 ${s.data.wins||0} victorias</span></div>
+    <div class="srow2"><span style="color:var(--dim)">🎯 Partidas</span><span style="color:var(--text)">${s.data.totalGames||0}</span></div>
+  `).join('');
+}
+
+// ═══════════════════════════════════════════════════════════
+//  MODE SELECT
+// ═══════════════════════════════════════════════════════════
+function selectMode(mode) {
+  G.mode = mode; G.selected = [];
+  if(mode==='1v1') {
+    document.getElementById('msTitle').textContent='⚔️ ELIGE TU RIVAL';
+    document.getElementById('msSub').textContent='Selecciona el miembro de BTS que te retará';
+    renderMG(false); document.getElementById('msConfirm').style.display='none';
+    goTo('memberScreen');
+  } else if(mode==='parejas') {
+    document.getElementById('msTitle').textContent='👫 ELIGE TU PAREJA';
+    document.getElementById('msSub').textContent='Elige un miembro de BTS como tu aliado 💜';
+    renderMG(true); document.getElementById('msConfirm').style.display='none';
+    goTo('memberScreen');
+  } else {
+    G.tourIdx=0; renderBracket(); goTo('tournamentScreen');
+  }
+}
+
+function renderMG(isAllyMode) {
+  const grid = document.getElementById('mg');
+  grid.innerHTML = MEMBERS.map(m=>{
+    const aff = G.affinity[m.id]||0;
+    const pct = Math.min(aff,100);
+    return `<div class="ma" id="ma_${m.id}" onclick="pickMember('${m.id}',${isAllyMode})">
+      <img class="mphoto" src="${m.e}" alt="${m.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <div class="ae" style="display:none;font-size:36px">👤</div>
+      <div class="an">${m.name}</div>
+      <div class="ar">${m.role}</div>
+      <div class="aff-bar"><div class="aff-fill" style="width:${pct}%"></div></div>
+      <div style="font-size:9px;color:var(--dim)">${aff>0?'💜 '+aff:'nuevo'}</div>
+    </div>`;
+  }).join('');
+}
+
+function pickMember(id, isAllyMode) {
+  if(G.mode==='1v1') {
+    document.querySelectorAll('.ma').forEach(e=>e.classList.remove('sel'));
+    document.getElementById('ma_'+id).classList.add('sel');
+    G.selected=[id];
+    setTimeout(()=>startGame([id]),350);
+  } else if(G.mode==='parejas') {
+    if(!G.selected.length) {
+      G.ally=id; G.selected=[id];
+      document.getElementById('ma_'+id).classList.add('sel');
+      document.getElementById('msSub').textContent=`¡${M(id).name} es tu aliado! Ahora se elegirán 2 rivales aleatoriamente`;
+      document.getElementById('msConfirm').style.display='inline-flex';
+    }
+  }
+}
+function confirmMember() {
+  if(G.mode==='parejas') {
+    const pool=MEMBERS.filter(m=>m.id!==G.ally).sort(()=>Math.random()-.5);
+    startGame([pool[0].id,pool[1].id], G.ally);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+//  TOURNAMENT
+// ═══════════════════════════════════════════════════════════
+const TOUR_ORDER = ['rm','jin','suga','jhope','jimin','v','jk'];
+function renderBracket() {
+  document.getElementById('bracket').innerHTML = '<h4 style="color:var(--gold);font-family:Black Han Sans,sans-serif;margin-bottom:10px;text-align:center">🏆 COPA BTS</h4>'
+    + TOUR_ORDER.map((id,i)=>{
+      const m=M(id);
+      const st = i<G.tourIdx?'done':i===G.tourIdx?'cur':'pend';
+      const ic = i<G.tourIdx?'✅':i===G.tourIdx?'⚔️':'🔒';
+      return `<div class="bstep ${st}"><div class="bnum">${i+1}</div><div>${m.mood.neutral} <strong>${m.name}</strong></div><div style="margin-left:auto">${ic}</div></div>`;
+    }).join('');
+  const nb=document.getElementById('nextMatch');
+  if(G.tourIdx>=TOUR_ORDER.length){ nb.style.display='none'; showVictory('torneo'); }
+  else{ nb.style.display='inline-flex'; nb.textContent=`DUELO ${G.tourIdx+1}: ${M(TOUR_ORDER[G.tourIdx]).name} ⚔️`; }
+}
+function startNext() { startGame([TOUR_ORDER[G.tourIdx]]); }
+
+// ═══════════════════════════════════════════════════════════
+//  GAME ENGINE
+// ═══════════════════════════════════════════════════════════
+function M(id){ return MEMBERS.find(m=>m.id===id); }
+
+function buildDeck() {
+  const colors=['red','blue','green','yellow'];
+  const nums=[0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9];
+  const specs=['skip','skip','reverse','reverse','draw2','draw2'];
+  let d=[]; let cid=0;
+  colors.forEach(c=>{
+    nums.forEach(n=>d.push({id:cid++,color:c,value:String(n),type:'number'}));
+    specs.forEach(s=>d.push({id:cid++,color:c,value:s,type:'special'}));
+  });
+  for(let i=0;i<4;i++) d.push({id:cid++,color:'wild',value:'wild',type:'wild'});
+  for(let i=0;i<4;i++) d.push({id:cid++,color:'wild',value:'+4',type:'wild4'});
+  return d.sort(()=>Math.random()-.5);
+}
+
+function deal(deck,n){ return deck.splice(0,n); }
+
+function startGame(oppIds, allyId=null) {
+  clearTimers();
+  G.deck=buildDeck(); G.discard=[]; G.oppHands={};
+  G.opponents=[...oppIds]; G.ally=allyId;
+  G.gameActive=true; G.unoCalled=false; G.direction=1;
+  G.teamPlayer = allyId ? ['player',allyId] : ['player'];
+  G.teamRivals = [...oppIds];
+
+  G.playerHand = deal(G.deck,7);
+  oppIds.forEach(id=>{ G.oppHands[id]=deal(G.deck,7); });
+  if(allyId) G.oppHands[allyId]=deal(G.deck,7);
+
+  let sc; do{ sc=G.deck.shift(); }while(sc.type==='wild'||sc.type==='wild4');
+  G.discard=[sc]; G.currentColor=sc.color;
+
+  G.turnOrder = allyId
+    ? ['player',allyId,oppIds[0],oppIds[1]].filter(Boolean)
+    : ['player',...oppIds];
+  G.currentTurn='player';
+
+  // UI
+  goTo('gameScreen');
+  document.getElementById('ptag').textContent = G.name;
+  document.getElementById('winsD').textContent = G.wins;
+  const tb=document.getElementById('tourBadge');
+  if(G.mode==='torneo'){ tb.style.display='flex'; document.getElementById('tourRound').textContent=G.tourIdx+1; }
+  else tb.style.display='none';
+
+  renderOpp(); renderHand(); renderDiscard();
+  sfx('deal');
+  setStatus(`¡Es tu turno, ${G.name}! 💜`);
+
+  // Greeting speech then maybe quiz
+  const greetM = M(oppIds[0]);
+  st(()=>speech(greetM, rand(greetM.p.greet), ()=>{
+    // 25% chance to show quiz after greeting
+    if(Math.random() < 0.25) st(()=>showQuiz(greetM), 400);
+  }), 700);
+
+  // Random event after 3s
+  if(Math.random()<0.35) st(()=>triggerRandomEvent(), 3500);
+  // Check gifts on game start
+  updateGiftBadge();
+}
+
+// ── RENDER OPPONENTS ──
+function renderOpp() {
+  const row = document.getElementById('orow');
+  if(G.ally) {
+    const bld = (id,lbl,lc,bc,bg) => {
+      const m=M(id), hand=G.oppHands[id]||[], active=G.currentTurn===id;
+      const mood = getmood(id);
+      return `<div class="oslot${active?' aturn':''}" id="os_${id}" style="border-color:${bc};background:${bg};min-width:82px">
+        <div style="font-size:8px;color:${lc};font-weight:bold;margin-bottom:4px">${lbl}</div>
+        <img class="mphoto-sm" src="${m.e}" alt="${m.name}" onerror="this.style.display='none'">
+        <div class="omood" style="font-size:14px;margin-top:2px">${m.mood[mood]}</div>
+        <div class="oname">${m.name}</div>
+        <div class="ocards">${hand.length} cartas</div>
+        <div>${Array(Math.min(hand.length,7)).fill('<span class="ocb"></span>').join('')}</div>
+      </div>`;
+    };
+    const ally = bld(G.ally,'💜 PAREJA','var(--pink)','rgba(255,107,157,.55)','rgba(255,107,157,.06)');
+    const rivals = G.opponents.map(id=>bld(id,'🔥 RIVAL','#ff7070','rgba(255,80,80,.5)','rgba(255,50,50,.05)')).join('');
+    row.innerHTML = `
+      <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+        <span style="font-size:9px;letter-spacing:2px;color:var(--pink);font-family:'Black Han Sans',sans-serif">💜 TU EQUIPO</span>
+        <div style="display:flex;gap:8px">${ally}</div>
+      </div>
+      <div style="font-size:26px;align-self:center;padding:0 8px;opacity:.65">⚔️</div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+        <span style="font-size:9px;letter-spacing:2px;color:#ff7070;font-family:'Black Han Sans',sans-serif">🔥 RIVALES</span>
+        <div style="display:flex;gap:8px">${rivals}</div>
+      </div>`;
+  } else {
+    row.innerHTML = G.opponents.map(id=>{
+      const m=M(id), hand=G.oppHands[id]||[], active=G.currentTurn===id;
+      const mood=getmood(id);
+      return `<div class="oslot${active?' aturn':''}" id="os_${id}">
+        <img class="mphoto-sm" src="${m.e}" alt="${m.name}" onerror="this.style.display='none'">
+        <div class="omood" style="font-size:14px;margin-top:2px">${m.mood[mood]}</div>
+        <div class="oname">${m.name}</div>
+        <div class="ocards">${hand.length} cartas</div>
+        <div>${Array(Math.min(hand.length,7)).fill('<span class="ocb"></span>').join('')}</div>
+      </div>`;
+    }).join('');
+  }
+}
+
+function getmood(id) {
+  const pc=G.playerHand.length, oc=(G.oppHands[id]||[]).length;
+  if(oc===1) return 'win';
+  if(oc-pc>=4) return 'happy';
+  if(pc-oc>=4) return 'angry';
+  if(Math.abs(oc-pc)<=1) return 'thinking';
+  return 'neutral';
+}
+
+// ── RENDER DISCARD ──
+function renderDiscard() {
+  const top=G.discard[G.discard.length-1];
+  const color=G.currentColor||top.color;
+  const el=document.getElementById('dtop');
+  el.className=`card dtop ${color==='wild'?'wild':color}`;
+  const lbl=clbl(top);
+  document.getElementById('dtl').textContent=lbl;
+  document.getElementById('dc').textContent=lbl;
+  document.getElementById('dbr').textContent=lbl;
+}
+function clbl(c){ return {skip:'⊘',reverse:'⇄',draw2:'+2',wild:'★','+4':'+4'}[c.value]||c.value; }
+function cclass(c){ return (c.color==='wild'||c.type==='wild'||c.type==='wild4')?'wild':c.color; }
+
+// ── RENDER HAND ──
+function renderHand() {
+  const h=document.getElementById('hand');
+  h.innerHTML = G.playerHand.map((c,i)=>{
+    const ok = G.currentTurn==='player' && canPlay(c);
+    const lbl=clbl(c);
+    return `<div class="card deal-anim ${cclass(c)} ${ok?'playable':'nplay'}" style="animation-delay:${i*.04}s" onclick="${ok?`playCard(${i})`:'badPlay()'}">
+      <span class="corner tl">${lbl}</span>${lbl}<span class="corner br">${lbl}</span>
+    </div>`;
+  }).join('');
+  document.getElementById('cardCnt').textContent = `${G.playerHand.length} cartas`;
+  document.getElementById('unoBtn').style.display =
+    (G.playerHand.length===2 && G.currentTurn==='player') ? 'block':'none';
+}
+
+function canPlay(c) {
+  const top=G.discard[G.discard.length-1];
+  if(c.type==='wild'||c.type==='wild4') return true;
+  if(c.color===G.currentColor) return true;
+  if(c.value===top.value) return true;
+  return false;
+}
+
+// ── PLAY CARD ──
+function playCard(idx) {
+  if(G.currentTurn!=='player') return;
+  const c=G.playerHand[idx];
+
+  // ── FLYING CARD ANIMATION ──
+  const handEl = document.getElementById('hand');
+  const cardEls = handEl.querySelectorAll('.card');
+  const discardEl = document.getElementById('dtop');
+  if(cardEls[idx] && discardEl) {
+    const src = cardEls[idx].getBoundingClientRect();
+    const dst = discardEl.getBoundingClientRect();
+    const fly = document.getElementById('flyCard');
+    const lbl = clbl(c);
+    const cc = cclass(c);
+    fly.className = `card ${cc}`;
+    fly.style.cssText = `display:inline-flex;position:fixed;left:${src.left}px;top:${src.top}px;
+      width:${src.width}px;height:${src.height}px;z-index:1000;pointer-events:none;
+      border:3px solid rgba(255,255,255,.35);box-shadow:0 0 24px rgba(255,215,0,.6);`;
+    document.getElementById('flyTL').textContent = lbl;
+    document.getElementById('flyC').textContent  = lbl;
+    document.getElementById('flyBR').textContent = lbl;
+    // Animate to discard position
+    fly.style.transition = 'left .28s ease-in-out, top .28s ease-in-out, transform .28s, opacity .2s .2s';
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      fly.style.left    = (dst.left + (dst.width-src.width)/2) + 'px';
+      fly.style.top     = (dst.top  + (dst.height-src.height)/2) + 'px';
+      fly.style.transform = 'scale(1.15) rotate(-6deg)';
+      fly.style.opacity = '0';
+    }));
+    setTimeout(()=>{ fly.style.cssText='display:none'; }, 350);
+  }
+
+  G.playerHand.splice(idx,1);
+  if(c.type==='wild4') sfx('wild');
+  else if(c.type==='wild') sfx('wild');
+  else if(c.value==='skip'||c.value==='reverse') sfx('skip');
+  else if(c.value==='draw2') sfx('reverse');
+  else sfx('card');
+  applyCard(c,'player');
+}
+
+function applyCard(c, who) {
+  G.discard.push(c);
+  if(c.type!=='wild'&&c.type!=='wild4') G.currentColor=c.color;
+  renderDiscard(); renderOpp();
+  if(who==='player'){ renderHand(); if(!G.playerHand.length){endGame('player');return;} }
+
+  let skip=false;
+  if(c.value==='skip'){ skip=true; reactBlock(who,c); }
+  if(c.value==='reverse'){
+    G.direction*=-1;
+    document.getElementById('dirBadge').textContent = G.direction===1?'↻ Normal':'↺ Inverso';
+  }
+  if(c.value==='draw2'){
+    const nxt=nextTurn(G.currentTurn);
+    forceDrawCards(nxt,2); skip=true; reactBlock(who,c);
+  }
+  if(c.type==='wild'){
+    if(who==='player'){ showCP(()=>advance(skip)); return; }
+    else { G.currentColor=aiColor(who); toast(`${M(who).name} eligió ${cname(G.currentColor)} 🎨`); }
+  }
+  if(c.type==='wild4'){
+    if(who==='player'){
+      showCP(()=>{
+        const nxt=nextTurn(G.currentTurn);
+        forceDrawCards(nxt,4); reactBlock(who,c,true); advance(true);
+      }); return;
+    } else {
+      G.currentColor=aiColor(who);
+      const nxt=nextTurn(who);
+      forceDrawCards(nxt,4); reactBlock(who,c,true);
+      toast(`${M(who).name} eligió ${cname(G.currentColor)} y +4! 😈`); skip=true;
+    }
+  }
+  advance(skip);
+}
+
+// ── REACT TO BLOCK (skip/draw played on opponent) ──
+function reactBlock(who, card, isBig=false) {
+  // Find who gets hit
+  const victim = nextTurn(G.currentTurn);
+  if(victim==='player') return; // don't react if player is the victim (it's expected)
+  const vM = M(victim);
+  if(!vM) return;
+  // Only react sometimes for realism
+  if(Math.random()<0.55) {
+    st(()=>speech(vM, rand(vM.p.block)), 400);
+  }
+}
+
+// ── ADVANCE TURN ──
+function advance(skip=false) {
+  if(!G.gameActive) return;
+  const nxt = skip ? nextTurn(nextTurn(G.currentTurn)) : nextTurn(G.currentTurn);
+  G.currentTurn = nxt;
+  renderOpp();
+  if(nxt==='player'){
+    setStatus(`¡Es tu turno, ${G.name}! 💜`);
+    renderHand();
+  } else {
+    const m=M(nxt), isAlly=nxt===G.ally;
+    setStatus(isAlly?`${m.mood.neutral} ${m.name} (tu aliado) está jugando 💜`:`${m.mood.neutral} ${m.name} está pensando... 🎴`);
+    renderHand();
+    st(()=>aiTurn(nxt), 1100+Math.random()*900);
+  }
+  checkInteractions();
+}
+
+function nextTurn(cur) {
+  const idx=G.turnOrder.indexOf(cur), len=G.turnOrder.length;
+  return G.turnOrder[((idx+G.direction)%len+len)%len];
+}
+
+// ── AI TURN ──
+function aiTurn(id) {
+  if(!G.gameActive||G.currentTurn!==id) return;
+  const hand=G.oppHands[id]; if(!hand) return;
+  const isAlly = id===G.ally;
+  const playable = hand.filter(c=>canPlay(c));
+  if(!playable.length){
+    if(!G.deck.length) reshuffle();
+    hand.push(G.deck.shift());
+    toast(`${M(id).name} robó una carta 🃏`);
+    advance(); return;
+  }
+  const nxt=nextTurn(id);
+  const nxtIsEnemy = isAlly ? G.teamRivals.includes(nxt) : G.teamPlayer.includes(nxt);
+  let card;
+  if(nxtIsEnemy){
+    card = playable.find(c=>c.type==='wild4')||playable.find(c=>c.value==='draw2')
+         ||playable.find(c=>c.value==='skip')||playable.find(c=>c.type==='wild')||playable[0];
+  } else {
+    const safe=playable.filter(c=>c.value!=='skip'&&c.value!=='draw2'&&c.type!=='wild4');
+    card=(safe.length?safe[0]:null)||playable.find(c=>c.type==='wild')||playable[0];
+  }
+  const ci=hand.indexOf(card);
+  hand.splice(ci,1);
+  if(!hand.length){ applyCard(card,id); st(()=>endGame(id),250); return; }
+  if(hand.length===1){ sfx('uno'); toast(`¡${M(id).name} dice UNO! 😱`); speech(M(id),rand(M(id).p.uno)); }
+  applyCard(card,id);
+}
+
+function drawCard() {
+  if(G.currentTurn!=='player'){ toast('No es tu turno 😅'); sfx('error'); return; }
+  if(!G.deck.length) reshuffle();
+  const c=G.deck.shift(); G.playerHand.push(c); renderHand();
+  sfx('draw');
+  toast('Robaste una carta 🃏');
+  if(!canPlay(c)) advance();
+  else setStatus('¡Puedes jugar la carta que robaste! 🃏');
+}
+
+function reshuffle(){
+  const top=G.discard.pop(); G.deck=G.discard.sort(()=>Math.random()-.5); G.discard=[top]; toast('¡Mazo mezclado! ♻️');
+}
+
+function forceDrawCards(who, n) {
+  for(let i=0;i<n;i++){ if(!G.deck.length) reshuffle(); if(who==='player') G.playerHand.push(G.deck.shift()); else if(G.oppHands[who]) G.oppHands[who].push(G.deck.shift()); }
+  if(who==='player'){ renderHand(); toast(`¡Robas ${n} cartas! 😬`); }
+  else toast(`${M(who)?M(who).name:'Rival'} roba ${n} cartas 😈`);
+}
+
+function aiColor(id){ const h=G.oppHands[id]||[],c={red:0,blue:0,green:0,yellow:0};h.forEach(x=>{if(c[x.color]!==undefined)c[x.color]++;});return Object.entries(c).sort((a,b)=>b[1]-a[1])[0][0]; }
+function cname(c){ return {red:'Rojo',blue:'Azul',green:'Verde',yellow:'Amarillo'}[c]||c; }
+
+// ═══════════════════════════════════════════════════════════
+//  INTERACTIONS
+// ═══════════════════════════════════════════════════════════
+let lastCheck=0;
+function checkInteractions() {
+  const now=Date.now(); if(now-lastCheck<7000||!G.gameActive) return;
+  lastCheck=now;
+  const opp=G.opponents[0]; if(!opp) return;
+  const m=M(opp), pc=G.playerHand.length, oc=(G.oppHands[opp]||[]).length, diff=oc-pc;
+  let phrase=null;
+  // Advantage phrases (opponent has fewer cards than player)
+  if(diff<=-3) phrase=rand(m.p.adv);
+  else if(diff>=3) phrase=rand(m.p.lose);
+  else if(Math.abs(diff)<=1) phrase=rand(m.p.even);
+  if(phrase && Math.random()<0.45) speech(m,phrase);
+}
+
+// ═══════════════════════════════════════════════════════════
+//  RANDOM EVENTS
+// ═══════════════════════════════════════════════════════════
+function triggerRandomEvent() {
+  if(!G.gameActive) return;
+  const ev=RANDOM_EVENTS[Math.floor(Math.random()*RANDOM_EVENTS.length)];
+  showEventBanner(ev);
+  st(()=>{
+    if(ev.effect==='allDraw2') { G.turnOrder.forEach(id=>{ if(id!=='player') forceDrawCards(id,2); else forceDrawCards('player',2); }); }
+    else if(ev.effect==='playerBoost') { if(G.playerHand.length>2){G.playerHand.splice(0,2);renderHand();toast('¡Fan Boost! Perdiste 2 cartas 💜');} }
+    else if(ev.effect==='chaos') { const colors=['red','blue','green','yellow']; G.currentColor=colors[Math.floor(Math.random()*4)]; renderDiscard(); toast(`¡Caos! Color: ${cname(G.currentColor)} 🎨`); }
+    else if(ev.effect==='doubleTurn') { if(G.currentTurn==='player') setStatus('¡Turno doble! Juega otra carta 💜'); }
+    else if(ev.effect==='bigReverse') { G.direction*=-1; document.getElementById('dirBadge').textContent=G.direction===1?'↻ Normal':'↺ Inverso'; toast('¡Gran Reversa! 🔄'); }
+  }, 2000);
+}
+
+function showEventBanner(ev) {
+  sfx('event');
+  document.getElementById('evIcon').textContent=ev.icon;
+  document.getElementById('evTitle').textContent=ev.title;
+  document.getElementById('evDesc').textContent=ev.desc;
+  const b=document.getElementById('eventBanner'); b.classList.add('show');
+  st(()=>b.classList.remove('show'),2200);
+}
+
+// ═══════════════════════════════════════════════════════════
+//  UNO / MISC
+// ═══════════════════════════════════════════════════════════
+function callUNO(){ if(G.playerHand.length===2){ G.unoCalled=true; sfx('uno'); toast('¡UNO! 🔴💜'); document.getElementById('unoBtn').style.display='none'; } }
+function badPlay(){ sfx('error'); toast('Esa carta no se puede jugar ahora 🙅'); }
+
+// ═══════════════════════════════════════════════════════════
+//  WIN / LOSE
+// ═══════════════════════════════════════════════════════════
+function endGame(winner) {
+  if(!G.gameActive) return;
+  G.gameActive=false; clearTimers();
+  document.getElementById('giftBadge').style.display='none';
+  G.totalGames++;
+  const playerWon = G.teamPlayer.includes(winner);
+  if(playerWon) {
+    sfx('win');
+    G.wins++; G.streak++;
+    gainAffinity(G.opponents[0],3);
+    if(G.ally) gainAffinity(G.ally,2);
+    checkAchievements();
+    save();
+    const loser=M(G.teamRivals[0]);
+    speech(loser, rand(loser.p.lgame), ()=>{
+      if(G.mode==='torneo'){
+        G.tourIdx++;
+        if(G.tourIdx>=TOUR_ORDER.length) showVictory('torneo');
+        else showVictory('1v1',()=>{ document.getElementById('victory').classList.remove('show'); renderBracket(); goTo('tournamentScreen'); });
+      } else showVictory(G.mode);
+    });
+    spawnParticles();
+  } else {
+    sfx('lose');
+    G.streak=0; save();
+    const winnerM=M(winner);
+    if(winnerM) speech(winnerM, rand(winnerM.p.wgame), ()=>{ showDefeat(); });
+    else showDefeat();
+  }
+}
+
+function showDefeat() {
+  sfx('lose');
+  document.getElementById('vtitle').textContent='FIN DEL JUEGO 😔';
+  document.getElementById('vsub').textContent='¡Inténtalo de nuevo, ARMY! 💜';
+  document.getElementById('vstats').innerHTML=`<h4>ESTADÍSTICAS</h4>
+    <div class="srow"><span class="sl">Victorias</span><span class="sv">${G.wins}</span></div>
+    <div class="srow"><span class="sl">Racha</span><span class="sv">${G.streak}</span></div>`;
+  document.getElementById('vnext').textContent='INTENTAR DE NUEVO 💜';
+  document.getElementById('vnext').onclick=()=>{ document.getElementById('victory').classList.remove('show'); goTo('modeScreen'); };
+  document.getElementById('victory').classList.add('show');
+}
+
+function showVictory(mode, cb) {
+  const isTour=mode==='torneo';
+  document.getElementById('vtitle').textContent = isTour?'¡CAMPEONA!':'¡GANASTE!';
+  document.getElementById('vsub').textContent = isTour
+    ? `¡Venciste a los 7 miembros de BTS! 💜 ARMY LEGEND`
+    : `Eres demasiado increíble 💜`;
+  document.getElementById('vstats').innerHTML=`<h4>ESTADÍSTICAS</h4>
+    <div class="srow"><span class="sl">Victorias totales</span><span class="sv">${G.wins}</span></div>
+    <div class="srow"><span class="sl">Partidas jugadas</span><span class="sv">${G.totalGames}</span></div>
+    <div class="srow"><span class="sl">Racha actual</span><span class="sv">${G.streak}</span></div>
+    <div class="srow"><span class="sl">Torneos</span><span class="sv">${G.tournamentWins}</span></div>`;
+  const nb=document.getElementById('vnext');
+  nb.textContent='CONTINUAR 💜'; nb.onclick = cb||victoryNext;
+  document.getElementById('victory').classList.add('show');
+}
+function victoryNext(){ document.getElementById('victory').classList.remove('show'); goTo('modeScreen'); }
+
+// ═══════════════════════════════════════════════════════════
+//  AFFINITY
+// ═══════════════════════════════════════════════════════════
+function gainAffinity(id, amount) {
+  if(!id||!G.affinity) return;
+  if(G.affinity[id]===undefined) G.affinity[id]=0;
+  G.affinity[id] = Math.min(100, G.affinity[id]+amount);
+  checkGifts(id);
+  renderAffinity();
+}
+
+function renderAffinity() {
+  const grid=document.getElementById('affGrid');
+  if(!grid) return;
+  grid.innerHTML = MEMBERS.map(m=>{
+    const aff=G.affinity[m.id]||0, pct=Math.min(aff,100);
+    const unlocked = aff>=25 ? '<div class="unlock-badge">DESBLOQUEADO ✨</div>' : '';
+    return `<div class="aff-card">
+      <img class="mphoto-aff" src="${m.e}" alt="${m.name}" onerror="this.style.display='none'">
+      <div class="ac-name">${m.name}</div>
+      <div class="ac-val">💜 ${aff}/100</div>
+      <div class="ac-bar"><div class="ac-fill" style="width:${pct}%"></div></div>
+      ${unlocked}
+    </div>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════════════════
+//  ACHIEVEMENTS
+// ═══════════════════════════════════════════════════════════
+function checkAchievements() {
+  ACHIEVEMENTS.forEach(a=>{
+    if(!G.achievements.includes(a.id) && a.cond(G)){
+      G.achievements.push(a.id);
+      showAchievement(a);
+    }
+  });
+}
+function showAchievement(a) {
+  document.getElementById('achIcon').textContent=a.icon;
+  document.getElementById('achTitle').textContent=a.title;
+  document.getElementById('achDesc').textContent=a.desc;
+  const p=document.getElementById('achpop'); p.classList.add('show');
+  setTimeout(()=>p.classList.remove('show'),3500);
+}
+
+// ═══════════════════════════════════════════════════════════
+//  PARTICLES
+// ═══════════════════════════════════════════════════════════
+function spawnParticles() {
+  const container=document.getElementById('particles');
+  const colors=['#FFD700','#9B6DFF','#FF6B9D','#00D4FF','#fff'];
+  for(let i=0;i<40;i++){
+    const p=document.createElement('div'); p.className='particle';
+    const size=(Math.random()*10+4)+'px';
+    p.style.cssText=`width:${size};height:${size};left:${Math.random()*100}%;top:-10px;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      animation-duration:${(Math.random()*2+1.5)}s;animation-delay:${Math.random()*.8}s;`;
+    container.appendChild(p);
+    setTimeout(()=>p.remove(),(3500));
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+//  COLOR PICKER
+// ═══════════════════════════════════════════════════════════
+function showCP(cb){ G.colorCb=cb; document.getElementById('cpicker').classList.add('show'); }
+function pickColor(c){
+  G.currentColor=c; document.getElementById('cpicker').classList.remove('show');
+  renderDiscard(); toast(`Elegiste ${cname(c)}! 🎨`);
+  if(G.colorCb){ const cb=G.colorCb; G.colorCb=null; cb(); }
+}
+
+// ═══════════════════════════════════════════════════════════
+//  SPEECH
+// ═══════════════════════════════════════════════════════════
+function speech(member, text, cb=null) {
+  G.speechCb=cb;
+  const bavEl = document.getElementById('bav');
+  bavEl.innerHTML = `<img class="mphoto-lg" src="${member.e}" alt="${member.name}" onerror="this.outerHTML='<div style=font-size:56px>👤</div>'">`;
+  document.getElementById('bname').textContent=member.name;
+  document.getElementById('btxt').textContent=text;
+  document.getElementById('baffgain').textContent='';
+  document.getElementById('speech').classList.add('show');
+}
+function closeSpeech(){
+  document.getElementById('speech').classList.remove('show');
+  if(G.speechCb){ const cb=G.speechCb; G.speechCb=null; cb(); }
+}
+
+// ═══════════════════════════════════════════════════════════
+//  PAUSE
+// ═══════════════════════════════════════════════════════════
+function showPause(){ document.getElementById('pause').classList.add('show'); }
+function hidePause(){ document.getElementById('pause').classList.remove('show'); }
+
+// ═══════════════════════════════════════════════════════════
+//  SOUND EFFECTS (Web Audio API)
+// ═══════════════════════════════════════════════════════════
+const AC = (()=>{ try{ return new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ return null; } })();
+
+function sfx(type) {
+  if(!AC) return;
+  // Resume context on first interaction (browser autoplay policy)
+  if(AC.state==='suspended') AC.resume();
+  const t = AC.currentTime;
+  const o = AC.createOscillator();
+  const g = AC.createGain();
+  o.connect(g); g.connect(AC.destination);
+
+  const cfg = {
+    card:    { wave:'sine',    freqs:[520,440],        dur:0.12, vol:0.18 },
+    draw:    { wave:'sine',    freqs:[300,260],        dur:0.15, vol:0.15 },
+    skip:    { wave:'square',  freqs:[600,300],        dur:0.18, vol:0.12 },
+    reverse: { wave:'sine',    freqs:[400,500,400],    dur:0.25, vol:0.14 },
+    wild:    { wave:'sine',    freqs:[400,600,800,600],dur:0.35, vol:0.16 },
+    uno:     { wave:'sawtooth',freqs:[800,1000,1200],  dur:0.45, vol:0.20 },
+    win:     { wave:'sine',    freqs:[523,659,784,1047],dur:0.8, vol:0.18 },
+    lose:    { wave:'sine',    freqs:[400,350,300,250],dur:0.8, vol:0.14 },
+    btn:     { wave:'sine',    freqs:[440,550],        dur:0.10, vol:0.10 },
+    error:   { wave:'square',  freqs:[200,180],        dur:0.20, vol:0.12 },
+    deal:    { wave:'sine',    freqs:[600,700],        dur:0.08, vol:0.10 },
+    event:   { wave:'sine',    freqs:[600,750,900,750,600], dur:0.5, vol:0.16 },
+  }[type] || { wave:'sine', freqs:[440], dur:0.1, vol:0.1 };
+
+  o.type = cfg.wave;
+  const step = cfg.dur / cfg.freqs.length;
+  cfg.freqs.forEach((f,i)=>{
+    o.frequency.setValueAtTime(f, t + i*step);
+  });
+  g.gain.setValueAtTime(cfg.vol, t);
+  g.gain.exponentialRampToValueAtTime(0.001, t + cfg.dur);
+  o.start(t); o.stop(t + cfg.dur);
+}
+
+// ═══════════════════════════════════════════════════════════
+//  MINI QUIZ — "ADIVINA MI NÚMERO"
+// ═══════════════════════════════════════════════════════════
+const QUIZ_DATA = {
+  rm:   { win:["¡Lo sabía! Eres tan inteligente como yo... casi 😏📚 +1 carta de ventaja","¡Increíble! La filosofía del UNO te guió 🎓 ¡Una carta extra para ti!"],
+          lose:["Hmm. Un intento válido... pero errado 📖 Mejor suerte estratégica","El universo no estaba de tu lado hoy 🌌 Quizás la próxima"] },
+  jin:  { win:["¡JAJAJA! ¿Eres adivina?! 😂👑 ¡Una carta extra porque eres INCREÍBLE!","¡Worldwide Fan! ¡Acertaste! 😂🎉 ¡Te ganas una carta extra!"],
+          lose:["¡NOOO! ¡Casi! ¡Pero casi no cuenta! 😭👑 La próxima será tuya... quizás","¡Ay! ¡Fallaste! Pero sigues siendo increíble... yo más 😂"] },
+  suga: { win:["...bien. Buena intuición. Una carta extra. No te emociones.","Mmm. Acertaste. Toma la carta. No diré nada más. 🐱"],
+          lose:["Fallaste. Era predecible. Intenta de nuevo otra vez. 😐","...no. Sigue intentando. 🐱"] },
+  jhope:{ win:["¡¡¡WOOOO!!! ¡¡ACERTASTE!! ¡¡Eres la mejor!! ☀️🎉 ¡¡Una carta extra!!","¡¡¡MILAGRO!!! ¡¡¡Eres increíble ARMY!!! ¡¡Carta extra para ti!! 🕺"],
+          lose:["¡¡Nooo!! ¡¡Casi!! ¡¡Tú puedes la próxima!! ☀️💜","¡Ánimo! ¡No pasa nada! ¡La energía positiva sigue! ☀️"] },
+  jimin:{ win:["¡Acertaste! 🌸 ¡Eso me alegra tanto! ¡Una carta extra con todo mi cariño! 💜","¡Woow! ¡Lo lograste! 🌸😊 ¡Toma esta carta con mi bendición!"],
+          lose:["Aww 🥺🌸 Fallaste... pero no te rindas, ¿okay? 💜","No fue esta vez 🌸 Pero aun así eres especial 💜"] },
+  v:    { win:["¡Interesante! ¡Como una obra de arte impredecible! 🎨🐻 ¡Carta extra!","¡Lo lograste de manera única! ✨ ¡Toma esta carta como mi regalo artístico!"],
+          lose:["Hmm... el resultado fue... inesperado 🤨🐻 Pero el intento fue artístico","No acertaste. Pero fue bonito verlo 🎨"] },
+  jk:   { win:["¡¡WOOO!! ¡¡ACERTASTE!! ¡¡GOLDEN ARMY!! 💪🐰🔥 ¡¡UNA CARTA EXTRA!!","¡¡INCREÍBLE!! ¡¡Igual que yo!! ¡¡Carta extra porque lo mereces!! 🐰💪"],
+          lose:["¡¡IMPOSIBLE!! ¡¡Casi era 100% seguro!! 😤🐰 ¡La próxima practicarás más!","¡Fallaste! ¡Pero yo también fallo a veces...! ¡Mentira, yo nunca fallo! 😁"] }
+};
+
+let G_quizMember = null;
+let G_quizAnswer = 0;
+
+function showQuiz(member) {
+  if(!G.gameActive) return;
+  G_quizMember = member;
+  G_quizAnswer = Math.floor(Math.random()*5)+1;
+
+  document.getElementById('qPhoto').src = member.e;
+  document.getElementById('qMember').textContent = member.name;
+  document.getElementById('qTitle').textContent =
+    `${member.mood.thinking} Estoy pensando en un número del 1 al 5... ¿Puedes adivinarlo?`;
+  document.getElementById('qResult').textContent = '';
+  document.getElementById('qSkip').style.display = 'block';
+
+  const nums = document.getElementById('qNums');
+  nums.innerHTML = [1,2,3,4,5].map(n=>
+    `<div class="qnum" onclick="answerQuiz(${n})">${n}</div>`
+  ).join('');
+
+  document.getElementById('quizModal').classList.add('show');
+}
+
+function answerQuiz(n) {
+  const nums = document.getElementById('qNums');
+  // Disable all buttons
+  nums.querySelectorAll('.qnum').forEach(el=>el.style.pointerEvents='none');
+  const correct = n === G_quizAnswer;
+  const m = G_quizMember;
+  const data = QUIZ_DATA[m.id];
+
+  // Highlight answer
+  nums.querySelectorAll('.qnum').forEach(el=>{
+    if(parseInt(el.textContent)===G_quizAnswer) el.classList.add('correct');
+    else if(parseInt(el.textContent)===n && !correct) el.classList.add('wrong');
+  });
+
+  const phrase = rand(correct ? data.win : data.lose);
+  document.getElementById('qResult').textContent =
+    correct ? `✅ ¡ERA EL ${G_quizAnswer}! ${phrase}` : `❌ Era el ${G_quizAnswer}. ${phrase}`;
+
+  document.getElementById('qSkip').textContent = 'Continuar ▶';
+  document.getElementById('qSkip').onclick = ()=>closeQuiz(correct);
+
+  if(correct) {
+    sfx('win');
+    // Give bonus: +1 card from deck
+    G_quizBonusPending = true;
+  } else {
+    sfx('error');
+    gainAffinity(m.id, -1); // small affinity penalty for wrong answer, save handled by gainAffinity
+  }
+}
+
+let G_quizBonusPending = false;
+
+function closeQuiz(giveBonus) {
+  document.getElementById('quizModal').classList.remove('show');
+  if(giveBonus && G_quizBonusPending) {
+    G_quizBonusPending = false;
+    if(G.deck.length) {
+      G.playerHand.push(G.deck.shift());
+      renderHand();
+      toast('🎁 +1 carta de bonus por adivinar!');
+    }
+    gainAffinity(G_quizMember.id, 2);
+  }
+  G_quizBonusPending = false;
+}
+
+// ═══════════════════════════════════════════════════════════
+//  GIFT SYSTEM — cartas especiales por afinidad
+// ═══════════════════════════════════════════════════════════
+const GIFTS = {
+  rm:   { icon:'📚', name:'Filosofía',   effect:'steal2',    desc:'Roba 2 cartas del rival',           threshold:30 },
+  jin:  { icon:'👑', name:'Worldwide',   effect:'skipAll',   desc:'Todos los rivales saltan turno',     threshold:30 },
+  suga: { icon:'🎧', name:'Genio',       effect:'recolor',   desc:'Cambia el color activo sin gastar',  threshold:30 },
+  jhope:{ icon:'☀️', name:'Energía',     effect:'doubleTurn',desc:'Juegas 2 cartas seguidas',           threshold:30 },
+  jimin:{ icon:'🌸', name:'Encanto',     effect:'discard1',  desc:'El rival descarta 1 carta al azar',  threshold:30 },
+  v:    { icon:'🎨', name:'Arte',        effect:'peek',      desc:'Ves las cartas del rival 4 segundos', threshold:30 },
+  jk:   { icon:'💪', name:'Golden',      effect:'freeWild',  desc:'Comodín gratis sin gastar turno',     threshold:30 },
+};
+
+function checkGifts(id) {
+  const aff = G.affinity[id]||0;
+  const gift = GIFTS[id];
+  if(!gift) return;
+  // Already received this gift?
+  if(G.giftInventory[id]) return;
+  if(aff >= gift.threshold) {
+    G.giftInventory[id] = {...gift, memberId:id};
+    save();
+    showGiftNotif(id);
+  }
+}
+
+function showGiftNotif(id) {
+  const m = M(id), gift = GIFTS[id];
+  document.getElementById('gnIcon').textContent = gift.icon;
+  document.getElementById('gnTitle').textContent = `¡${m.name} te regaló "${gift.name}"!`;
+  document.getElementById('gnDesc').textContent = gift.desc;
+  const el = document.getElementById('giftNotif');
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'), 3500);
+  sfx('win');
+  toast(`🎁 ¡${m.name} te dio la carta especial "${gift.name}"!`);
+}
+
+function updateGiftBadge() {
+  const badge = document.getElementById('giftBadge');
+  const hasGift = Object.keys(G.giftInventory).length > 0;
+  badge.style.display = (hasGift && G.gameActive) ? 'block' : 'none';
+  if(hasGift) {
+    const first = Object.values(G.giftInventory)[0];
+    badge.querySelector('.gb-icon').textContent = first.icon;
+    badge.querySelector('.gb-label').textContent = first.name.toUpperCase();
+  }
+}
+
+function useGiftCard() {
+  if(!G.gameActive || G.currentTurn!=='player') {
+    toast('Solo puedes usar el don en tu turno 🙅'); return;
+  }
+  const keys = Object.keys(G.giftInventory);
+  if(!keys.length) { toast('No tienes cartas especiales 🎁'); return; }
+
+  // Use first available gift
+  const key = keys[0];
+  const gift = G.giftInventory[key];
+  const m = M(key);
+
+  // Apply effect
+  const opp = G.opponents[0];
+  switch(gift.effect) {
+    case 'steal2':
+      if(opp) { forceDrawCards(opp, 2); }
+      toast(`📚 ¡Filosofía de RM! El rival roba 2 cartas`);
+      break;
+    case 'skipAll':
+      G.opponents.forEach(id=>{ if(G.oppHands[id]) G.oppHands[id].push(G.deck.shift()||{id:999,color:'wild',value:'wild',type:'wild'}); });
+      toast(`👑 ¡Worldwide de Jin! Todos los rivales pierden turno`);
+      // skip to player's turn again
+      advance(true); 
+      delete G.giftInventory[key]; save(); updateGiftBadge(); return;
+    case 'recolor':
+      showCP(()=>{ toast(`🎧 ¡Genio de Suga! Color cambiado sin gastar carta`); });
+      delete G.giftInventory[key]; save(); updateGiftBadge(); return;
+    case 'doubleTurn':
+      G.playerHand.push(G.deck.shift()||{id:998,color:'wild',value:'wild',type:'wild'});
+      renderHand();
+      toast(`☀️ ¡Energía de J-Hope! Roba 1 y juega otra vez`);
+      break;
+    case 'discard1':
+      if(opp && G.oppHands[opp] && G.oppHands[opp].length) {
+        const ri = Math.floor(Math.random()*G.oppHands[opp].length);
+        G.oppHands[opp].splice(ri,1);
+        renderOpp();
+        toast(`🌸 ¡Encanto de Jimin! El rival descartó 1 carta`);
+      }
+      break;
+    case 'peek':
+      if(opp && G.oppHands[opp]) {
+        const hand = G.oppHands[opp];
+        const preview = hand.map(c=>`${clbl(c)}(${c.color[0]})`).join(' ');
+        toast(`🎨 Cartas de ${M(opp).name}: ${preview}`);
+        setStatus(`🎨 Arte de V: ${preview}`, true);
+        setTimeout(()=>setStatus(`¡Es tu turno, ${G.name}! 💜`), 4000);
+      }
+      break;
+    case 'freeWild':
+      G.playerHand.push({id:9999,color:'wild',value:'wild',type:'wild',isFree:true});
+      renderHand();
+      toast(`💪 ¡Golden de JK! Comodín gratis añadido a tu mano`);
+      break;
+  }
+
+  delete G.giftInventory[key];
+  save();
+  updateGiftBadge();
+  sfx('event');
+}
+
+
+function setStatus(txt, hi=false){ const b=document.getElementById('sbar'); b.textContent=txt; b.className='sbar'+(hi?' hi':''); }
+let toastT; function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),2600); }
+function rand(a){ return a[Math.floor(Math.random()*a.length)]; }
+
+// ═══════════════════════════════════════════════════════════
+//  AVATAR SYSTEM (completamente aislado)
+// ═══════════════════════════════════════════════════════════
+const AV_DATA = {
+  skin:  [{v:'#FDDBB4',e:'🌸'},{v:'#F2C185',e:'☀️'},{v:'#D4935A',e:'🍂'},{v:'#A0634C',e:'🍫'},{v:'#7B4F3A',e:'🌑'},{v:'#FFE0E0',e:'🌷'}],
+  hair:  [{v:'#1a0800',e:'🖤'},{v:'#4a2c0a',e:'🟤'},{v:'#FFD700',e:'💛'},{v:'#FF6B9D',e:'🩷'},{v:'#9B6DFF',e:'💜'},{v:'#00D4FF',e:'🩵'},{v:'#FF4500',e:'🔴'},{v:'#FFFFFF',e:'🤍'}],
+  eyes:  [{v:'#1a1a1a',e:'⚫'},{v:'#5C3A1E',e:'🟤'},{v:'#1565C0',e:'🔵'},{v:'#2E7D32',e:'🟢'},{v:'#7B1FA2',e:'💜'},{v:'#C2185B',e:'🩷'}],
+  outfit:[{v:'#9B6DFF',e:'💜'},{v:'#FF6B9D',e:'🩷'},{v:'#FFD700',e:'💛'},{v:'#00D4FF',e:'🩵'},{v:'#43A047',e:'💚'},{v:'#E53935',e:'❤️'},{v:'#ECEFF1',e:'🤍'},{v:'#120524',e:'🖤'}],
+  acc:   [{v:'',e:'✖️'},{v:'🎀',e:'🎀'},{v:'👑',e:'👑'},{v:'🌸',e:'🌸'},{v:'⭐',e:'⭐'},{v:'💎',e:'💎'},{v:'🎧',e:'🎧'},{v:'🌙',e:'🌙'}],
+};
+let _avTab = 'skin';
+let AV = {skin:'#FDDBB4', hair:'#1a0800', eyes:'#1a1a1a', outfit:'#9B6DFF', acc:''};
+
+function _loadAV(){ try{ const d=JSON.parse(localStorage.getItem('btsuno_av')||'{}'); Object.assign(AV,d); }catch(e){} }
+function saveAvatar(){ try{ localStorage.setItem('btsuno_av',JSON.stringify(AV)); }catch(e){} toast('💾 Avatar guardado 💜'); sfx('btn'); }
+function _drawAV(){
+  document.getElementById('avHair').style.background=AV.hair;
+  document.getElementById('avFace').style.background=AV.skin;
+  document.getElementById('avEye1').style.background=AV.eyes;
+  document.getElementById('avEye2').style.background=AV.eyes;
+  document.getElementById('avOutfit').style.background=AV.outfit;
+  document.getElementById('avAcc').textContent=AV.acc;
+  document.getElementById('avNameTag').textContent=G.name||'ARMY';
+}
+function setAvTab(tab, el){
+  _avTab=tab;
+  document.querySelectorAll('.av-tab').forEach(b=>b.classList.remove('on'));
+  if(el) el.classList.add('on');
+  _drawAvPalette();
+}
+function _drawAvPalette(){
+  const opts=AV_DATA[_avTab], cur=AV[_avTab];
+  document.getElementById('avPalette').innerHTML=opts.map(o=>`
+    <div class="av-swatch${cur===o.v?' on':''}"
+      style="${o.v&&_avTab!=='acc'?'background:'+o.v:''}"
+      onclick="_pickAV('${_avTab}','${o.v}')">${_avTab==='acc'?o.e:(o.v?'':o.e)}</div>
+  `).join('');
+}
+function _pickAV(tab,val){ AV[tab]=val; _drawAV(); _drawAvPalette(); sfx('btn'); }
+
+// ═══════════════════════════════════════════════════════════
+//  NOVEL DATA — 8 capítulos × 7 miembros (textos largos ~8 min lectura)
+// ═══════════════════════════════════════════════════════════
+const NV_CHAPTERS = {
+rm:[
+  {loc:'Librería Séoul',lines:[
+    {s:'RM',t:'Hola... no esperaba encontrar a alguien aquí entre los clásicos de filosofía a esta hora. La mayoría de la gente prefiere los bestsellers de la entrada.'},
+    {s:'RM',t:'¿Buscas algo en especial, o simplemente dejas que los libros te encuentren a ti? Eso también es válido, ya lo sabes. Hay algo mágico en perderse entre estantes sin un destino claro.'},
+    {s:'RM',t:'Yo vine porque estaba componiendo y me quedé bloqueado. Cuando eso pasa, vengo aquí. Los libros me recuerdan que las palabras pueden tener mil formas, que no hay una sola manera de decir lo que sientes.'},
+    {s:'{name}',t:'...'},
+    {s:'RM',t:'Perdona, estoy hablando demasiado. Suelo hacerlo cuando estoy nervioso. ¿Y tú? ¿Qué libro estás buscando hoy?'},
+  ],ch:[
+    {t:'Vine buscando un libro que tú hayas recomendado alguna vez 📖',pts:3,type:'good'},
+    {t:'Solo estaba pasando el tiempo...',pts:1,type:'neutral'},
+    {t:'Vine a verte a ti, RM. Sabía que vendrías.',pts:2,type:'good'},
+  ]},
+  {loc:'Café del museo',lines:[
+    {s:'RM',t:'Te pedí que vinieras porque encontré algo que me hizo pensar en ti. Esta exposición tiene una obra que lleva semanas dándome vueltas en la cabeza.'},
+    {s:'RM',t:'¿Sabes qué hace grande el arte? No el artista, sino el espectador. El artista crea algo incompleto a propósito, y la persona que lo mira lo termina con su propia historia.'},
+    {s:'RM',t:'Cuando vi este cuadro, pensé: esta persona —tú— completa algo que yo no sabía que me faltaba. No sé si tiene sentido lo que digo. A veces las cosas más importantes no tienen sentido lógico.'},
+    {s:'{name}',t:'¿Qué obra es?'},
+    {s:'RM',t:'Es una pequeña pintura en la sala tres. Una figura mirando el horizonte desde una colina. El título es "Esperar". Cuando la vi, casi no pude respirar. Y aún no entiendo por qué.'},
+  ],ch:[
+    {t:'Creo que entiendo. Tú también eres algo que yo no sabía que me faltaba. 💜',pts:3,type:'good'},
+    {t:'Qué bonita reflexión, RM.',pts:1,type:'neutral'},
+    {t:'No entiendo mucho de arte, honestamente.',pts:0,type:'bad'},
+  ]},
+  {loc:'Galería contemporánea',lines:[
+    {s:'RM',t:'Esta sala es mi favorita. Ven, quiero mostrarte algo. Hay una instalación al fondo que solo funciona cuando dos personas están paradas en ciertos puntos específicos del suelo.'},
+    {s:'RM',t:'Aquí. Párate aquí. Y yo me pongo aquí. ¿Lo ves? Las luces se activan. La obra solo existe cuando hay dos personas en los lugares correctos. El artista decía que era una metáfora de la conexión.'},
+    {s:'{name}',t:'Es precioso...'},
+    {s:'RM',t:'Sí. Hay algo en ti que me recuerda a esta obra. Una presencia que no puedo ignorar aunque lo intente. Y he intentado no pensar en ello, porque me pone nervioso admitirlo.'},
+    {s:'RM',t:'Pero hoy... aquí... creo que debía decírtelo. Aunque no sepa exactamente qué significa todavía.'},
+  ],ch:[
+    {t:'Yo tampoco sé qué significa, pero quiero descubrirlo contigo. 💙',pts:3,type:'good'},
+    {t:'Eso es muy bonito, RM.',pts:1,type:'neutral'},
+    {t:'Deberías ignorarlo, somos muy diferentes.',pts:0,type:'bad'},
+  ]},
+  {loc:'Parque Han al atardecer',lines:[
+    {s:'RM',t:'¿Puedo preguntarte algo? ¿Cuándo fue la última vez que hiciste algo sin ningún propósito, solo porque querías hacerlo en ese momento?'},
+    {s:'{name}',t:'Hmm... no recuerdo bien.'},
+    {s:'RM',t:'Yo tampoco. Vivimos muy orientados a los resultados. Cada cosa que hacemos tiene que tener un porqué, un para qué. A veces me cansa eso. ¿A ti no?'},
+    {s:'RM',t:'Hoy quería hacer algo así. Sin propósito. Solo caminar. Y pensé en ti. Y te llamé. Y aquí estamos.'},
+    {s:'RM',t:'No sé si eso es raro. Pero el silencio contigo se siente diferente al silencio con cualquier otra persona. Cómodo. Como si no tuviera que llenar el espacio con palabras todo el tiempo.'},
+  ],ch:[
+    {t:'Contigo el silencio habla solo. No necesito que digas nada. 🌙',pts:3,type:'good'},
+    {t:'Sí, a mí también me pasa que todo tiene que tener un porqué.',pts:2,type:'neutral'},
+    {t:'Yo prefiero cuando hablas. Tu silencio me pone nerviosa.',pts:0,type:'bad'},
+  ]},
+  {loc:'Estudio de grabación BTS',lines:[
+    {s:'RM',t:'Pocas personas entran aquí. Es un espacio muy privado para mí. Pero quería que lo vieras, que entendieras un poco mejor de dónde vienen las canciones.'},
+    {s:'RM',t:'Estoy componiendo algo que lleva semanas sin terminar. Una letra que empieza bien pero siempre se interrumpe en el mismo verso. Como si le faltara algo para cerrarse.'},
+    {s:'RM',t:'¿Puedo leerte lo que tengo? *saca su libreta* "No importa a dónde vaya, hay algo que me sigue. No es una sombra, no es miedo. Es más parecido a una luz que alguien dejó encendida para que yo pudiera volver."'},
+    {s:'{name}',t:'...'},
+    {s:'RM',t:'Sé que falta algo. Pero cada vez que intento terminarlo, la mente se me va a otro lugar. A ti, para ser honesto. ¿Eso te parece una tontería?'},
+  ],ch:[
+    {t:'No es una tontería. Esa letra es sobre mí, ¿verdad? 🥺',pts:3,type:'good'},
+    {t:'Es hermosa, RM. No le falta nada.',pts:2,type:'good'},
+    {t:'Creo que el ritmo del segundo verso no encaja bien.',pts:0,type:'bad'},
+  ]},
+  {loc:'Azotea bajo las estrellas',lines:[
+    {s:'RM',t:'¿Sabes cuánto tarda la luz de una estrella en llegar hasta aquí? Algunas de las que estamos viendo llevan miles de años viajando para que nosotros pudiéramos verlas esta noche.'},
+    {s:'{name}',t:'Qué manera de poner en perspectiva el tiempo...'},
+    {s:'RM',t:'Exacto. Y aun así aquí estamos, en este momento diminuto del universo, mirando hacia arriba. Hay algo ridículo y hermoso en eso al mismo tiempo.'},
+    {s:'RM',t:'Últimamente pienso mucho en el tiempo. En cómo algunas personas llegan a tu vida y de repente todo tiene más sentido. Como esa luz que viajó miles de años solo para estar aquí ahora.'},
+    {s:'RM',t:'Como tú. Esperé mucho para que alguien así llegara. Aunque no lo sabía mientras esperaba. 💙'},
+  ],ch:[
+    {t:'Yo también te esperé, RM. Sin saber que era a ti. 💜',pts:3,type:'good'},
+    {t:'Eso es lo más poético que alguien me ha dicho nunca.',pts:1,type:'neutral'},
+    {t:'Son solo estrellas, RM. No deberías romantizar tanto las cosas.',pts:0,type:'bad'},
+  ]},
+  {loc:'Sala de conciertos vacía',lines:[
+    {s:'RM',t:'Mañana hay show aquí. Setenta mil personas. Pero ahora mismo somos solo nosotros y este silencio enorme. ¿Sientes eso? El peso del espacio vacío.'},
+    {s:'RM',t:'Cuando estoy en el escenario, intento conectar con cada persona del público. Es imposible, claro. Pero lo intento. Últimamente, cuando canto ciertas canciones, pienso en una persona específica.'},
+    {s:'{name}',t:'¿Quién?'},
+    {s:'RM',t:'*te mira fijamente* ¿De verdad no lo sabes? *sonríe un poco* Llevas tiempo siendo esa persona, aunque yo tardé en darme cuenta. Las cosas importantes a veces se ven mejor desde lejos.'},
+    {s:'RM',t:'Pero hoy no quiero verlo desde lejos. Hoy quiero que estés aquí, cerca. ¿Está bien eso?'},
+  ],ch:[
+    {t:'Más que bien, RM. Llevo tiempo queriendo estar cerca. 🌸',pts:3,type:'good'},
+    {t:'Eso es muy especial, que pienses en mí cuando cantas.',pts:1,type:'neutral'},
+    {t:'Quizás deberías pensar en el ARMY completo, no en una persona.',pts:0,type:'bad'},
+  ]},
+  {loc:'Jardín secreto al amanecer',lines:[
+    {s:'RM',t:'Te traje aquí porque este jardín lo descubrí solo. No se lo he mostrado a nadie. Cuando necesito pensar, vengo aquí. Es el primer lugar que siento completamente mío.'},
+    {s:'RM',t:'Y hoy quería que fuera tuyo también. Eso significa algo para mí, aunque no tenga las palabras exactas para explicarlo bien.'},
+    {s:'{name}',t:'RM...'},
+    {s:'RM',t:'Sé que las cosas entre nosotros son complicadas. Mi vida es complicada. Pero llevo meses diciéndome que debería ignorar lo que siento, y ya no puedo.'},
+    {s:'RM',t:'"Love yourself." Lo digo siempre. Pero esta vez quiero añadir algo: ¿me dejarías amarte yo también? No perfectamente. No sin errores. Pero con todo lo que soy. 💙'},
+  ],ch:[
+    {t:'Sí, RM. Para siempre. Con todo lo que eres. 💜',pts:3,type:'good'},
+    {t:'Necesito tiempo para pensar en esto.',pts:1,type:'neutral'},
+    {t:'No creo que sea buena idea, RM.',pts:0,type:'bad'},
+  ]},
+],
+jin:[
+  {loc:'Cocina de las instalaciones BTS',lines:[
+    {s:'JIN',t:'¡Ahahahaha! ¿Puedes creer que quemé el arroz OTRA VEZ? Llevo cocinando desde los quince años y el arroz sigue ganándome. Esto es un insulto personal.'},
+    {s:'{name}',t:'¿Quieres que te ayude?'},
+    {s:'JIN',t:'¡Espera! No toques nada. WORLDWIDE HANDSOME cocinando mal sigue siendo un espectáculo digno de admiración. Necesito que esto quede documentado en tu memoria.'},
+    {s:'JIN',t:'*saca su teléfono* Foto. Ahora. Necesito evidencia de este desastre para enviársela a los chicos. Les va a encantar. Llevan meses esperando que haga algo así.'},
+    {s:'JIN',t:'¿Sabes qué? Mejor pide pizza. Yo invito. Es lo mínimo que puedo hacer después de casi incendiar la cocina. 😂'},
+  ],ch:[
+    {t:'Eres adorable incluso en desastre, Jin. 👑',pts:3,type:'good'},
+    {t:'Sí, mejor pido yo. ¿Qué quieres?',pts:2,type:'good'},
+    {t:'Seokjin, esto es un desastre de verdad.',pts:0,type:'bad'},
+  ]},
+  {loc:'Set de fotos de BigHit',lines:[
+    {s:'JIN',t:'Para. Para justo ahí. No te muevas. ¿Tienes idea de lo bien que te ve la luz de esta sala? Es ridículo. El fotógrafo soy yo y el sujeto de la foto se roba toda la atención. Eso no está bien.'},
+    {s:'{name}',t:'Jin...'},
+    {s:'JIN',t:'Necesito una foto. En serio. Hoy yo soy el fotógrafo. Sé que normalmente soy yo quien posa, pero hoy quiero capturar esto. Confía en mí, tengo buen ojo artístico.'},
+    {s:'JIN',t:'*toma la foto* Perfecta. Mira. ¿Lo ves? Eso es arte. Y yo lo cree. Soy increíble en todo lo que hago, incluyendo captarte a ti en el mejor ángulo posible.'},
+    {s:'JIN',t:'Aunque, siendo honesto... la foto está bien, pero la versión en vivo es mejor. Ahí lo dije. 📸'},
+  ],ch:[
+    {t:'Solo si tú también sales en una foto conmigo, Jin. 💜',pts:3,type:'good'},
+    {t:'Jaja, está bien! Saca la foto.',pts:1,type:'neutral'},
+    {t:'No soy fotogénica, Jin, de verdad.',pts:0,type:'bad'},
+  ]},
+  {loc:'Restaurante privado',lines:[
+    {s:'JIN',t:'Reservé la sala privada porque el chef es fan mío y me dijo que si venía me haría el menú especial completo. Así que esta noche comemos como reyes. O como yo, que es mejor que cualquier rey.'},
+    {s:'{name}',t:'Qué exagerado eres.'},
+    {s:'JIN',t:'¿Exagerado? Soy preciso. Hay una diferencia importante. *abre el menú* ¿Qué te apetece? Pide lo que quieras, no mires los precios. Hoy es una ocasión especial.'},
+    {s:'{name}',t:'¿Por qué es una ocasión especial?'},
+    {s:'JIN',t:'*pausa larga* Porque estás aquí. *mira hacia otro lado* Y... me alegra que estés aquí. Eso no lo digo siempre, así que tómatelo en serio. Aunque parezca que no. 😊'},
+  ],ch:[
+    {t:'Más increíble estar aquí contigo, Jin. 💜',pts:3,type:'good'},
+    {t:'Gracias por traerme, de verdad.',pts:2,type:'good'},
+    {t:'Siempre tan presumido, Seokjin.',pts:0,type:'bad'},
+  ]},
+  {loc:'Sala de videojuegos del dorm',lines:[
+    {s:'JIN',t:'¡NOOO! ¡IMPOSIBLE! ¡Llevaba tres victorias seguidas! ¡Esto es trampa! ¡El juego me odia! ¡El universo conspira contra el Worldwide Handsome!'},
+    {s:'{name}',t:'Perdiste una partida, Jin. No es para tanto.'},
+    {s:'JIN',t:'*suspiro dramático* Tienes razón. Solo es un juego. *pausa* MENTIRA. Es un insulto a mi legado. Pero... *te mira* puede que me hayas distraído un poco.'},
+    {s:'JIN',t:'Tú aquí hace que se me olvide concentrarme. Y eso no me pasa con nadie más. Así que técnicamente tú tuviste la culpa de que perdiera.'},
+    {s:'JIN',t:'...Eso quiere decir algo, ¿no? *ríe nervioso* Ahahahaha. Soy terrible siendo sutil. 😳'},
+  ],ch:[
+    {t:'¿Perdiste por mi culpa? Eso es lo más bonito que me han dicho. 🥺',pts:3,type:'good'},
+    {t:'Jaja, eres muy dramático, Jin.',pts:1,type:'neutral'},
+    {t:'Sigo pensando que eres malo en los juegos.',pts:0,type:'bad'},
+  ]},
+  {loc:'Estudio de grabación nocturno',lines:[
+    {s:'JIN',t:'Espera aquí. Cierra los ojos. No, en serio, ciérralos. Confía en mí, que sé lo que hago. *pasos, luego silencio*'},
+    {s:'JIN',t:'*música suave empieza a sonar* Ahora ábrelos.'},
+    {s:'{name}',t:'Jin... ¿qué es esto?'},
+    {s:'JIN',t:'Una canción. La grabé este mes. Quería que la escucharas antes que nadie, antes que los chicos, antes que la compañía. Tú primero.'},
+    {s:'JIN',t:'La escribí pensando en alguien que me hace querer ser mejor persona. No el mejor en todo —que ya lo soy— sino mejor de verdad. Más honesto. Más presente. Alguien así merece una canción entera.'},
+  ],ch:[
+    {t:'Jin... ¿esa canción es para mí? 💜',pts:3,type:'good'},
+    {t:'Me emociona mucho poder escucharla primero.',pts:2,type:'good'},
+    {t:'¿Cuándo la vas a publicar para el ARMY?',pts:0,type:'bad'},
+  ]},
+  {loc:'Playa privada al atardecer',lines:[
+    {s:'JIN',t:'¿Sabes cuál es la cosa más difícil del mundo para el Worldwide Handsome? No son los conciertos. No son las cámaras. No es nada de lo que la gente imagina.'},
+    {s:'{name}',t:'¿Cuál es?'},
+    {s:'JIN',t:'Decirle a alguien lo que siento. En serio. Sin chistes. Sin ahahaha. Sin esconderlo detrás de algo gracioso. Es ridículo, lo sé. Parezco tan seguro todo el tiempo.'},
+    {s:'JIN',t:'Pero hay momentos, como este, en los que la actuación se cae sola. Y me quedo yo. Solo Jin. Sin el worldwide handsome, sin el idol, sin las bromas.'},
+    {s:'JIN',t:'Y ese Jin... tiene miedo. Pero también quiere contarte algo. Algo importante. 😅'},
+  ],ch:[
+    {t:'Cuéntame ese algo, Jin. Solo Jin. Sin actuación. 💙',pts:3,type:'good'},
+    {t:'No sabía que te ponías así. Nadie lo diría de ti.',pts:1,type:'neutral'},
+    {t:'Todos tenemos miedos, Jin. No te preocupes.',pts:1,type:'neutral'},
+  ]},
+  {loc:'Paseo nocturno por Seúl',lines:[
+    {s:'JIN',t:'Llevamos... *mira el teléfono* tres horas caminando. Son las dos de la mañana. Debería tener sueño. Mañana tengo ensayo a las ocho.'},
+    {s:'{name}',t:'Entonces deberías volver.'},
+    {s:'JIN',t:'No quiero. *dice directamente, sin reírse* Y eso me parece raro porque normalmente a las once ya estoy pensando en la almohada.'},
+    {s:'JIN',t:'Contigo el tiempo hace trampa. Se va demasiado rápido y deja muy poco. Y siempre quedo con ganas de más. ¿Eso te parece muy cursi? Sí, verdad. Ahahaha.'},
+    {s:'JIN',t:'*te para suavemente del brazo* En serio. No quiero que termine esta noche. ¿Podemos quedarnos un poco más?'},
+  ],ch:[
+    {t:'Sí. No pares. Sigamos caminando. 💜',pts:3,type:'good'},
+    {t:'Yo tampoco quiero que termine.',pts:2,type:'good'},
+    {t:'Jin, son las dos de la mañana, tienes ensayo...',pts:0,type:'bad'},
+  ]},
+  {loc:'Terraza bajo las estrellas',lines:[
+    {s:'JIN',t:'¿Sabes por qué me río tanto? No es solo porque sea gracioso, aunque sí lo soy mucho.'},
+    {s:'JIN',t:'Es porque durante mucho tiempo fue más fácil reírme que decir lo que realmente sentía. Si haces reír a la gente, no tienen que verte de verdad. Es una protección muy efectiva.'},
+    {s:'{name}',t:'Jin...'},
+    {s:'JIN',t:'Contigo eso no funciona. Me has visto de todas formas. Cuando me río demasiado, cuando estoy callado, cuando quemo el arroz y cuando grabo canciones de madrugada.'},
+    {s:'JIN',t:'Y aun así sigues aquí. *pausa larga* Me enamoré de ti. Ahahahaha. *se cubre la cara* Lo dije. No sé por qué lo dije con esa risa al final. Pero en serio. Me enamoré. 👑💜'},
+  ],ch:[
+    {t:'Jin... yo también. 💜 Y me encanta tu risa.',pts:3,type:'good'},
+    {t:'¿En serio? No lo había notado...',pts:1,type:'neutral'},
+    {t:'Jin, somos mundos muy distintos.',pts:0,type:'bad'},
+  ]},
+],
+suga:[
+  {loc:'Estudio de producción 3am',lines:[
+    {s:'SUGA',t:'Hm. No esperaba visitas a esta hora.'},
+    {s:'{name}',t:'La puerta estaba abierta.'},
+    {s:'SUGA',t:'...Sí. La dejé abierta. *pausa incómoda* No por nada específico.'},
+    {s:'SUGA',t:'Si quieres quedarte, no hagas ruido. Estoy en medio de algo. Pero si necesitas irte, también está bien. No me importa.'},
+    {s:'SUGA',t:'...Mentira. Me importa un poco. *sigue mirando la pantalla* Siéntate si quieres. 🐱'},
+  ],ch:[
+    {t:'Prometo no hacer ruido. Solo quiero escucharte crear. 🎧',pts:3,type:'good'},
+    {t:'Puedo irme si te molesta.',pts:1,type:'neutral'},
+    {t:'¿Por qué siempre tan frío, Yoongi?',pts:0,type:'bad'},
+  ]},
+  {loc:'Cafetería a medianoche',lines:[
+    {s:'SUGA',t:'¿Sabías que el cerebro funciona diferente pasada la medianoche? Las inhibiciones bajan. La creatividad sube. Es por eso que compongo mejor a las 3am.'},
+    {s:'{name}',t:'¿Y por qué estás aquí ahora y no en el estudio?'},
+    {s:'SUGA',t:'Porque necesitaba café. Y... *pausa* pensé que quizás querías tomar uno también. *mira su taza* Tengo tu número. No sé bien por qué te escribí.'},
+    {s:'SUGA',t:'A las 3am el cerebro también piensa en cosas que durante el día ignora. Cosas que en teoría no deberían importar pero sí importan. *te mira brevemente* Cosas raras.'},
+    {s:'SUGA',t:'...¿Cuándo fue la última vez que dormiste bien? *cambia el tema inmediatamente* Solo curiosidad.'},
+  ],ch:[
+    {t:'¿Como en qué cosas piensas, Yoongi? 🐱',pts:3,type:'good'},
+    {t:'Deberías dormir más tú también.',pts:1,type:'neutral'},
+    {t:'Yo también soy nocturna. Bienvenido al club.',pts:2,type:'good'},
+  ]},
+  {loc:'Sala de descanso',lines:[
+    {s:'SUGA',t:'...'},
+    {s:'{name}',t:'¿Yoongi?'},
+    {s:'SUGA',t:'Mm.'},
+    {s:'{name}',t:'¿Estás bien?'},
+    {s:'SUGA',t:'Estoy pensando. *larga pausa* A veces pienso que debería hablar más. Y luego pienso que quizás contigo no hace falta hablar. Que el silencio ya dice suficiente.'},
+    {s:'SUGA',t:'¿Lo dice? ¿O necesitas palabras? Soy mejor con las notas que con las palabras cuando se trata de... esto. *gesticula vagamente en tu dirección* 😐'},
+  ],ch:[
+    {t:'El silencio contigo dice más que mil palabras, Yoongi. 🥺',pts:3,type:'good'},
+    {t:'Está bien. No tienes que hablar si no quieres.',pts:1,type:'neutral'},
+    {t:'Preferiría que hablaras más.',pts:0,type:'bad'},
+  ]},
+  {loc:'Parque desierto de madrugada',lines:[
+    {s:'SUGA',t:'Vine aquí porque no quería estar con nadie. *pausa* Eso sonó mal. No era lo que quería decir.'},
+    {s:'{name}',t:'¿Qué querías decir?'},
+    {s:'SUGA',t:'Que vine aquí porque necesitaba estar solo. Y luego te mandé esa foto del parque sin saber bien por qué. Y apareciste. Y... no me molestó.'},
+    {s:'SUGA',t:'De hecho, me alegré. Y eso es raro para mí porque normalmente la soledad es lo que quiero. Pero hoy quería la soledad y quería que estuvieras aquí al mismo tiempo.'},
+    {s:'SUGA',t:'Eso no tiene sentido lógico. Pero contigo pocas cosas tienen sentido lógico. 🐱'},
+  ],ch:[
+    {t:'Soy tu excepción, Yoongi. Y tú eres la mía. 💜',pts:3,type:'good'},
+    {t:'Puedo irme si prefieres estar solo.',pts:1,type:'neutral'},
+    {t:'Decides tarde para avisarme, Yoongi.',pts:0,type:'bad'},
+  ]},
+  {loc:'Estudio con piano',lines:[
+    {s:'SUGA',t:'*está tocando algo suave al piano* Siéntate aquí.'},
+    {s:'{name}',t:'¿Qué estás tocando?'},
+    {s:'SUGA',t:'Una cosa que estoy componiendo. Sin título todavía. *sigue tocando* ¿Qué te parece?'},
+    {s:'{name}',t:'Es preciosa.'},
+    {s:'SUGA',t:'Mm. *deja de tocar* Pon tus manos aquí. Voy a enseñarte el patrón básico. No, así no. Así. *guía tus manos sobre las teclas con mucho cuidado* Mejor. ¿Lo sientes?'},
+    {s:'SUGA',t:'Cuando una melodía nace de dos personas al mismo tiempo... suena diferente. Más completa. *no te mira pero tampoco aparta las manos* Solo una observación técnica. 🎹'},
+  ],ch:[
+    {t:'*dejas las manos donde están* Sí, lo siento, Yoongi. 💜',pts:3,type:'good'},
+    {t:'¿Y si arruino tu canción con mis errores?',pts:1,type:'neutral'},
+    {t:'Preferiría solo escucharte tocar a ti.',pts:0,type:'bad'},
+  ]},
+  {loc:'Estudio de noche',lines:[
+    {s:'SUGA',t:'Esta pista que estás escuchando no va a salir en ningún álbum. No es para el ARMY.'},
+    {s:'{name}',t:'¿Para quién es?'},
+    {s:'SUGA',t:'Para una persona. *pausa muy larga* Que está sentada aquí ahora mismo.'},
+    {s:'SUGA',t:'La compuse en tres días. Eso no me pasa nunca. Normalmente una canción me toma semanas. Pero esta salió sola, como si ya existiera y solo necesitara que alguien la encontrara.'},
+    {s:'SUGA',t:'No sé qué significa eso exactamente. Pero sé que tú tienes algo que ver. Y que no quiero ignorarlo más. ...Ahí lo tienes. Ya lo dije. 😐'},
+  ],ch:[
+    {t:'Yoongi... 🥺 No sé qué decir.',pts:3,type:'good'},
+    {t:'¿De verdad? ¿Una canción solo para mí?',pts:2,type:'good'},
+    {t:'Deberías compartirla con todos.',pts:0,type:'bad'},
+  ]},
+  {loc:'Colina con vista a Seúl',lines:[
+    {s:'SUGA',t:'Desde aquí se ve toda la ciudad. *silencio largo* La primera vez que vine tenía dieciséis años y acababa de llegar de Daegu. No conocía a nadie. No sabía si iba a lograrlo.'},
+    {s:'{name}',t:'¿Y lo lograste.'},
+    {s:'SUGA',t:'Sí. *pausa* Pero no siempre fue así. Hubo momentos muy oscuros. Momentos en que esto *señala la ciudad* no valía lo que costaba.'},
+    {s:'SUGA',t:'No cuento esto a mucha gente. No porque me avergüence. Sino porque cuesta encontrar a alguien que pueda sostener esa historia sin que cambie algo entre ustedes.'},
+    {s:'SUGA',t:'Contigo no tengo ese miedo. Eso es algo que no había sentido antes. *te mira directamente por primera vez esta noche* Soy bueno eligiendo a las personas correctas. Y te elegí a ti.'},
+  ],ch:[
+    {t:'Y yo a ti, Yoongi. Sin dudarlo. 💜',pts:3,type:'good'},
+    {t:'Gracias por contarme eso. De verdad.',pts:2,type:'good'},
+    {t:'No sé si merezco que me cuentes eso.',pts:0,type:'bad'},
+  ]},
+  {loc:'Bajo el cielo estrellado',lines:[
+    {s:'SUGA',t:'...Te quiero. *larga pausa* Ya lo dije. No voy a repetirlo porque no me gusta repetirme.'},
+    {s:'{name}',t:'...'},
+    {s:'SUGA',t:'Pero lo digo en serio. No es una frase. No es poesía. Es un hecho que tardé en reconocer y que ahora que lo reconocí no tiene caso ignorar.'},
+    {s:'SUGA',t:'Soy complicado. Tengo días malos. No siempre sé cómo demostrar lo que siento con palabras bonitas. Pero estoy aquí. Y mientras esté aquí, estaré completamente aquí.'},
+    {s:'SUGA',t:'...Eso es todo lo que tengo. ¿Es suficiente? 🐱'},
+  ],ch:[
+    {t:'Es más que suficiente, Yoongi. Yo también te quiero. 💜',pts:3,type:'good'},
+    {t:'No necesitas repetirlo. Lo creo. 💜',pts:3,type:'good'},
+    {t:'¿Solo una vez te vas a declarar?',pts:0,type:'bad'},
+  ]},
+],
+jhope:[
+  {loc:'Sala de ensayo',lines:[
+    {s:'J-HOPE',t:'¡HEYYY! ¡Llegaste justo a tiempo! ¡Llevo dos horas ensayando esta coreografía y NECESITO que alguien la vea! ¡Siéntate! ¡Aquí! ¡En ese espejo!'},
+    {s:'{name}',t:'¿Dos horas? ¿Estás bien?'},
+    {s:'J-HOPE',t:'¡MÁS QUE BIEN! ¡Estoy en LLAMAS! ☀️ Cuando encuentro el flow de una coreografía nueva es como... como cuando el sol sale y de repente todo tiene sentido.'},
+    {s:'J-HOPE',t:'*baila el fragmento completo* ¿QUÉ TAL? ¿Lo viste? ¿La parte del puente? ¡INVENTÉ ESO HOY! ¡En dos horas! *señala el espejo emocionado*'},
+    {s:'J-HOPE',t:'Oye... *baja el volumen* ¿Sabes qué cosa rara me pasa desde que llegaste? Que bailo mejor. No sé si tiene sentido pero contigo mirando todo sale más fluido. ¿Es raro eso? 🕺'},
+  ],ch:[
+    {t:'¡No es raro! ¡Quiero aprender a bailar así contigo! 🕺',pts:3,type:'good'},
+    {t:'Es precioso, Hobi. Bailas increíble.',pts:2,type:'good'},
+    {t:'No sé mucho de baile, Hoseok.',pts:1,type:'neutral'},
+  ]},
+  {loc:'Café favorito en Itaewon',lines:[
+    {s:'J-HOPE',t:'¡Esta canción! ¿La escuchas? ¡Es mi favorita de este mes! *tararea* Siempre que la pongo en el estudio los chicos me piden que la baje pero yo la subo más. ¡JAJAJA!'},
+    {s:'{name}',t:'¿Por qué es tu favorita?'},
+    {s:'J-HOPE',t:'Porque tiene esa energía de... de cuando estás en el momento exacto correcto. Ya sabes. Cuando todo encaja. El lugar correcto, el momento correcto, la persona correcta.'},
+    {s:'J-HOPE',t:'*pausa* Oye. *más tranquilo* ¿Sabes qué canción me recuerda a alguien últimamente? No te voy a decir cuál todavía porque me pongo nervioso. ¡JAJAJA!'},
+    {s:'J-HOPE',t:'Pero... es una canción muy específica. Y cada vez que la pongo pienso en una persona muy específica. ☀️'},
+  ],ch:[
+    {t:'Hobi... ¿esa persona soy yo? ☀️',pts:3,type:'good'},
+    {t:'Cuéntame cuál es, me muero de curiosidad.',pts:2,type:'good'},
+    {t:'¿Otro ARMY te recuerda a esa canción?',pts:0,type:'bad'},
+  ]},
+  {loc:'Orilla del río Han',lines:[
+    {s:'J-HOPE',t:'¡MIRA ESO! *señala el cielo* ¡LOS COLORES! ¡El rosa con el naranja y el morado! ¡Alguien diseñó eso esta tarde específicamente para nosotros! ¡Estoy SEGURO!'},
+    {s:'{name}',t:'Jaja, Hobi...'},
+    {s:'J-HOPE',t:'En serio, hay días en que el universo se esfuerza de más. Como diciendo: oye, mira, aquí hay algo especial pasando. Presta atención. ¿Tú no lo sientes así a veces?'},
+    {s:'{name}',t:'A veces sí.'},
+    {s:'J-HOPE',t:'*más callado, mirando el río* Aunque... hay algo más bonito que el cielo aquí ahora mismo. *te mira de reojo y se sonroja* Perdona. Eso salió solo. No lo puedo creer. ¡JAJAJA! ☀️'},
+  ],ch:[
+    {t:'Hobi... ¿me estabas mirando a mí? 🌸',pts:3,type:'good'},
+    {t:'Sí, el cielo está precioso hoy.',pts:1,type:'neutral'},
+    {t:'¿Qué es más bonito?',pts:2,type:'good'},
+  ]},
+  {loc:'Mercado tradicional',lines:[
+    {s:'J-HOPE',t:'¡ESPERA! ¡Mira eso! ¡Ese llavero! ¡Es exactamente lo que estaba buscando para el dorm! *lo toma* ¿Cuánto cuesta? *paga antes de que responda* ¡Listo!'},
+    {s:'{name}',t:'Hoseok, era muy caro...'},
+    {s:'J-HOPE',t:'¡No importa! ¡Es para el dorm! ¡Y también... *pausa* ...quería comprarte algo a ti. Eso de allá. Ese. Te lo compro. Sin excusas. Sin "no hace falta".'},
+    {s:'{name}',t:'¿Por qué?'},
+    {s:'J-HOPE',t:'Porque quiero verte sonreír cuando lo tengas. Y eso suena cursi pero lo digo en serio. Tu sonrisa me da más energía que el sol. ¿Sabes cuánto es eso? ¡Mucho! ¡El sol es gigante! ☀️'},
+  ],ch:[
+    {t:'Eres mi sol también, Hobi. 💛',pts:3,type:'good'},
+    {t:'No tenías que hacerlo, Hoseok.',pts:1,type:'neutral'},
+    {t:'Gracias... de verdad, Hoseok.',pts:2,type:'good'},
+  ]},
+  {loc:'Backstage del concierto',lines:[
+    {s:'J-HOPE',t:'*camina de un lado al otro* Diez minutos. Salimos en diez minutos. Setenta mil personas. Setenta mil. Esto nunca se vuelve normal. Cada vez es igual de grande.'},
+    {s:'{name}',t:'Hobi, respira.'},
+    {s:'J-HOPE',t:'*para de caminar* Tienes razón. *respira profundo* Oye. ¿Puedo decirte algo antes de salir? Es importante.'},
+    {s:'{name}',t:'Claro.'},
+    {s:'J-HOPE',t:'Cuando estoy nervioso antes de un show, pienso en cosas concretas. El ritmo de la primera canción. Los zapatos. El micrófono. Y últimamente... en ti. Pienso en ti y la energía vuelve sola.☀️'},
+  ],ch:[
+    {t:'Ve a brillar, Hobi. Yo te espero aquí. 💜',pts:3,type:'good'},
+    {t:'¡Tú puedes! ¡Hwaiting, J-Hope!',pts:2,type:'good'},
+    {t:'No sabía que te ponías nervioso antes de los shows.',pts:0,type:'bad'},
+  ]},
+  {loc:'Parque de atracciones',lines:[
+    {s:'J-HOPE',t:'¡¡¡AAAHHHH!!! ¡¡¡OTRA VEZ!!! ¡¡¡QUIERO IR OTRA VEZ!!! *agita los brazos* ¿Puedes creer que esa montaña rusa tiene ese giro? ¡NO ME LO ESPERABA Y SOY INSTRUCTOR DE BAILE!'},
+    {s:'{name}',t:'¡Jaja, estás temblando, Hobi!'},
+    {s:'J-HOPE',t:'¡Es de emoción! Completamente diferente. *se calma un poco* Oye. La siguiente vuelta... ¿puedo cogerte la mano? *muy rápido* Por el miedo. Solo por eso. Protocolos de seguridad.'},
+    {s:'{name}',t:'¿"Protocolos de seguridad"?'},
+    {s:'J-HOPE',t:'Sí. Es un término técnico. *te mira esperando* ...Okay, no es un término técnico. Quiero cogerte la mano. Sin excusas. ¿Está bien? 😅'},
+  ],ch:[
+    {t:'*extiendes tu mano* Claro, Hobi. 💛',pts:3,type:'good'},
+    {t:'¡Jaja! Sabía que no tenías miedo de verdad.',pts:1,type:'neutral'},
+    {t:'Está bien.',pts:2,type:'good'},
+  ]},
+  {loc:'Estudio de danza de madrugada',lines:[
+    {s:'J-HOPE',t:'Son las dos de la mañana y seguimos aquí. Los dos. Eso dice algo, ¿no? Porque yo no me quedo con nadie hasta las dos de la mañana por defecto. Soy de dormir temprano.'},
+    {s:'{name}',t:'¿Y qué dice?'},
+    {s:'J-HOPE',t:'Que... *busca las palabras* ...que contigo el tiempo pasa diferente. Que quiero enseñarte esa última combinación de pasos. Que me importa que la aprendas bien.'},
+    {s:'J-HOPE',t:'Que cuando te ves feliz haciendo algo que te enseñé yo, siento algo en el pecho que no sé muy bien cómo llamar pero que me gusta mucho.'},
+    {s:'J-HOPE',t:'*más tranquilo* Me gusta hacerte feliz. Mucho. Quizás demasiado para ser casual. ¿Eso te parece raro? ☀️'},
+  ],ch:[
+    {t:'No es raro. A mí también me gusta hacerte feliz, Hobi. 💜',pts:3,type:'good'},
+    {t:'Eres muy buena persona, Hoseok.',pts:1,type:'neutral'},
+    {t:'¿Demasiado para ser casual significa...?',pts:2,type:'good'},
+  ]},
+  {loc:'Tejado al amanecer',lines:[
+    {s:'J-HOPE',t:'¡OYE! ¡OYE! ¡MIRA! ¡EL AMANECER! *te agarra del brazo emocionado* ¡¡¡LLEGAMOS A TIEMPO!!! ¡¡¡LO SABÍA!!!'},
+    {s:'{name}',t:'Hoseok... es precioso.'},
+    {s:'J-HOPE',t:'*callado por primera vez* Sí. *suspira* Mira el naranja. Cada mañana esto pasa y casi nadie lo ve porque están dormidos. Qué desperdicio.'},
+    {s:'J-HOPE',t:'Oye... *muy quieto* tengo algo que decirte. Y lo voy a decir ahora porque si espero más me va a dar vergüenza y me va a salir con ahahaha al final.'},
+    {s:'J-HOPE',t:'Me enamoré de ti. ☀️ *pausa* ¡¡¡AHHH LO DIJE!!! ¡¡¡NO LO PUEDO CREER!!! ¡¡¡JAJAJA!!! ...pero en serio. Me enamoré. De verdad. 💛'},
+  ],ch:[
+    {t:'¡¡¡YO TAMBIÉN, HOBI!!! 💜☀️',pts:3,type:'good'},
+    {t:'Hoseok... qué sorpresa tan bonita.',pts:1,type:'neutral'},
+    {t:'No lo esperaba para nada.',pts:0,type:'bad'},
+  ]},
+],
+jimin:[
+  {loc:'Clase de danza contemporánea',lines:[
+    {s:'JIMIN',t:'¡Oh! No sabía que vendrías hoy. *se detiene a mitad del ejercicio* Estoy un poco sudado, perdona. Debería haberme avisado. No, espera, tú no tenías que avisarme. Yo... hola. 🌸'},
+    {s:'{name}',t:'Hola, Jimin. Sigue, no te interrumpas.'},
+    {s:'JIMIN',t:'No, no, ya iba a parar. *toma agua* Vine a practicar sola porque el estudio principal estaba ocupado. Este movimiento del segundo verso no me convence todavía.'},
+    {s:'JIMIN',t:'¿Puedo mostrarte? *ejecuta el movimiento* ¿Lo ves? ¿El momento de transición? Hay algo que no fluye. Los chicos dicen que está bien pero yo lo siento y...'},
+    {s:'JIMIN',t:'Perdona. Estoy hablando de trabajo. ¿Cómo estás tú? ¿Cómo llegaste aquí? ¿Alguien te dijo dónde estaba? *sonríe un poco nervioso* Quiero saberlo todo. 😊'},
+  ],ch:[
+    {t:'Bailas precioso, Jimin. El movimiento está perfecto. 💜',pts:3,type:'good'},
+    {t:'No quería interrumpirte, puedo volver luego.',pts:0,type:'bad'},
+    {t:'Vine porque quería verte. Simple.',pts:2,type:'good'},
+  ]},
+  {loc:'Café pequeño en Hannam-dong',lines:[
+    {s:'JIMIN',t:'*ya sentado cuando llegas, con dos tazas* Pedí lo tuyo. Espero haberlo recordado bien. *empuja la taza hacia ti* Si no es correcto dime y pido otro.'},
+    {s:'{name}',t:'¿Cómo sabías lo que quería?'},
+    {s:'JIMIN',t:'*pausa larga* Lo busqué. En una entrevista mencionaste tu bebida favorita hace como un año. Lo guardé. *mira su taza* Eso suena raro al decirlo en voz alta, lo siento.'},
+    {s:'{name}',t:'No suena raro. Suena bonito.'},
+    {s:'JIMIN',t:'*aliviado* Quería sorprenderte. A veces pienso en detalles pequeños que le gustan a la gente y... *para* En detalles que te gustan a ti. Eso es diferente. Más específico. 🌸'},
+  ],ch:[
+    {t:'Que lo hayas buscado hace un año significa todo, Jimin. 💜',pts:3,type:'good'},
+    {t:'Qué adorable eres, de verdad.',pts:2,type:'good'},
+    {t:'Jimin... ¿me investigaste?',pts:0,type:'bad'},
+  ]},
+  {loc:'Galería de arte Leeum',lines:[
+    {s:'JIMIN',t:'*parado frente a una obra grande, abstracta* Este cuadro llevo veinte minutos mirándolo. No sé si es que el artista era un genio o si simplemente necesito dormir más.'},
+    {s:'{name}',t:'¿Qué ves en él?'},
+    {s:'JIMIN',t:'*sin apartar los ojos del cuadro* Movimiento. Como si algo estuviera a punto de pasar pero todavía no pasó. Ese momento exacto antes de que todo cambie.'},
+    {s:'JIMIN',t:'*te mira* Hay algo así en ti. Ese estado de... inminencia. Como si siempre estuvieras a punto de decir algo importante. O quizás soy yo el que está a punto de decirlo.'},
+    {s:'JIMIN',t:'*vuelve al cuadro* Me recuerda a cómo me siento cuando estás cerca. Como si algo fuera a pasar y no supiera qué. ¿Eso tiene algún sentido? 🌸'},
+  ],ch:[
+    {t:'¿Y cómo te sientes cuando estoy cerca, Jimin? 🥺',pts:3,type:'good'},
+    {t:'Qué manera tan bonita de verlo, Jimin.',pts:1,type:'neutral'},
+    {t:'Creo que necesitas dormir más.',pts:0,type:'bad'},
+  ]},
+  {loc:'Parque en plena primavera',lines:[
+    {s:'JIMIN',t:'¿Ves cuántos pétalos? En esta época el parque se llena de un rosa que no existe en ningún otro lugar del mundo. Solo aquí, solo estos días. Y si no vienes en este momento exacto, lo pierdes.'},
+    {s:'{name}',t:'Es hermoso.'},
+    {s:'JIMIN',t:'Sí. Vine aquí el año pasado solo y pensé: la próxima vez quiero venir con alguien. *pausa* Con una persona en particular. *te mira* No te lo diré quién era todavía.'},
+    {s:'{name}',t:'Jimin...'},
+    {s:'JIMIN',t:'*un pétalo cae entre los dos* Oh. *se queda muy quieto* Dicen que cuando los pétalos caen sobre dos personas juntas es... *sonríe lento* qué coincidencia más conveniente. 🌸'},
+  ],ch:[
+    {t:'No creo en las coincidencias, Jimin. 💜',pts:3,type:'good'},
+    {t:'Qué bonita tradición.',pts:2,type:'good'},
+    {t:'Son solo flores cayendo.',pts:0,type:'bad'},
+  ]},
+  {loc:'Azotea del dorm de noche',lines:[
+    {s:'JIMIN',t:'*ya estaba aquí cuando subes* Sabía que vendrías. Bueno... esperaba que vinieras. Hay una diferencia. *da vuelta* ¿Tienes frío?'},
+    {s:'{name}',t:'Un poco.'},
+    {s:'JIMIN',t:'*se saca la chaqueta inmediatamente y te la pone sin preguntar* Ahí. *pausa incómoda* Eso fue automático. No sé si te molestó. Si te molestó lo retiro.'},
+    {s:'{name}',t:'No me molestó.'},
+    {s:'JIMIN',t:'Bien. *se sienta en el borde de la azotea* Me preocupa que tengas frío más de lo normal. Más de lo que me preocupa cualquier otra cosa a esta hora de la noche. ¿Eso es raro? 🌙'},
+  ],ch:[
+    {t:'No es raro. Es precioso, Jimin. 💜',pts:3,type:'good'},
+    {t:'Estoy bien, gracias. Puedes quedarte la chaqueta.',pts:1,type:'neutral'},
+    {t:'Un poco raro, pero también bonito.',pts:2,type:'good'},
+  ]},
+  {loc:'Backstage antes del concierto',lines:[
+    {s:'JIMIN',t:'¿Puedes quedarte aquí unos minutos? *señala el lugar junto a él* Los chicos ya están en posiciones. Yo salgo en dos minutos pero necesito dos minutos aquí primero.'},
+    {s:'{name}',t:'Claro, Jimin.'},
+    {s:'JIMIN',t:'Antes de cada show tengo este ritual. Respiro. Pienso en algo que me ancle. Algo real, concreto, que no cambia aunque todo alrededor sea caos y cámaras y luces.'},
+    {s:'JIMIN',t:'Durante mucho tiempo pensaba en la coreografía, en la letra, en el ARMY. Pero últimamente... pienso en una cara. Y cuando la encuentro en el público, todo sale perfecto.'},
+    {s:'JIMIN',t:'*te mira* ¿Estarás ahí? Primera fila si puedes. No es una petición oficial. Es algo más. 💫'},
+  ],ch:[
+    {t:'Siempre estaré en primera fila por ti, Jimin. 💜',pts:3,type:'good'},
+    {t:'Jimin... qué bonito que me lo digas.',pts:2,type:'good'},
+    {t:'¿Y si no puedo ir al show?',pts:0,type:'bad'},
+  ]},
+  {loc:'Jardín del hotel en Tokio',lines:[
+    {s:'JIMIN',t:'Gracias por venir hasta aquí. Sé que es lejos. *camina despacio entre las flores* Tokio de noche tiene algo. No sé cómo explicarlo. Más suave que Seúl. Más quieto.'},
+    {s:'{name}',t:'Me alegra haber venido.'},
+    {s:'JIMIN',t:'*para frente a una fuente* ¿Puedo decirte algo importante? *te mira* Llevo meses queriéndolo decir pero cada vez que encuentro el momento me sale el miedo de que cambie todo entre nosotros.'},
+    {s:'{name}',t:'Dímelo, Jimin.'},
+    {s:'JIMIN',t:'Tengo miedo de que después de que lo diga ya no podamos volver a lo que éramos. Y lo que éramos me importa mucho. Pero lo que podríamos ser... me importa más. 🌸'},
+  ],ch:[
+    {t:'Dímelo. Lo que sea, no cambiará nada malo. 💜',pts:3,type:'good'},
+    {t:'Puedes confiar en mí, Jimin.',pts:2,type:'good'},
+    {t:'Si te da tanto miedo, quizás no es el momento.',pts:0,type:'bad'},
+  ]},
+  {loc:'Bajo los cerezos en flor',lines:[
+    {s:'JIMIN',t:'Los cerezos solo florecen una semana al año. Una semana de todo el año y ya. Después se van. Por eso quería traerte aquí hoy, en este día exacto.'},
+    {s:'{name}',t:'Jimin...'},
+    {s:'JIMIN',t:'Me enamoré de ti. 🌸 *respira* Ahí está. Ya lo dije. Llevo semanas ensayando esa frase y al final salió sola, sin ensayo. Qué irónico para alguien que practica todo.'},
+    {s:'JIMIN',t:'No sé qué pasa después. No tengo coreografía para esto. Pero sé que quería decírtelo aquí, con los pétalos cayendo, porque te mereces que las cosas importantes pasen en momentos bonitos.'},
+    {s:'JIMIN',t:'¿Puedo ser yo quien cuide de tu sonrisa? 💜'},
+  ],ch:[
+    {t:'Sí, Jimin. Para siempre. 💜🌸',pts:3,type:'good'},
+    {t:'Yo también me enamoré de ti, Jimin.',pts:3,type:'good'},
+    {t:'Necesito tiempo para pensarlo.',pts:0,type:'bad'},
+  ]},
+],
+v:[
+  {loc:'Estudio de pintura en Hannam',lines:[
+    {s:'V',t:'¡Oh! ¿Viniste? 🐻 *no se voltea, sigue pintando* Estoy en la parte más difícil. Si paro ahora pierdo el hilo. ¿Puedes esperar dos minutos?'},
+    {s:'{name}',t:'Claro.'},
+    {s:'V',t:'*veinte minutos después* Listo. *se voltea con pintura en la cara sin darse cuenta* Hola. ¿Cuánto tiempo llevas esperando?'},
+    {s:'{name}',t:'Veinte minutos.'},
+    {s:'V',t:'*pausa* Dos minutos pueden ser veinte cuando estoy en flujo. Lo siento. Aunque... *te mira con atención* el hecho de que esperaste veinte minutos dice algo de ti. Algo bueno. 🐯'},
+  ],ch:[
+    {t:'Esperaría más. ¿Qué estabas pintando, Tae? 🐻',pts:3,type:'good'},
+    {t:'No te preocupes, no me importó esperar.',pts:2,type:'good'},
+    {t:'Dijiste dos minutos, Taehyung.',pts:0,type:'bad'},
+  ]},
+  {loc:'Mercado de antigüedades en Insadong',lines:[
+    {s:'V',t:'¡MIRA ESTO! *levanta un objeto extraño y antiguo* ¿Qué crees que es? No, no busques la respuesta. Solo míralo. ¿Qué sientes?'},
+    {s:'{name}',t:'No sé... ¿un instrumento?'},
+    {s:'V',t:'¡Exacto! O quizás era un jarrón. O quizás los dos. Lo bonito es que nadie sabe con certeza. Tiene su propio misterio y no necesita que lo clasifiques.'},
+    {s:'V',t:'*lo devuelve y te mira* Tú eres así también. Tienes capas que no se ven a primera vista. La primera vez que te vi pensé: ahí hay algo que no se descubre rápido.'},
+    {s:'V',t:'Y tenía razón. Cuanto más te conozco, más hay que conocer. Eso es muy difícil de encontrar. 🐻✨'},
+  ],ch:[
+    {t:'Tú también eres así, Tae. Cada vez más profundo. 💜',pts:3,type:'good'},
+    {t:'Qué original eres para ver las cosas.',pts:1,type:'neutral'},
+    {t:'¿Qué capas crees que tienes tú entonces?',pts:2,type:'good'},
+  ]},
+  {loc:'Cine privado de Taehyung',lines:[
+    {s:'V',t:'Tengo mil películas descargadas. Hice una lista de posibles opciones según el mood de hoy. *saca su teléfono* ¿Qué mood tienes? No me digas "bien". Eso no es un mood.'},
+    {s:'{name}',t:'...Nostalgia dulce.'},
+    {s:'V',t:'Hmm. *piensa* Entonces esta. *pone la película sin más explicación* Confía en mí.'},
+    {s:'{name}',t:'¿Qué es?'},
+    {s:'V',t:'Ya verás. *apaga las luces* Aunque... ahora que lo pienso... también podemos no ver nada. Hablar. Quedarnos aquí en silencio. Contigo cualquier opción tiene el mismo valor. 🐻'},
+  ],ch:[
+    {t:'Prefiero quedarme aquí hablando contigo, Tae. 💜',pts:3,type:'good'},
+    {t:'Ponla. Confío en tu gusto, Taehyung.',pts:1,type:'neutral'},
+    {t:'Las dos cosas. Película y hablar.',pts:2,type:'good'},
+  ]},
+  {loc:'Playa desierta al atardecer',lines:[
+    {s:'V',t:'*camina descalzo por la orilla* ¿Escuchas? El mar no repite ninguna ola. Cada una es diferente. La misma agua, el mismo lugar, y sin embargo siempre nuevo.'},
+    {s:'{name}',t:'No lo había pensado así.'},
+    {s:'V',t:'Yo tampoco lo pensé hasta que vine aquí solo una vez. Me quedé tres horas mirando el agua. Los otros pensaban que estaba triste. No estaba triste. Estaba entendiendo algo.'},
+    {s:'V',t:'*se para frente al mar* Que las cosas más valiosas son las que no se repiten. Los momentos únicos. Las personas únicas. 🐻🌊'},
+    {s:'V',t:'Este momento, aquí contigo, no va a volver a ser exactamente igual. Eso me parece hermoso. ¿A ti no?'},
+  ],ch:[
+    {t:'Sí. Por eso quiero que este momento dure. 💜',pts:3,type:'good'},
+    {t:'Eres muy especial, V. Lo sabes, ¿no?',pts:2,type:'good'},
+    {t:'El mar solo son olas de agua, Tae.',pts:0,type:'bad'},
+  ]},
+  {loc:'Exposición de fotografía',lines:[
+    {s:'V',t:'*para frente a una fotografía grande en blanco y negro* ¿Reconoces algo en esta foto?'},
+    {s:'{name}',t:'*la mira* Es... espera. ¿Soy yo?'},
+    {s:'V',t:'*asiente sin decir nada*'},
+    {s:'{name}',t:'Taehyung... ¿cuándo tomaste esto?'},
+    {s:'V',t:'Hace tres meses. Estabas mirando hacia la ventana en ese café de Hongdae. No sabías que te miraba. Y precisamente por eso salió bien. Así eres más tú que cuando sabes que hay una cámara.'},
+    {s:'V',t:'La puse aquí porque quería que la gente viera lo que yo veo cuando te miro. Que hay algo en ti que merece ser capturado y guardado. 🐯📷'},
+  ],ch:[
+    {t:'Tae... me tomaste una foto sin que supiera. 🥺💜',pts:3,type:'good'},
+    {t:'Es hermosa. No puedo creer que seas tú quien la tomó.',pts:2,type:'good'},
+    {t:'Deberías haberme avisado antes.',pts:0,type:'bad'},
+  ]},
+  {loc:'Campo de girasoles en las afueras',lines:[
+    {s:'V',t:'¿Sabes qué tienen los girasoles que no tiene ninguna otra flor? *camina entre ellos* Que siempre miran hacia la luz. Siempre. Aunque nublado, aunque no puedan ver el sol, siguen orientados hacia él.'},
+    {s:'{name}',t:'No lo sabía.'},
+    {s:'V',t:'Se llama heliotropismo. Lo aprendí de niño y nunca lo olvidé. Porque pensé: yo también quiero ser así. Siempre orientado hacia lo luminoso.'},
+    {s:'V',t:'*te mira directamente* Desde que te conocí hago eso contigo. Te sigo. No de manera obsesiva. Sino de esa manera en que el girasol sigue al sol. Naturalmente. Sin poder evitarlo.'},
+    {s:'V',t:'No sé si eso te parece bonito o extraño. A mí me parece lo más honesto que he dicho en mucho tiempo. 🐻🌻'},
+  ],ch:[
+    {t:'Es lo más bonito que me han dicho nunca, Tae. 💜',pts:3,type:'good'},
+    {t:'Yo también te sigo a ti, Taehyung.',pts:3,type:'good'},
+    {t:'Soy solo una persona normal, Tae.',pts:0,type:'bad'},
+  ]},
+  {loc:'Azotea con telescopio',lines:[
+    {s:'V',t:'Aquí. Mira por esto. *señala el telescopio* Busca la estrella más brillante del cuadrante norte. ¿La ves? Esa, esa de ahí. Tiene nombre oficial pero yo le puse otro.'},
+    {s:'{name}',t:'¿Qué nombre le pusiste?'},
+    {s:'V',t:'El tuyo. *totalmente en serio* Hace seis meses. Una noche que no podía dormir subí aquí y la encontré y pensé: esta. Esta es la que brilla diferente.'},
+    {s:'V',t:'Sé que legalmente no puedo registrar el nombre. No me importa. Para mí esa estrella se llama como tú y ya. *te mira* Y todavía brillas más que ella, que conste.'},
+    {s:'V',t:'Eso no es exageración. Es una observación astronómica objetiva. 🔭✨'},
+  ],ch:[
+    {t:'Y tú eres mi universo entero, Tae. 💜',pts:3,type:'good'},
+    {t:'Eres el más romántico que conozco, V.',pts:1,type:'neutral'},
+    {t:'No se puede registrar nombres de estrellas así, Taehyung.',pts:0,type:'bad'},
+  ]},
+  {loc:'Jardín secreto de noche',lines:[
+    {s:'V',t:'Vine aquí porque quería estar en el lugar más bonito que conozco para decirte algo importante. *se sienta en el suelo entre las flores* Siéntate aquí.'},
+    {s:'{name}',t:'*te sientas junto a él*'},
+    {s:'V',t:'Pinté mil cosas. Caminé mil lugares. Toqué mil canciones. Viví cosas que la mayoría de personas no vivirán nunca. Soy muy afortunado. Lo sé.'},
+    {s:'V',t:'Y con todo eso... lo más extraordinario que me ha pasado eres tú. No un lugar. No una obra. No un momento. Tú. Una persona concreta, con nombre y cara y maneras específicas de ser.'},
+    {s:'V',t:'¿Puedo tenerte? No de una manera posesiva. Sino de esa manera en que el jardín "tiene" flores. Que formas parte de aquí. Que perteneces a este lugar. 🐯💜'},
+  ],ch:[
+    {t:'Ya me tienes, Taehyung. Desde hace tiempo. 💜',pts:3,type:'good'},
+    {t:'Sí, Tae. Para siempre.',pts:3,type:'good'},
+    {t:'No sé si soy suficiente para todo eso, Tae.',pts:0,type:'bad'},
+  ]},
+],
+jk:[
+  {loc:'Gimnasio privado de BTS',lines:[
+    {s:'JUNGKOOK',t:'¡Ey! *para de levantar pesas* ¿Cuánto llevas ahí? *se seca con una toalla* No me dijiste que venías. Debería haberme dicho, que estaba en mitad de la sesión.'},
+    {s:'{name}',t:'La puerta estaba abierta.'},
+    {s:'JUNGKOOK',t:'Sí, siempre la dejo abierta cuando entreno solo porque si no me agobio. *pausa* Bueno. Ya que estás... ¿te enseño algo? Tengo una rutina nueva que inventé esta semana.'},
+    {s:'JUNGKOOK',t:'*empieza a explicar con mucho detalle técnico* ...y entonces en la tercera serie bajas el peso pero aumentas la velocidad. *te mira* ¿Estás siguiéndome?'},
+    {s:'JUNGKOOK',t:'*más tranquilo* ...Me distrae que estés aquí. Solo un poco. Eso no lo digo nunca. 🐰'},
+  ],ch:[
+    {t:'¿Te distraigo? Eso es lo mejor que me han dicho hoy. 🐰',pts:3,type:'good'},
+    {t:'Te prometo que no te voy a distraer.',pts:1,type:'neutral'},
+    {t:'¿Solo un poco?',pts:2,type:'good'},
+  ]},
+  {loc:'Sala de videojuegos',lines:[
+    {s:'JUNGKOOK',t:'¡JEON JUNGKOOK NO PIERDE! *los dedos vuelan sobre el control* ¡ESTO ES INJUSTO! ¡LA IA HACE TRAMPAS! ¡Estoy completamente seguro!'},
+    {s:'{name}',t:'Jungkook... perdiste fair and square.'},
+    {s:'JUNGKOOK',t:'¡IMPOSIBLE! *pausa* ...Okay. Quizás. Pero solo porque me puse nervioso cuando te sentaste al lado. *sin mirarte* Y eso no me pasa. Nunca me pasa con nadie.'},
+    {s:'{name}',t:'¿Nervioso por mí?'},
+    {s:'JUNGKOOK',t:'*te mira de reojo* ...Sí. 🐰 No sé qué decir más sobre eso. Solo que es un hecho. Y que generalmente los hechos que no sé explicar son los más importantes.'},
+  ],ch:[
+    {t:'Nervioso por mí... eso me hace feliz, JK. 🥺',pts:3,type:'good'},
+    {t:'Eres demasiado competitivo, Jungkook.',pts:0,type:'bad'},
+    {t:'Puedo enseñarte el truco que uso yo.',pts:2,type:'good'},
+  ]},
+  {loc:'Estudio de tatuajes en Hongdae',lines:[
+    {s:'JUNGKOOK',t:'*mirando el catálogo* Este. No, este. Hmm. *cierra el catálogo* ¿Cuál me recomiendas tú? En serio. Tu opinión.'},
+    {s:'{name}',t:'¿Qué quieres que signifique?'},
+    {s:'JUNGKOOK',t:'Algo que recuerde un momento específico. *pausa* No te voy a decir cuál momento todavía porque queda raro decirlo aquí en voz alta.'},
+    {s:'{name}',t:'¿Un momento conmigo?'},
+    {s:'JUNGKOOK',t:'*larga pausa* Sí. *sin más elaboración, mirando el catálogo muy concentradamente para no tener que verte* Hay momentos que merecen volverse permanentes. Eso es todo. 🐰'},
+  ],ch:[
+    {t:'¿Hacerme permanente en tu piel, JK? 💜',pts:3,type:'good'},
+    {t:'Algo relacionado con BTS sería bonito.',pts:1,type:'neutral'},
+    {t:'¿Y si después te arrepientes?',pts:0,type:'bad'},
+  ]},
+  {loc:'Estudio de grabación personal',lines:[
+    {s:'JUNGKOOK',t:'*con auriculares al cuello* Espera. Quédate quieto un segundo. *reproduce algo desde su teléfono* ¿La escuchas? Esta.'},
+    {s:'{name}',t:'Es bonita. ¿Quién la canta?'},
+    {s:'JUNGKOOK',t:'La grabé yo. No es para el álbum. Solo para mí. *pausa* La tengo en repeat desde hace semanas. Los chicos ya me están mirando raro por eso.'},
+    {s:'{name}',t:'¿Por qué la tienes en repeat?'},
+    {s:'JUNGKOOK',t:'Porque cuando la escucho pienso en algo que... en alguien que... *se pasa la mano por el pelo* Que me importa mucho. Más de lo que sé manejar todavía. 🐰'},
+  ],ch:[
+    {t:'¿Piensas en mí cuando la escuchas, JK? 💜',pts:3,type:'good'},
+    {t:'¿Cuál es? Quiero escucharla completa.',pts:1,type:'neutral'},
+    {t:'Deberías agregarla al álbum.',pts:0,type:'bad'},
+  ]},
+  {loc:'Pista de patinaje',lines:[
+    {s:'JUNGKOOK',t:'*agarra la barrera lateral* ¡YO PUEDO HACER ESTO! ¡El Golden Maknae puede con todo! *intenta avanzar y pierde el equilibrio* ¡Esto es diferente al baile! ¡Completamente diferente!'},
+    {s:'{name}',t:'*tratando de no reírte*'},
+    {s:'JUNGKOOK',t:'¡NO TE RÍAS! *se afirma en la barrera* Okay. Quizás necesito... práctica adicional. *pausa larga* ¿Puedes ayudarme? Solo por esta sesión. No le digas nada a los chicos.'},
+    {s:'{name}',t:'¿Jeon Jungkook pidiendo ayuda?'},
+    {s:'JUNGKOOK',t:'*directo* Sí. Y no lo digo seguido. Así que cuando lo digo, lo digo en serio. *extiende la mano hacia ti* ¿Me ayudas? 🐰'},
+  ],ch:[
+    {t:'*extiendes tu mano* Siempre, JK. 💜',pts:3,type:'good'},
+    {t:'¡Claro! Te enseño.',pts:2,type:'good'},
+    {t:'¡El Golden Maknae necesita ayuda! Esto es histórico.',pts:0,type:'bad'},
+  ]},
+  {loc:'Balcón viendo el atardecer',lines:[
+    {s:'JUNGKOOK',t:'*apoyado en la baranda* Oye. ¿Te molesta si me quedo aquí un rato más? No tengo ningún motivo específico. Solo... *señala el cielo* esto está bien.'},
+    {s:'{name}',t:'Quédate el tiempo que quieras.'},
+    {s:'JUNGKOOK',t:'*silencio cómodo por un rato* Tenía ensayo en veinte minutos. *saca el teléfono, escribe algo, lo guarda* Ya lo cancelé.'},
+    {s:'{name}',t:'¿Por qué?'},
+    {s:'JUNGKOOK',t:'*te mira de frente por primera vez* Porque esto importa más ahora mismo. Y cuando algo importa más, eliges eso. Sin más explicación. Llevo tiempo eligiéndote a ti sin decirlo. 🐰'},
+  ],ch:[
+    {t:'Yo también te elijo, JK. 💜',pts:3,type:'good'},
+    {t:'JK... no tenías que cancelar el ensayo.',pts:1,type:'neutral'},
+    {t:'¿Cuánto tiempo llevas eligiéndome?',pts:2,type:'good'},
+  ]},
+  {loc:'Concierto privado solo para ti',lines:[
+    {s:'JUNGKOOK',t:'*con guitarra en mano, en una sala pequeña y vacía* Siéntate ahí. *señala una silla en el centro* Solo ahí. Y no grabes. No quiero que nadie más escuche esto todavía.'},
+    {s:'{name}',t:'¿Qué vas a cantar?'},
+    {s:'JUNGKOOK',t:'Una canción que compuse este mes. *afina la guitarra* He cantado para millones de personas. En estadios, en televisión, en todas partes. Pero esta... esta siempre fue solo para una.'},
+    {s:'JUNGKOOK',t:'*empieza a tocar* *la canción es suave, íntima, completamente diferente a lo que has escuchado de él antes*'},
+    {s:'JUNGKOOK',t:'*cuando termina, sin levantar la vista* ¿...qué te pareció? *los nudillos blancos sobre las cuerdas de tanto apretar* 🐰🎤'},
+  ],ch:[
+    {t:'Jungkook... 🥺💜 No tengo palabras.',pts:3,type:'good'},
+    {t:'Es la más hermosa que has compuesto.',pts:2,type:'good'},
+    {t:'¿Cuándo la vas a grabar para el álbum?',pts:0,type:'bad'},
+  ]},
+  {loc:'Campo abierto bajo las estrellas',lines:[
+    {s:'JUNGKOOK',t:'*acostado en el suelo mirando arriba* En la escuela no era bueno en casi nada excepto cantar y bailar. Y tenía mucho miedo de que eso no fuera suficiente.'},
+    {s:'{name}',t:'Y lo fue.'},
+    {s:'JUNGKOOK',t:'Sí. *pausa* Pero durante mucho tiempo actué sin miedo porque tenía miedo real. Eso cansa. *se sienta* Contigo no actúo. No sé por qué. Pero no actúo.'},
+    {s:'JUNGKOOK',t:'Soy... torpe cuando se trata de decir cosas importantes en palabras. Siempre lo fui. Por eso compongo. Las canciones dicen lo que no puedo decir hablando.'},
+    {s:'JUNGKOOK',t:'Pero esta vez quiero intentar hacerlo hablando. *respira* Si te doy mi corazón, lo hago con todo. No a medias. No temporalmente. ¿Lo aceptas? 🐰💜'},
+  ],ch:[
+    {t:'Sí, Jungkook. Con todo. Para siempre. 💜',pts:3,type:'good'},
+    {t:'Te acepto, JK. Completamente.',pts:3,type:'good'},
+    {t:'Es demasiado rápido, Jungkook.',pts:0,type:'bad'},
+  ]},
+],
+};
+
+// ═══════════════════════════════════════════════════════════
+//  NOVEL STATE & SAVE (completamente separado de G)
+// ═══════════════════════════════════════════════════════════
+const NV = {
+  memberId:null, chapter:0, novelAff:0, totalPts:0,
+  active:false, lineIdx:0, lines:[],
+  typingTimer:null, lineReady:false,
+};
+
+function _nvSaveKey(){ return 'btsuno_nv_'+G.name; }
+function _nvSave(){
+  try{
+    const d=JSON.parse(localStorage.getItem(_nvSaveKey())||'{}');
+    d[NV.memberId]={chapter:NV.chapter, novelAff:NV.novelAff, totalPts:NV.totalPts};
+    localStorage.setItem(_nvSaveKey(), JSON.stringify(d));
+  }catch(e){}
+}
+function _nvLoad(){ try{ return JSON.parse(localStorage.getItem(_nvSaveKey())||'{}'); }catch(e){ return {}; } }
+function _nvCoinsKey(){ return 'btsuno_coins_'+G.name; }
+function _nvLoadCoins(){
+  try{
+    const d=JSON.parse(localStorage.getItem(_nvCoinsKey())||'{}');
+    G.fanCoins=d.coins||0; G.novelTickets=d.tickets||{};
+  }catch(e){ G.fanCoins=0; G.novelTickets={}; }
+}
+function _nvSaveCoins(){
+  try{ localStorage.setItem(_nvCoinsKey(), JSON.stringify({coins:G.fanCoins||0,tickets:G.novelTickets||{}})); }catch(e){}
+}
+function _collKey(){ return 'btsuno_coll_'+G.name; }
+function _loadColl(){ try{ G.fanCollection=JSON.parse(localStorage.getItem(_collKey())||'{}'); }catch(e){ G.fanCollection={}; } }
+function _saveColl(){ try{ localStorage.setItem(_collKey(), JSON.stringify(G.fanCollection||{})); }catch(e){} }
+
+// ═══════════════════════════════════════════════════════════
+//  NOVEL MODE — NAVIGATION & RENDER
+// ═══════════════════════════════════════════════════════════
+function openNovelMode(){
+  _nvLoadCoins(); _loadColl();
+  _updateNvCoinsUI();
+  _renderRouteGrid();
+  goTo('novelScreen');
+}
+function _updateNvCoinsUI(){
+  document.getElementById('nvCoins').textContent=G.fanCoins||0;
+  const tcount=Object.values(G.novelTickets||{}).filter(Boolean).length;
+  document.getElementById('nvTickets').textContent=tcount;
+}
+function _renderRouteGrid(){
+  const nd=_nvLoad();
+  document.getElementById('routeGrid').innerHTML=MEMBERS.map(m=>{
+    const unlocked=(G.affinity[m.id]||0)>=50;
+    const saved=nd[m.id]||{chapter:0,novelAff:0};
+    const prog=saved.chapter||0;
+    const pct=Math.round((prog/8)*100);
+    const hasTicket=(G.novelTickets||{})[m.id];
+    const done=G.fanCollection&&G.fanCollection[m.id];
+    return `<div class="rcard ${unlocked?'open':'locked'}" ${unlocked?`onclick="_nvStartRoute('${m.id}')"`:''}>
+      ${hasTicket?`<div class="rtick">🎫 TICKET</div>`:''}
+      ${unlocked
+        ?`<img class="rphoto" src="${m.e}" alt="${m.name}" onerror="this.style.display='none'">`
+        :`<div style="font-size:36px;margin:8px 0">🔒</div>`}
+      <div class="rname">${m.name}</div>
+      <div class="rsub">${unlocked?(done?'✅ Completada':'💌 Disponible'):`Afinidad ${G.affinity[m.id]||0}/50`}</div>
+      ${unlocked?`<div class="nvaff-track"><div class="nvaff-fill" style="width:${pct}%"></div></div><div class="rchap">Cap ${prog}/8</div>`:''}
+    </div>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════════════════
+//  NOVEL GAMEPLAY
+// ═══════════════════════════════════════════════════════════
+function _nvStartRoute(memberId){
+  if((G.affinity[memberId]||0)<50){ toast('¡Necesitas afinidad 50 con '+M(memberId).name+'! 💜'); return; }
+  const hasTicket=(G.novelTickets||{})[memberId];
+  if(!hasTicket && (G.fanCoins||0)<1){ toast('¡Necesitas 1 Fan Coin o un Ticket! 🪙'); return; }
+  // consume resource
+  if(hasTicket){ delete G.novelTickets[memberId]; }
+  else { G.fanCoins=Math.max(0,(G.fanCoins||0)-1); }
+  _nvSaveCoins();
+  // load progress
+  const nd=_nvLoad();
+  const saved=nd[memberId]||{chapter:0,novelAff:0,totalPts:0};
+  NV.memberId=memberId;
+  NV.chapter=saved.chapter||0;
+  NV.novelAff=saved.novelAff||0;
+  NV.totalPts=saved.totalPts||0;
+  NV.active=true;
+  _nvPlayChapter();
+}
+
+function _nvPlayChapter(){
+  if(NV.chapter>=8){ _nvEnd(); return; }
+  const m=M(NV.memberId);
+  const chap=NV_CHAPTERS[NV.memberId][NV.chapter];
+  goTo('novelGameScreen');
+  document.getElementById('ngChapLbl').textContent=`CAP ${NV.chapter+1} · ${m.name}`;
+  document.getElementById('ngCharImg').src=m.e;
+  document.getElementById('ngLoc').textContent=chap.loc;
+  document.getElementById('ngChoices').innerHTML='';
+  document.getElementById('ngChoices').style.display='none';
+  document.getElementById('ngTap').style.display='block';
+  _nvUpdateAff();
+  // show transition then lines
+  _nvShowTransition(`CAPÍTULO ${NV.chapter+1}`, chap.loc, ()=>{
+    NV.lines=chap.lines.map(l=>({...l, s:l.s==='{name}'?(G.name||'Tú'):l.s}));
+    NV.lineIdx=0;
+    NV.lineReady=false;
+    _nvNextLine();
+  });
+}
+
+function _nvShowTransition(num, loc, cb){
+  const el=document.getElementById('nvTrans');
+  document.getElementById('nvTransNum').textContent=num;
+  document.getElementById('nvTransLoc').textContent=loc;
+  el.classList.add('show');
+  setTimeout(()=>{ el.classList.remove('show'); if(cb) cb(); },1800);
+}
+
+function _nvNextLine(){
+  if(NV.lineIdx>=NV.lines.length){ _nvShowChoices(); return; }
+  const line=NV.lines[NV.lineIdx];
+  document.getElementById('ngSpk').textContent=line.s;
+  _nvType(line.t, ()=>{ NV.lineReady=true; });
+}
+
+function _nvType(text, cb){
+  const el=document.getElementById('ngTxt');
+  el.innerHTML='';
+  clearTimeout(NV.typingTimer);
+  NV.lineReady=false;
+  let i=0;
+  function tick(){
+    if(i<=text.length){
+      el.innerHTML=text.slice(0,i)+(i<text.length?'<span class="ng-cursor"></span>':'');
+      i++;
+      NV.typingTimer=setTimeout(tick,22);
+    } else { if(cb) cb(); }
+  }
+  tick();
+}
+
+// Tap handler — ONLY fires when novelGameScreen is active
+function _nvTapHandler(e){
+  if(!NV.active) return;
+  const gs=document.getElementById('novelGameScreen');
+  if(!gs||!gs.classList.contains('active')) return;
+  // Ignore taps on buttons and choices
+  if(e.target.closest('button')||e.target.closest('.ng-choice')) return;
+  if(NV.lineReady){
+    NV.lineReady=false;
+    clearTimeout(NV.typingTimer);
+    // Show full text immediately
+    if(NV.lineIdx<NV.lines.length){
+      document.getElementById('ngTxt').textContent=NV.lines[NV.lineIdx].t;
+    }
+    NV.lineIdx++;
+    setTimeout(_nvNextLine, 180);
+  }
+}
+document.addEventListener('click', _nvTapHandler);
+
+function _nvShowChoices(){
+  const chap=NV_CHAPTERS[NV.memberId][NV.chapter];
+  document.getElementById('ngTap').style.display='none';
+  const box=document.getElementById('ngChoices');
+  box.style.display='flex';
+  box.innerHTML=chap.ch.map((c,i)=>
+    `<div class="ng-choice ${c.type}" onclick="_nvPickChoice(${i})">${c.t}</div>`
+  ).join('');
+}
+
+function _nvPickChoice(idx){
+  const chap=NV_CHAPTERS[NV.memberId][NV.chapter];
+  const c=chap.ch[idx];
+  document.getElementById('ngChoices').innerHTML='';
+  document.getElementById('ngChoices').style.display='none';
+  document.getElementById('ngTap').style.display='block';
+  NV.totalPts+=c.pts;
+  if(c.type==='good') NV.novelAff=Math.min(100,NV.novelAff+12);
+  else if(c.type==='bad') NV.novelAff=Math.max(0,NV.novelAff-8);
+  else NV.novelAff=Math.min(100,NV.novelAff+4);
+  _nvUpdateAff();
+  // brief reaction
+  const m=M(NV.memberId);
+  document.getElementById('ngSpk').textContent=m.name;
+  document.getElementById('ngTxt').textContent=c.type==='good'?'💜 ...':'...';
+  NV.chapter++;
+  _nvSave();
+  setTimeout(()=>{
+    if(NV.chapter>=8) _nvEnd();
+    else _nvPlayChapter();
+  },800);
+}
+
+function _nvUpdateAff(){
+  document.getElementById('ngAffBar').style.width=NV.novelAff+'%';
+  document.getElementById('ngAffVal').textContent=NV.novelAff;
+}
+
+function _nvEnd(){
+  NV.active=false;
+  const m=M(NV.memberId);
+  const maxPts=NV_CHAPTERS[NV.memberId].reduce((s,c)=>s+Math.max(...c.ch.map(x=>x.pts)),0);
+  const ratio=NV.totalPts/Math.max(1,maxPts);
+  let title,desc,isGood=false;
+  if(ratio>=0.72){ title='💜 FINAL FELIZ'; desc=`Conquistaste el corazón de ${m.name}. Tu historia juntos apenas comienza. 💜`; isGood=true; }
+  else if(ratio>=0.4){ title='🌸 FINAL AMIGOS'; desc=`${m.name} y tú tienen una conexión especial. Con más tiempo podría crecer algo hermoso. 🌸`; }
+  else { title='💔 FINAL DIFÍCIL'; desc=`Las cosas no salieron como esperabas esta vez. Cada historia enseña algo. ¿Lo intentas de nuevo? 💔`; }
+  // unlock photo
+  if(isGood){
+    _loadColl(); if(!G.fanCollection) G.fanCollection={};
+    G.fanCollection[NV.memberId]={memberId:NV.memberId,photo:m.e,name:m.name,earned:Date.now()};
+    _saveColl();
+    // ticket chance on good ending
+    if(Math.random()<0.25){
+      if(!G.novelTickets) G.novelTickets={};
+      G.novelTickets[NV.memberId]=true;
+      _nvSaveCoins();
+      setTimeout(()=>toast('🎫 ¡'+m.name+' te dio un Ticket para repetir! 💜'),1500);
+    }
+    spawnParticles();
+  }
+  // reset chapter progress
+  const nd=_nvLoad(); nd[NV.memberId]={chapter:0,novelAff:0,totalPts:0};
+  try{ localStorage.setItem(_nvSaveKey(),JSON.stringify(nd)); }catch(e){}
+  // show ending screen
+  goTo('novelEndScreen');
+  document.getElementById('neTitle').textContent=title;
+  document.getElementById('neDesc').textContent=desc;
+  const frame=document.getElementById('neFrame');
+  const collBox=document.getElementById('neCollBox');
+  if(isGood){
+    frame.style.display='block';
+    document.getElementById('nePhoto').src=m.e;
+    document.getElementById('neSign').textContent='♥ '+m.name;
+    collBox.style.display='block';
+    sfx('win');
+  } else {
+    frame.style.display='none';
+    collBox.style.display='none';
+  }
+}
+
+function nvPause(){ NV.active=false; document.getElementById('nvPause').classList.add('show'); }
+function nvResume(){ NV.active=true; document.getElementById('nvPause').classList.remove('show'); }
+function nvExit(){ NV.active=false; document.getElementById('nvPause').classList.remove('show'); goTo('novelScreen'); _renderRouteGrid(); _updateNvCoinsUI(); }
+
+// ═══════════════════════════════════════════════════════════
+//  COLLECTION
+// ═══════════════════════════════════════════════════════════
+function _renderColl(){
+  _loadColl();
+  document.getElementById('collGrid').innerHTML=MEMBERS.map(m=>{
+    const e=G.fanCollection&&G.fanCollection[m.id];
+    return `<div class="ccard ${e?'earned':''}">
+      ${e?`<img src="${m.e}" alt="${m.name}" onerror="this.style.display='none'"><div class="cheart">💜</div>`:`<div class="clock">🔒</div>`}
+      <div class="cname">${m.name}</div>
+      <div class="ctag">${e?'📸 Foto firmada 💜':'Completa su historia'}</div>
+    </div>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════════════════
+//  REWARDS — Fan Coins al llegar a afinidad 50
+// ═══════════════════════════════════════════════════════════
+function _checkCoinReward(memberId){
+  if((G.affinity[memberId]||0)>=50){
+    const key='btsuno_coin50_'+G.name+'_'+memberId;
+    if(!localStorage.getItem(key)){
+      try{ localStorage.setItem(key,'1'); }catch(e){}
+      _nvLoadCoins();
+      G.fanCoins=(G.fanCoins||0)+8;
+      _nvSaveCoins();
+      setTimeout(()=>toast('🪙 +8 Fan Coins! Afinidad 50 con '+M(memberId).name+' 🎉'),1500);
+    }
+  }
+}
+// Ticket reward chance after winning UNO
+function _checkTicketReward(memberId){
+  if((G.affinity[memberId]||0)<50) return;
+  if(Math.random()<0.18){
+    _nvLoadCoins();
+    if(!G.novelTickets) G.novelTickets={};
+    G.novelTickets[memberId]=true;
+    _nvSaveCoins();
+    setTimeout(()=>toast('🎫 ¡'+M(memberId).name+' te dio un Ticket para su historia! 💜'),2200);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+//  PATCH goTo — triggers on screen entry
+// ═══════════════════════════════════════════════════════════
+const _origGoTo=goTo;
+goTo=function(id){
+  _origGoTo(id);
+  if(id==='avatarScreen'){ _loadAV(); _drawAV(); _drawAvPalette(); document.getElementById('avNameTag').textContent=G.name||'ARMY'; }
+  if(id==='collectionScreen') _renderColl();
+  if(id==='novelScreen'){ _nvLoadCoins(); _updateNvCoinsUI(); _renderRouteGrid(); }
+};
+
+// ═══════════════════════════════════════════════════════════
+//  PATCH gainAffinity — add coin/ticket checks without breaking UNO
+// ═══════════════════════════════════════════════════════════
+const _origGainAff=gainAffinity;
+gainAffinity=function(id,amount){
+  _origGainAff(id,amount);
+  _checkCoinReward(id);
+};
+
+// ═══════════════════════════════════════════════════════════
+//  PATCH endGame — add ticket reward on win without breaking UNO
+// ═══════════════════════════════════════════════════════════
+const _origEndGame=endGame;
+endGame=function(winner){
+  _origEndGame(winner);
+  // ticket chance only when player wins
+  const playerWon=G.teamPlayer&&G.teamPlayer.includes(winner);
+  if(playerWon && G.opponents){
+    G.opponents.forEach(id=>_checkTicketReward(id));
+  }
+};
+
+// ═══════════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════════
+document.addEventListener('click', ()=>requestFS(), {once:true});
+document.addEventListener('keydown', ()=>requestFS(), {once:true});
+
+window.addEventListener('load', ()=>{
+  renderSaves(); renderAffinity();
+  setTimeout(()=>{
+    const l=document.getElementById('loading');
+    l.style.opacity='0'; l.style.transition='opacity .5s';
+    setTimeout(()=>{
+      l.style.display='none';
+      // Auto-login si hay nombre guardado
+      const saved = localStorage.getItem('btsuno_playername');
+      if(saved) {
+        G.name = saved; load(saved);
+        document.getElementById('nameInp').value = saved;
+        document.getElementById('winsD').textContent = G.wins;
+        document.getElementById('modeWel').textContent = `¡Bienvenida de vuelta, ${saved}! 💜`;
+        document.getElementById('affBtn').style.display='inline-flex';
+        renderSaves(); renderAffinity();
+        goTo('modeScreen');
+      }
+    },500);
+  },2000);
+  document.getElementById('nameInp').addEventListener('keydown', e=>{ if(e.key==='Enter') enterGame(); });
+});
+</script>
+</body>
+</html>
